@@ -1,0 +1,94 @@
+<!doctype html><html>  <head>    <meta charset="utf-8">    <title>JSDoc: Index</title>    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">    <link href="css/site.css" type="text/css" rel="stylesheet">  </head>  <body ng-app="">    <nav id="toc">      <input placeholder="Filter" id="filter-input" class="col12 block field" type="text">      <div class="nav-wrapper">      <h2><a href="index.html">Index</a></h2>      <ul class="module">        <!-- undefined -->        <h2 class="module">          <a chref="" ng-click="moduleundefined = !moduleundefined">            module: undefined          </a>          <i ng-cloak="" ng-show="moduleundefined">+</i>        </h2>        <li id="undefined" ng-hide="moduleundefined">          <ul class="group">            <h2>              <a href="" ng-click="undefinedconstructor = !undefinedconstructor">                constructor              </a>              <i ng-cloak="" ng-show="undefinedconstructor">+</i>            </h2>            <ul ng-hide="undefinedconstructor">              <li>                <a href="ResourceCache.html">ResourceCache</a>              </li><li>                <a href="ResourceFactory.html">ResourceFactory</a>              </li><li>                <a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a>              </li><li>                <a href="ResourceStore.html">ResourceStore</a>              </li><li>                <a href="ResourceStoreRelation.html">ResourceStoreRelation</a>              </li>            </ul>          </ul><ul class="group">            <h2>              <a href="" ng-click="undefinedfactory = !undefinedfactory">                factory              </a>              <i ng-cloak="" ng-show="undefinedfactory">+</i>            </h2>            <ul ng-hide="undefinedfactory">              <li>                <a href="ResourceCacheService.html">ResourceCacheService</a>              </li><li>                <a href="ResourceFactoryService.html">ResourceFactoryService</a>              </li><li>                <a href="ResourcePhantomIdNegativeInt.html">ResourcePhantomIdNegativeInt</a>              </li><li>                <a href="ResourcePhantomIdUuid4.html">ResourcePhantomIdUuid4</a>              </li>            </ul>          </ul><ul class="group">            <h2>              <a href="" ng-click="undefinedservice = !undefinedservice">                service              </a>              <i ng-cloak="" ng-show="undefinedservice">+</i>            </h2>            <ul ng-hide="undefinedservice">              <li>                <a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a>              </li>            </ul>          </ul>        </li>      </ul>      </div>    </nav>    <div id="content" class="page-wrap">      <h1 class="title">        Index      </h1>      <div id="main" class="big-container">        <!-- source code html -->        <!-- index.html -->        <section class="section-readme">          <article>            <h1>Angular ResourceFactory</h1><p>Angular ResourceFactory is an AngularJS library that extends the capabilities of ngResource in various ways. The main 
+features include a resource store for holding changes on resource instances and related resource instances to commit
+them at once, and an advanced resource caching.</p>
+<p><strong>Note:</strong> This library is for AngularJS 1.x only!</p>
+<h2>Dependencies</h2><p>Angular ResourceFactory depends on AngularJS 1.x.</p>
+<h2>Installation</h2><ul>
+<li>Via <code>npm</code>: <code>npm install --save angular-resource-factory</code></li>
+<li>Via <code>git</code>: <code>git clone git@github.com:beachmachine/angular-resource-factory.git</code></li>
+</ul>
+<h2>Examples</h2><h3>RESTful service definition</h3><p>In the following example we assume a RESTful endpoint that gives us the total of results via the <code>count</code> attribute
+and the actual data in the <code>results</code> attribute in the list call. Each object has an ID on the <code>pk</code> attribute, holds
+its own URL on the <code>url</code> attribute and also has some dates as <code>creation_date</code> and <code>last_modification_date</code> that we
+want to handle as Moment.js objects.</p>
+<p>To make things a bit clearer, this is the list call result of the RESTful API endpoint:</p>
+<pre class="prettyprint source lang-json"><code>{
+  &quot;count&quot;: 2,
+  &quot;results&quot;: [
+    {
+      &quot;pk&quot;: 1,
+      &quot;url&quot;: &quot;http://example.api/member/1/&quot;,
+      &quot;creation_date&quot;: &quot;2017-01-11T06:00:00Z&quot;,
+      &quot;last_modification_date&quot;: &quot;2017-01-12T08:00:00Z&quot;,
+      &quot;name&quot;: &quot;Example Member 1&quot;
+    },
+    {
+      &quot;pk&quot;: 2,
+      &quot;url&quot;: &quot;http://example.api/member/2/&quot;,
+      &quot;creation_date&quot;: &quot;2017-01-11T06:00:00Z&quot;,
+      &quot;last_modification_date&quot;: &quot;2017-01-12T08:00:00Z&quot;,
+      &quot;name&quot;: &quot;Example Member 2&quot;
+    }
+  ]
+}</code></pre><p>Whereas this is the result of a detail call:</p>
+<pre class="prettyprint source lang-json"><code>{
+  &quot;pk&quot;: 2,
+  &quot;url&quot;: &quot;http://example.api/member/2/&quot;,
+  &quot;creation_date&quot;: &quot;2017-01-11T06:00:00Z&quot;,
+  &quot;last_modification_date&quot;: &quot;2017-01-12T08:00:00Z&quot;,
+  &quot;name&quot;: &quot;Example Member 2&quot;
+}</code></pre><p>Our service definition may look like this:</p>
+<pre class="prettyprint source lang-javascript"><code>var module = angular.module('services');
+module.factory('MemberResourceService',
+    function (ResourceFactoryService) {
+        return ResourceFactoryService('MemberResourceService', 'http://example.api/member/:pk/', {
+            queryDataAttr: 'results',
+            queryTotalAttr: 'count',
+            pkAttr: 'pk',
+            urlAttr: 'url',
+            /**
+             * Converts the dates to moment objects.
+             * @param obj
+             * @return {*}
+             */
+            toInternal: function (obj) {
+                // no transformation needed if given object is false
+                if (!obj) {
+                    return obj;
+                }
+                obj.creation_date = obj.creation_date ? moment(obj.creation_date) : null;
+                obj.last_modification_date = obj.last_modification_date ? moment(obj.last_modification_date) : null;
+                return obj;
+            },
+            /**
+             * Converts the moment dates to strings.
+             * @param obj
+             * @return {*}
+             */
+            fromInternal: function (obj) {
+                // no transformation needed if given object is false
+                if (!obj) {
+                    return obj;
+                }
+                obj.creation_date = obj.creation_date ? moment(obj.creation_date).toJSON() : null;
+                obj.last_modification_date = obj.last_modification_date ? moment(obj.last_modification_date).toJSON() : null;
+                return obj;
+            }
+        });
+    }
+);</code></pre><h2>Contributions</h2><ul>
+<li>Andreas Stocker <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#97;&#x6e;&#x64;&#114;&#101;&#x61;&#115;&#x40;&#x73;&#116;&#x6f;&#x63;&#107;&#x65;&#x72;&#x2e;&#99;&#111;&#46;&#105;&#x74;">&#97;&#x6e;&#x64;&#114;&#101;&#x61;&#115;&#x40;&#x73;&#116;&#x6f;&#x63;&#107;&#x65;&#x72;&#x2e;&#99;&#111;&#46;&#105;&#x74;</a>, Main developer</li>
+</ul>
+<h2>License</h2><p>Angular ResourceFactory
+Copyright 2016 Andreas Stocker
+MIT License</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>          </article>        </section>        <!-- class files -->      </div>      <footer style="clear:both">        Documentation generated by        <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>        using        <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>      </footer>    </div>    <script src="js/prettify.js"></script>    <script src="js/angular.min.js"></script>    <script src="js/site.js"></script>    <!--%= prettyJson %-->    <script>      prettyPrint();      var lineNo = window.location.hash.match(/#line([0-9]+)$/);      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();    </script>  </body></html>
