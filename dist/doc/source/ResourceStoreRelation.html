@@ -941,9 +941,6 @@
                         }
                         else {
                             merge(parentPersistInstance, childPersistInstance);
-                            // store gets overwritten by the merge, so set it to the parent
-                            // store again here.
-                            parentPersistInstance.$store = parentStore;
                         }
                         parentStore.persist(parentPersistInstance);
                     }
@@ -959,9 +956,6 @@
                         }
                         else {
                             merge(parentRemoveInstance, childRemoveInstance);
-                            // store gets overwritten by the merge, so set it to the parent
-                            // store again here.
-                            parentRemoveInstance.$store = parentStore;
                         }
                         parentStore.remove(parentRemoveInstance);
                     }
@@ -1194,11 +1188,6 @@
                     instances = instances || managedInstances;
                     var
                         childStoreManagedInstances = copy(instances);
-                    // Remove the $store attribute from the cloned instances as they become managed
-                    // by the new child store.
-                    for (var i = 0; i &lt; childStoreManagedInstances.length; i++) {
-                        delete childStoreManagedInstances[i].$store;
-                    }
                     return new ResourceStore(resource, childStoreManagedInstances, self);
                 };
                 /**
@@ -1473,131 +1462,118 @@
                     return obj && angular.isFunction(obj.then);
                 }
                 /**
-                 * Internal implementation of angulars `baseExtend`, used for extending and merging objects. This
-                 * implementation skips `ResourceStore` instances and has support for moment.js objects.
+                 * Populates the destination object `dst` by copying the non-private data from `src` object. The data
+                 * on the `dst` object will be a deep copy of the data on the `src`. This function will not copy
+                 * attributes of the `src` whose names start with "$". These attributes are considered private. The
+                 * method will also keep the private attributes of the `dst`.
                  *
                  * @memberOf ResourceStore
                  * @private
-                 * @param dst
-                 * @param objs
-                 * @param deep
+                 * @param dst {Undefined|Object|Array} Destination object
+                 * @param src {Object|Array} Source object
+                 * @param [keepMissing] boolean Keep attributes on dst that are not present on src
                  * @return {*}
                  */
-                function baseExtend(dst, objs, deep) {
-                    for (var i = 0, ii = objs.length; i &lt; ii; ++i) {
-                        var
-                            obj = objs[i],
-                            isMoment = moment ? moment.isMoment : function () { return false; };
-                        if (!angular.isObject(obj) && !angular.isFunction(obj)){
-                            continue
+                function populate (dst, src, keepMissing) {
+                    // keepMissing defaults to true
+                    keepMissing = angular.isUndefined(keepMissing) ? true : !!keepMissing;
+                    dst = dst || undefined;
+                    var
+                        key,
+                        preserve = !!dst,
+                        preservedObjects = {};
+                    /*
+                     * As we do remove all "private" properties from the source, so they are not copied
+                     * to the destination object, we make a copy of the source first. We do not want to
+                     * modify the actual source object.
+                     */
+                    src = angular.copy(src);
+                    for (key in src) {
+                        if (src.hasOwnProperty(key) && key[0] === '$') {
+                            delete src[key];
                         }
-                        var
-                            keys = Object.keys(obj);
-                        for (var j = 0, jj = keys.length; j &lt; jj; j++) {
-                            var
-                                key = keys[j],
-                                src = obj[key];
-                            // Skip keys starting with '$'
-                            if (key[0] === '$') {
-                                continue;
+                    }
+                    /*
+                     * Only preserve if we got a destination object. Save "private" object keys of destination before
+                     * copying the source object over the destination object. We restore these properties afterwards.
+                     */
+                    if (preserve) {
+                        for (key in dst) {
+                            if (dst.hasOwnProperty(key)) {
+                                // keep private attributes
+                                if (key[0] === '$') {
+                                    preservedObjects[key] = dst[key];
+                                }
+                                // keep attribute if not present on source
+                                else if (keepMissing && !src.hasOwnProperty(key)) {
+                                    preservedObjects[key] = dst[key];
+                                }
                             }
-                            if (deep && angular.isObject(src)) {
-                                if (angular.isDate(src)) {
-                                    dst[key] = new Date(src.valueOf());
-                                }
-                                else if (isMoment(src)) {
-                                    dst[key] = moment(src);
-                                }
-                                else if (toString.call(src) === '[object RegExp]') {
-                                    dst[key] = new RegExp(src);
-                                }
-                                else if (src instanceof ResourceStore) {
-                                    // Do not copy ResourceStore instances
-                                }
-                                else if (src.nodeName) {
-                                    dst[key] = src.cloneNode(true);
-                                }
-                                else if (angular.isElement(src)) {
-                                    dst[key] = src.clone();
-                                }
-                                else {
-                                    if (!angular.isObject(dst[key])) {
-                                        dst[key] = angular.isArray(src) ? [] : {};
-                                    }
-                                    baseExtend(dst[key], [src], true);
-                                }
-                            } else {
-                                dst[key] = src;
+                        }
+                    }
+                    // do the actual copy
+                    dst = angular.copy(src, dst);
+                    /*
+                     * Now we can restore the preserved data on the destination object again.
+                     */
+                    if (preserve) {
+                        for (key in preservedObjects) {
+                            if (preservedObjects.hasOwnProperty(key)) {
+                                dst[key] = preservedObjects[key];
                             }
                         }
                     }
                     return dst;
                 }
                 /**
-                 * Extends the destination object `dst` by copying own enumerable properties from the `src` object
-                 * to `dst`. Does not work recursively.
-                 *
-                 * @memberOf ResourceStore
-                 * @private
-                 * @param dst
-                 * @param src
-                 * @return {*}
-                 */
-                function extend (dst, src) {
-                    return baseExtend(dst, [src], false);
-                }
-                /**
-                 * Merges the destination object `dst` by copying own enumerable properties from the `src` object
-                 * to `dst`. Does work recursively.
-                 *
-                 * @memberOf ResourceStore
-                 * @private
-                 * @param dst
-                 * @param src
-                 * @return {*}
-                 */
-                function merge (dst, src) {
-                    return baseExtend(dst, [src], true);
-                }
-                /**
-                 * Copies the source object to the destination object (or array)
+                 * Copies the source object to the destination object (or array). Keeps private
+                 * attributes on the `dst` object (attributes starting with $ are private).
                  *
                  * @memberOf ResourceStore
                  * @private
                  * @param src
-                 * @param dst
+                 * @param [dst]
                  * @return {*}
                  */
                 function copy (src, dst) {
+                    // if we are working on an array, copy each instance of the array to
+                    // the dst.
                     if (angular.isArray(src)) {
-                        if (!dst) {
-                            dst = [];
-                        }
-                        // Clear the destination array
+                        dst = angular.isArray(dst) ? dst : [];
                         dst.length = 0;
                         for (var i = 0; i &lt; src.length; i++) {
-                            dst.push(copy(src[i]));
+                            dst.push(populate(null, src[i], false));
                         }
                     }
-                    else if (angular.isObject(src)) {
-                        var
-                            filterPrivate = function (key) {
-                                return String(key)[0] === '$' && key !== '$$hashKey';
-                            },
-                            keys = Object.keys(src),
-                            privateKeys = keys.filter(filterPrivate);
-                        dst = angular.copy(src);
-                        // Remove all private attributes (attributes with name starting with '$') from
-                        // the destination object.
-                        for (var j = 0; j &lt; privateKeys.length; j++) {
-                            var
-                                privateKey = privateKeys[j];
-                            delete dst[privateKey];
-                        }
-                        return dst;
-                    }
+                    // else we can just copy the src object.
                     else {
-                        dst = angular.copy(src);
+                        dst = populate(dst, src, false);
+                    }
+                    return dst;
+                }
+                /**
+                 * Merges the source object to the destination object (or array). Keeps private
+                 * attributes on the `dst` object (attributes starting with $ are private).
+                 *
+                 * @memberOf ResourceStore
+                 * @private
+                 * @param src
+                 * @param [dst]
+                 * @return {*}
+                 */
+                function merge (src, dst) {
+                    // if we are working on an array, copy each instance of the array to
+                    // the dst.
+                    if (angular.isArray(src)) {
+                        dst = angular.isArray(dst) ? dst : [];
+                        dst.length = 0;
+                        for (var i = 0; i &lt; src.length; i++) {
+                            dst.push(populate(null, src[i], true));
+                        }
+                    }
+                    // else we can just copy the src object.
+                    else {
+                        dst = populate(dst, src, true);
                     }
                     return dst;
                 }
