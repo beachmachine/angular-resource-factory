@@ -1,6 +1,6 @@
 {
   "name": "angular-resource-factory",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "A factory build upon $resource helping you to interact with RESTful APIs with advanced features as caches and data stores.",
   "main": "dist/ngresourcefactory.min.js",
   "repository": {
@@ -20,7 +20,8 @@
   "author": "Andreas Stocker <andreas@stocker.co.it>",
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.6.0"
+    "angular": "^1.6.0",
+    "angular-resource": "^1.6.0"
   },
   "devDependencies": {
     "angular-jsdoc": "^1.5.0",

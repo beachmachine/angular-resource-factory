@@ -1,5 +1,5 @@
 /**
- * Angular ResourcePhantomIdFactoryService
+ * Angular ResourceFactory
  * Copyright 2016 Andreas Stocker
  * MIT License
  *
