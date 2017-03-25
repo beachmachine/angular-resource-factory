@@ -188,11 +188,22 @@
                     insertingInterceptor = {
                         response: function (response) {
                             var
-                                data = response.data;
+                                data = response.data,
+                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
                             cache.removeAllLists();
                             cache.removeAllDependent();
-                            cache.insert(data[options.urlAttr], data, false);
+
+                            /*
+                             * Insert the cached object if we have an URL on the returned instance. Else we have
+                             * to invalidate the whole object cache.
+                             */
+                            if (url) {
+                                cache.insert(url, data, false);
+                            }
+                            else {
+                                cache.removeAllObjects();
+                            }
 
                             return response;
                         }
@@ -207,11 +218,21 @@
                         response: function (response) {
                             var
                                 data = response.data,
-                                url = data[options.urlAttr];
+                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
                             cache.removeAllLists();
                             cache.removeAllDependent();
-                            cache.insert(url, data, false);
+
+                            /*
+                             * Update the cached object if we have an URL on the returned instance. Else we have
+                             * to invalidate the whole object cache.
+                             */
+                            if (url) {
+                                cache.insert(url, data, false);
+                            }
+                            else {
+                                cache.removeAllObjects();
+                            }
 
                             return response;
                         }
@@ -224,9 +245,23 @@
                      */
                     deletingInterceptor = {
                         response: function (response) {
+                            var
+                                data = response.data,
+                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
+
                             cache.removeAllLists();
                             cache.removeAllDependent();
-                            cache.remove(response.config.url);
+
+                            /*
+                             * Remove the cached object if we have an URL on the returned instance. Else we have
+                             * to invalidate the whole object cache.
+                             */
+                            if (url) {
+                                cache.remove(url);
+                            }
+                            else {
+                                cache.removeAllObjects();
+                            }
 
                             return response;
                         }
@@ -297,10 +332,21 @@
                         // get data on success status from `queryDataAttr`, if configured
                         if (status >= 200 && status < 300) {
                             // get the data from the `queryDataAttr`, if configured
-                            if (options.queryDataAttr && responseData && responseData[options.queryDataAttr]) {
+                            if (options.queryDataAttr) {
                                 console.log("ResourceFactoryService: Get data from '" + options.queryDataAttr + "' attribute.");
 
-                                result = responseData[options.queryDataAttr];
+                                // get the data from the configured `queryDataAttr` only if we have a response object.
+                                // else we just want the result to be the response data.
+                                if (responseData) {
+                                    result = responseData[options.queryDataAttr];
+                                }
+                                else {
+                                    result = responseData;
+                                }
+                            }
+                            // if no data `queryDataAttr` is defined, use the response data directly
+                            else {
+                                result = responseData;
                             }
 
                             // get the total from the `queryTotalAttr`, if configured
