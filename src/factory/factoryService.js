@@ -743,6 +743,16 @@
                 };
 
                 /**
+                 * Gets the cache instance.
+                 *
+                 * @memberOf ResourceFactory
+                 * @return {ResourceCacheService}
+                 */
+                resource.getCache = function () {
+                    return cache;
+                };
+
+                /**
                  * Creates a new store for the resource
                  *
                  * @memberOf ResourceFactory
