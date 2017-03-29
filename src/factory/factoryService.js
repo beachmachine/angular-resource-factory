@@ -1130,7 +1130,7 @@
                             parentStore.manage(parentPersistInstance);
                         }
                         else {
-                            merge(parentPersistInstance, childPersistInstance);
+                            merge(childPersistInstance, parentPersistInstance);
                         }
 
                         parentStore.persist(parentPersistInstance);
@@ -1149,7 +1149,7 @@
                             parentStore.manage(parentRemoveInstance);
                         }
                         else {
-                            merge(parentRemoveInstance, childRemoveInstance);
+                            merge(childRemoveInstance, parentRemoveInstance);
                         }
 
                         parentStore.remove(parentRemoveInstance);

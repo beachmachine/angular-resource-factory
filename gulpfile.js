@@ -48,7 +48,6 @@ var
     gulpUtil = require('gulp-util'),
     gulpUglify = require('gulp-uglify'),
     gulpSequence = require('gulp-sequence'),
-    gulpSourcemaps = require('gulp-sourcemaps'),
     gulpClean = require('gulp-clean'),
     gulpConcat = require('gulp-concat'),
     gulpWatch = require('gulp-watch'),
@@ -98,8 +97,6 @@ gulp.task('build', function (cb) {
 gulp.task('scripts-js', function () {
     return gulp.src(config.src)
         .pipe(gulpPlumber())
-        // wrap tasks in a sourcemap
-        .pipe(development ? gulpSourcemaps.init({ 'loadMaps': true }) : gulpUtil.noop())
         // ng annotate
         .pipe(gulpNgAnnotate({ 'add': true, 'remove': false, 'single_quotes': true }))
         // remove logging
@@ -110,8 +107,6 @@ gulp.task('scripts-js', function () {
         .pipe(gulpModuleWrapper(config.moduleConfig))
         // minify js
         .pipe(production ? gulpUglify({ 'mangle': false }) : gulpUtil.noop())
-        // write sourcemaps
-        .pipe(development ? gulpSourcemaps.write() : gulpUtil.noop())
         // write compiled js
         .pipe(gulp.dest(config.dist));
 });
