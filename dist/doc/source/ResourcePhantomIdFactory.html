@@ -25,6 +25,22 @@
      *
      * @name ResourcePhantomIdFactoryService
      * @ngdoc service
+     * @example
+     *  // Example of a phantom ID generator that uses negative numbers as phantom IDs.
+     *  angular.module('example').factory('ExampleIdFactory',
+     *      function(ResourcePhantomIdFactoryService) {
+     *          var lastPkValue = 0;
+     *
+     *          return ResourcePhantomIdFactoryService.createPhantomIdFactory({
+     *              generate: function () {
+     *                  return --lastPkValue;
+     *              },
+     *              is: function (pkValue) {
+     *                  return pkValue &lt; 0;
+     *              }
+     *          });
+     *      }
+     *  );
      */
     module.service('ResourcePhantomIdFactoryService',
         function () {
@@ -105,7 +121,7 @@
         }
     );
     /**
-     * Resource phantom id generator that generates negative integer IDs
+     * Resource phantom id generator that generates UUID4 IDs
      *
      * @name ResourcePhantomIdUuid4
      * @ngdoc factory

@@ -114,7 +114,7 @@ module.factory('MemberResourceService',
 
 ## Plunker
 
-* [Demo 1](https://embed.plnkr.co/JUZTVZyYcU58AaFGvlr4/)
+* [Demo 1](https://embed.plnkr.co/JUZTVZyYcU58AaFGvlr4/): Simple demo that shows how to load data and how to clear the cache.
 
 
 ## Contributions

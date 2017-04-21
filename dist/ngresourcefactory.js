@@ -826,7 +826,8 @@
         module = angular.module('ngResourceFactory');
 
     /**
-     * Factory service to create new resource classes.
+     * Factory service to create new resource classes. This factory is used to inject a `{@link ResourceFactory}`
+     * to create new resource services.
      *
      * @name ResourceFactoryService
      * @ngdoc factory
@@ -834,6 +835,19 @@
      * @param {service} $resource
      * @param {ResourceCacheService} ResourceCacheService Default cache service
      * @param {ResourcePhantomIdNegativeInt} ResourcePhantomIdNegativeInt Default phantom ID generator
+     * @see ResourceFactory
+     * @example
+     *  // Define a resource service for an REST endpoint.
+     *  angular.module('example').factory('ExampleResourceService',
+     *      function(ResourceFactoryService) {
+     *          return ResourceFactoryService('ExampleResourceService', 'http://example.api/example/:pk/', {
+     *              queryDataAttr: 'results',
+     *              queryTotalAttr: 'count',
+     *              pkAttr: 'pk',
+     *              urlAttr: 'url'
+     *          });
+     *      }
+     *  );
      */
     module.factory('ResourceFactoryService',
         ['$q', '$resource', 'ResourceCacheService', 'ResourcePhantomIdNegativeInt', function ($q,
@@ -843,14 +857,72 @@
             'ngInject';
 
             /**
-             * Constructor function for the resource.
+             * Constructor function for creating a resource service. The resource service is used to make calls to the
+             * REST-API via the "method" functions. These are the default method functions:
+             * ```javascript
+             * {
+             *     // Undo all changes on the instance using the cache or by reloading the data from the server
+             *     'restore': {method:'GET', isArray:false},
+             *     // Get a single instance from the API
+             *     'get': {method:'GET', isArray:false},
+             *     // Get a single instance from the API bypassing the cache
+             *     'getNoCache': {method:'GET', isArray:false},
+             *     // Get a list of instances from the API
+             *     'query': {method:'GET', isArray:true},
+             *     // Get a list of instances from the API bypassing the cache
+             *     'queryNoCache': {method:'GET', isArray:true},
+             *     // Save a new instance
+             *     'save': {method:'POST', isArray:false},
+             *     // Update an existing instance
+             *     'update': {method:'PATCH', isArray:false},
+             *     // Delete an instance
+             *     'remove': {method:'DELETE', isArray:false},
+             * }
+             * ```
+             *
+             * You can extend or override these methods by using the `options.extraMethods` option.
+             *
+             * Each of these methods is available as "static" version on the returned resource class, or as instance
+             * method on a resource instance. The instance methods have a `"$"` prefix. Each of these methods,
+             * static and instance versions, exists with a `"Bg"` postfix to make the call in the "background". This
+             * means you do not see a loading bar if you are using `angular-loading-bar` ({@link http://chieffancypants.github.io/angular-loading-bar/}).
              *
              * @name ResourceFactory
              * @ngdoc constructor
              * @param {String} name Name of the resource service
              * @param {String} url URL to the resource
              * @param {Object} options Options for the resource
+             * @param {Boolean} options.stripTrailingSlashes Strip trailing slashes from request URLs. Defaults to `false`.
+             * @param {Boolean} options.ignoreLoadingBar Ignore the resource for automatic loading bars. Defaults to `false`.
+             * @param {Boolean} options.generatePhantomIds Generate IDs for phantom records created via the `new` method. Defaults to `true`.
+             * @param {ResourcePhantomIdFactory} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
+             * @param {String[]} options.dependent List of resource services to clean the cache for on modifying requests.
+             * @param {Object} options.extraMethods Extra request methods to put on the resource service.
+             * @param {Object} options.extraFunctions Extra functions to put on the resource service instance.
+             * @param {String} options.pkAttr Attribute name where to find the ID of objects. Defaults to `"pk"`.
+             * @param {String} options.urlAttr Attribute name where to find the URL of objects. Defaults to `"url"`.
+             * @param {String} options.queryDataAttr Attribute name where to find the data on the query call (resource list calls). Defaults to `null`.
+             * @param {String} options.queryTotalAttr Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to `null`.
+             * @param {String} options.cacheClass Resource cache class constructor function to use (see `{@link ResourceCache}`). Defaults to `{@link ResourceCacheService}`.
+             * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
+             * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
              * @constructor
+             * @example
+             *  // Getting and updating an resource instance
+             *  var ex = ExampleResourceService.get({pk: 123});
+             *  ex.$promise.then(function() {
+             *      ex.test = 456;
+             *      ex.$update();
+             *  });
+             * @example
+             *  // Saving a new resource instance
+             *  var ex = ExampleResourceService.new({test: 789});
+             *  ex.$save();
+             * @example
+             *  // Saving or updating a resource instance
+             *  var ex = get_a_new_or_existing_instance_from_somewhere();
+             *  ex.test = 123;
+             *  ex.persist();
              */
             return function (name, url, options) {
                 /**
@@ -932,6 +1004,12 @@
                     queryFilter: {},
 
                     /**
+                     * Resource cache class constructor function to use (see `{@link ResourceCache}`)
+                     * @type {Function}
+                     */
+                    cacheClass: ResourceCacheService,
+
+                    /**
                      * Function to post-process data coming from response
                      * @param obj
                      * @param headersGetter
@@ -973,7 +1051,7 @@
                      * The cache instance for the resource.
                      * @type {ResourceCacheService}
                      */
-                    cache = new ResourceCacheService(name, options.pkAttr, {
+                    cache = new options.cacheClass(name, options.pkAttr, {
                         dataAttr: options.queryDataAttr,
                         pkAttr: options.pkAttr,
                         urlAttr: options.urlAttr,
@@ -2896,6 +2974,22 @@
      *
      * @name ResourcePhantomIdFactoryService
      * @ngdoc service
+     * @example
+     *  // Example of a phantom ID generator that uses negative numbers as phantom IDs.
+     *  angular.module('example').factory('ExampleIdFactory',
+     *      function(ResourcePhantomIdFactoryService) {
+     *          var lastPkValue = 0;
+     *
+     *          return ResourcePhantomIdFactoryService.createPhantomIdFactory({
+     *              generate: function () {
+     *                  return --lastPkValue;
+     *              },
+     *              is: function (pkValue) {
+     *                  return pkValue < 0;
+     *              }
+     *          });
+     *      }
+     *  );
      */
     module.service('ResourcePhantomIdFactoryService',
         function () {
@@ -2986,7 +3080,7 @@
     );
 
     /**
-     * Resource phantom id generator that generates negative integer IDs
+     * Resource phantom id generator that generates UUID4 IDs
      *
      * @name ResourcePhantomIdUuid4
      * @ngdoc factory
