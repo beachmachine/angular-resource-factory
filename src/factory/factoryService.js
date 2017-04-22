@@ -121,7 +121,7 @@
              *  // Saving or updating a resource instance
              *  var ex = get_a_new_or_existing_instance_from_somewhere();
              *  ex.test = 123;
-             *  ex.persist();
+             *  ex.$persist();
              */
             return function (name, url, options) {
                 /**
