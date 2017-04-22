@@ -267,7 +267,7 @@
                         response: function (response) {
                             var
                                 data = response.data,
-                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
+                                url = options.urlAttr ? data[options.urlAttr] : null;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
