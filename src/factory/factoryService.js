@@ -269,6 +269,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 
@@ -298,6 +299,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 
@@ -327,6 +329,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 

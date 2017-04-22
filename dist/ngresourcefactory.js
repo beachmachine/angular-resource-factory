@@ -242,7 +242,7 @@
 
                     if (key) {
                         // store the actual data object, not the serialized string, for JSON
-                        if (value && value[2] && value[2]['content-type'] === 'application/json') {
+                        if (value && value[2] && isJsonContentType(value[2]['content-type'])) {
                             console.log("ResourceCacheService: Use deserialized data for key '" + key + "' on the cache '" + name + "'.");
 
                             value[1] = value[1] ? angular.fromJson(value[1]) : null;
@@ -371,6 +371,24 @@
 
                     for (var key in cache) {
                         if (cache.hasOwnProperty(key) && angular.isObject(getDataForKey(key))) {
+                            delete cache[key];
+                            delete cacheTimestamps[key];
+                            delete cacheUseDataAttr[key];
+                            delete cacheIsManaged[key];
+                        }
+                    }
+                };
+
+                /**
+                 * Removes all raw entries from the cache.
+                 *
+                 * @memberOf ResourceCache
+                 */
+                self.removeAllRaw = function () {
+                    console.log("ResourceCacheService: Remove all raw entries from the cache '" + name + "'.");
+
+                    for (var key in cache) {
+                        if (cache.hasOwnProperty(key) && !cacheIsManaged[key]) {
                             delete cache[key];
                             delete cacheTimestamps[key];
                             delete cacheUseDataAttr[key];
@@ -509,6 +527,18 @@
                     removeAll: self.removeAll,
                     info: self.info
                 };
+
+                /**
+                 * Checks if the given content type string indicates JSON.
+                 * @param contentType
+                 * @return {boolean}
+                 */
+                function isJsonContentType (contentType) {
+                    if (!contentType) {
+                        return false;
+                    }
+                    return (contentType === 'application/json' || String(contentType).indexOf('application/json;') === 0);
+                }
 
                 /**
                  * Gets the cache data for the given key.
@@ -1070,6 +1100,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 
@@ -1099,6 +1130,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 
@@ -1128,6 +1160,7 @@
                                 data = response.data,
                                 url = options.urlAttr ? data[options.urlAttr] : response.config.url;
 
+                            cache.removeAllRaw();
                             cache.removeAllLists();
                             cache.removeAllDependent();
 
