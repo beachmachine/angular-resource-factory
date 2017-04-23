@@ -284,7 +284,7 @@
                                 cache.removeAllObjects();
                             }
 
-                            return response;
+                            return data;
                         }
                     },
 
@@ -314,7 +314,7 @@
                                 cache.removeAllObjects();
                             }
 
-                            return response;
+                            return data;
                         }
                     },
 
@@ -344,7 +344,7 @@
                                 cache.removeAllObjects();
                             }
 
-                            return response;
+                            return data;
                         }
                     },
 
@@ -1368,10 +1368,10 @@
 
                                     // If the response contains the saved object (with the PK from the REST API) then
                                     // set the new PK on the item.
-                                    if (response.data && response.data[resource.getPkAttr()]) {
+                                    if (response && response[resource.getPkAttr()]) {
                                         var
                                             oldPkValue = item ? item[resource.getPkAttr()] : null,
-                                            newPkValue = response.data ? response.data[resource.getPkAttr()] : null;
+                                            newPkValue = response ? response[resource.getPkAttr()] : null;
 
                                         // Update the FK values on referencing instances on related stores if this
                                         // was a successful insert or update on the REST API

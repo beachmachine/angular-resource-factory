@@ -4,6 +4,8 @@
  *
  * - gulp build
  *   Builds the library under the configured dist folder
+ * - gulp run-tests
+ *   Runs the test suite of the library
  * - gulp watch
  *   Watches for changes in the sources and triggers a build
  * - gulp clean
@@ -20,10 +22,15 @@ var
             'src/index.js',
             'src/**/*.js'
         ],
-        'docConfig': {
-            'src': 'src',
-            'dist': 'dist/doc'
-        },
+        'documentationSources': './src',
+        'documentationDir': './dist/doc',
+        'testSources': [
+            './node_modules/angular/angular.js',
+            './node_modules/angular-mocks/angular-mocks.js',
+            './node_modules/angular-resource/angular-resource.js',
+            './dist/ngresourcefactory.js',
+            './tests/**/test*.js'
+        ],
         'moduleLicenseDir': 'MODULE_LICENSES',
         'moduleConfig': {
             'name' : 'ngresourcefactory',
@@ -55,6 +62,8 @@ var
     gulpStripDebug = require('gulp-strip-debug'),
     gulpNgAnnotate = require('gulp-ng-annotate'),
     gulpModuleWrapper = require('gulp-module-wrapper'),
+    gulpKarmaRunner = require('gulp-karma-runner'),
+    gulpExit = require('gulp-exit'),
 
     // Other modules
     url = require('url'),
@@ -68,8 +77,7 @@ var
  * Environment variables
  */
 var
-    production = !!gulpUtil.env.production,
-    development = !production;
+    production = !!gulpUtil.env.production;
 
 
 /**
@@ -80,6 +88,23 @@ gulp.task('watch', function () {
     gulpWatch([config.src], function () {
         gulp.start('build');
     });
+});
+
+
+/**
+ * Runs the test suite
+ */
+gulp.task('run-tests', ['build'], function () {
+    return gulp.src(config.testSources, {'read': false})
+        .pipe(gulpKarmaRunner.server({
+            'frameworks': ['jasmine'],
+            'reporters': ['verbose'],
+            'browsers': ['PhantomJS'],
+            'singleRun': true,
+            'showStack': false,
+            'autoWatch': false
+        }))
+        .pipe(gulpExit());
 });
 
 
@@ -119,10 +144,10 @@ gulp.task('docs', function (cb) {
     childProcess.exec(
         'node_modules/jsdoc/jsdoc.js '+
         '--configure node_modules/angular-jsdoc/common/conf.json '+ // config file
-        '--template node_modules/angular-jsdoc/angular-template '+ // template file
-        '--destination "' + config.docConfig.dist + '" '+ // output directory
+        '--template node_modules/angular-jsdoc/default '+ // template file
+        '--destination "' + config.documentationDir + '" '+ // output directory
         '--readme ./README.md ' + // to include README.md as index contents
-        '--recurse "' + config.docConfig.src + '" ', // source code directory
+        '--recurse "' + config.documentationSources + '" ', // source code directory
         function (err) {
             cb(err);
         }

@@ -1,4 +1,4 @@
-<!doctype html><html>  <head>    <meta charset="utf-8">    <base href="../">    <title>JSDoc: source : factoryService.js</title>    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet">    <link href="css/site.css" type="text/css" rel="stylesheet">  </head>  <body ng-app="">    <nav id="toc">      <input placeholder="Filter" id="filter-input" class="col12 block field" type="text">      <div class="nav-wrapper">      <h2><a href="index.html">Index</a></h2>      <ul class="module">        <!-- undefined -->        <h2 class="module">          <a chref="" ng-click="moduleundefined = !moduleundefined">            module: undefined          </a>          <i ng-cloak="" ng-show="moduleundefined">+</i>        </h2>        <li id="undefined" ng-hide="moduleundefined">          <ul class="group">            <h2>              <a href="" ng-click="undefinedconstructor = !undefinedconstructor">                constructor              </a>              <i ng-cloak="" ng-show="undefinedconstructor">+</i>            </h2>            <ul ng-hide="undefinedconstructor">              <li>                <a href="ResourceCache.html">ResourceCache</a>              </li><li>                <a href="ResourceFactory.html">ResourceFactory</a>              </li><li>                <a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a>              </li><li>                <a href="ResourceStore.html">ResourceStore</a>              </li><li>                <a href="ResourceStoreRelation.html">ResourceStoreRelation</a>              </li>            </ul>          </ul><ul class="group">            <h2>              <a href="" ng-click="undefinedfactory = !undefinedfactory">                factory              </a>              <i ng-cloak="" ng-show="undefinedfactory">+</i>            </h2>            <ul ng-hide="undefinedfactory">              <li>                <a href="ResourceCacheService.html">ResourceCacheService</a>              </li><li>                <a href="ResourceFactoryService.html">ResourceFactoryService</a>              </li><li>                <a href="ResourcePhantomIdNegativeInt.html">ResourcePhantomIdNegativeInt</a>              </li><li>                <a href="ResourcePhantomIdUuid4.html">ResourcePhantomIdUuid4</a>              </li>            </ul>          </ul><ul class="group">            <h2>              <a href="" ng-click="undefinedservice = !undefinedservice">                service              </a>              <i ng-cloak="" ng-show="undefinedservice">+</i>            </h2>            <ul ng-hide="undefinedservice">              <li>                <a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a>              </li>            </ul>          </ul>        </li>      </ul>      </div>    </nav>    <div id="content" class="page-wrap">      <h1 class="title">        source : factoryService.js      </h1>      <div id="main" class="big-container">        <!-- source code html -->        <article>          <pre class="prettyprint source linenums"><code>/**
+<!doctype html><html>  <head>    <base href="../" />    <title>JSDoc: Source:factoryService.js</title>    <link type="text/css" rel="stylesheet" href="css/jsdoc-default.css" />    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet" />    <script src="js/prettify.js"></script>  </head>  <body>    <nav>      <h2><a href="index.html">Index</a></h2>          <h3>module: docs</h3>        <ul>        </ul>        <ul>            <h3>constructor</h3>            <ul>                <li><a href="ResourceCache.html">ResourceCache</a></li>                <li><a href="ResourceFactory.html">ResourceFactory</a></li>                <li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a></li>                <li><a href="ResourceStore.html">ResourceStore</a></li>                <li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a></li>            </ul>            <h3>factory</h3>            <ul>                <li><a href="ResourceCacheService.html">ResourceCacheService</a></li>                <li><a href="ResourceFactoryService.html">ResourceFactoryService</a></li>                <li><a href="ResourcePhantomIdNegativeInt.html">ResourcePhantomIdNegativeInt</a></li>                <li><a href="ResourcePhantomIdUuid4.html">ResourcePhantomIdUuid4</a></li>            </ul>            <h3>service</h3>            <ul>                <li><a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a></li>            </ul>        </ul>    </nav>    <h1 class="title">      Source:factoryService.js    </h1>    <div id="main">      <article>        <pre class="prettyprint source linenums"><code>/**
  * Angular ResourceFactoryService
  * Copyright 2016 Andreas Stocker
  * MIT License
@@ -257,7 +257,7 @@
                             else {
                                 cache.removeAllObjects();
                             }
-                            return response;
+                            return data;
                         }
                     },
                     /**
@@ -283,7 +283,7 @@
                             else {
                                 cache.removeAllObjects();
                             }
-                            return response;
+                            return data;
                         }
                     },
                     /**
@@ -309,7 +309,7 @@
                             else {
                                 cache.removeAllObjects();
                             }
-                            return response;
+                            return data;
                         }
                     },
                     /**
@@ -1203,10 +1203,10 @@
                                     }
                                     // If the response contains the saved object (with the PK from the REST API) then
                                     // set the new PK on the item.
-                                    if (response.data && response.data[resource.getPkAttr()]) {
+                                    if (response && response[resource.getPkAttr()]) {
                                         var
                                             oldPkValue = item ? item[resource.getPkAttr()] : null,
-                                            newPkValue = response.data ? response.data[resource.getPkAttr()] : null;
+                                            newPkValue = response ? response[resource.getPkAttr()] : null;
                                         // Update the FK values on referencing instances on related stores if this
                                         // was a successful insert or update on the REST API
                                         if (!isRemove) {
@@ -1877,4 +1877,4 @@
         }
     );
 })();
-</code></pre>        </article>        <!-- index.html -->        <!-- class files -->      </div>      <footer style="clear:both">        Documentation generated by        <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>        using        <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>      </footer>    </div>    <script src="js/prettify.js"></script>    <script src="js/angular.min.js"></script>    <script src="js/site.js"></script>    <!--%= prettyJson %-->    <script>      prettyPrint();      var lineNo = window.location.hash.match(/#line([0-9]+)$/);      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();    </script>  </body></html>
+</code></pre>      </article>    </div>    <footer style="clear:both">      Documentation generated by      <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>      using       <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>     </footer>    <!--%= prettyJson %-->    <script>      prettyPrint();      var lineNo = window.location.hash.match(/#line([0-9]+)$/);      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();    </script>  </body></html>

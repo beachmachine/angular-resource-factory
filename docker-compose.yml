@@ -1,0 +1,19 @@
+version: '2'
+services:
+  # Node configuration
+  node:
+    build:
+      context: ./docker/node
+    environment:
+      NODE_RUN_UID: 1000
+      NODE_RUN_USER: user
+      NODE_RUN_GROUP: user
+    volumes:
+      - ./:/app
+    command: gulp run-server
+    ports:
+      - "8080:8080"
+      - "8181:8181"
+    expose:
+      - "8080"
+      - "8181"
