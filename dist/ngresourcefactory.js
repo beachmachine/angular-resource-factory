@@ -1090,6 +1090,26 @@
                     }),
 
                     /**
+                     * Interceptor that puts the configured `queryTotalAttr` on the resulting array as attribute
+                     * named `total`.
+                     * @type {Object}
+                     */
+                    queryInterceptor = {
+                        response: function (response) {
+                            var
+                                data = response.data,
+                                instance = response.resource;
+
+                            // `data` is the object that went through the transformation chain. It should alrady
+                            // have the `total` attribute set via the `queryTransformResponseData` transformation
+                            // method.
+                            instance.total = data.total;
+
+                            return instance;
+                        }
+                    },
+
+                    /**
                      * Interceptor that puts the returned object on the cache an invalidates the
                      * dependent resource services caches.
                      * @type {Object}
@@ -1097,8 +1117,8 @@
                     insertingInterceptor = {
                         response: function (response) {
                             var
-                                data = response.data,
-                                url = options.urlAttr ? data[options.urlAttr] : null;
+                                instance = response.resource,
+                                url = options.urlAttr ? instance[options.urlAttr] : null;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
@@ -1109,13 +1129,13 @@
                              * to invalidate the whole object cache.
                              */
                             if (url) {
-                                cache.insert(url, data, false);
+                                cache.insert(url, instance, false);
                             }
                             else {
                                 cache.removeAllObjects();
                             }
 
-                            return data;
+                            return instance;
                         }
                     },
 
@@ -1127,8 +1147,8 @@
                     modifyingInterceptor = {
                         response: function (response) {
                             var
-                                data = response.data,
-                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
+                                instance = response.resource,
+                                url = options.urlAttr ? instance[options.urlAttr] : response.config.url;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
@@ -1139,13 +1159,13 @@
                              * to invalidate the whole object cache.
                              */
                             if (url) {
-                                cache.insert(url, data, false);
+                                cache.insert(url, instance, false);
                             }
                             else {
                                 cache.removeAllObjects();
                             }
 
-                            return data;
+                            return instance;
                         }
                     },
 
@@ -1157,8 +1177,8 @@
                     deletingInterceptor = {
                         response: function (response) {
                             var
-                                data = response.data,
-                                url = options.urlAttr ? data[options.urlAttr] : response.config.url;
+                                instance = response.resource,
+                                url = options.urlAttr ? instance[options.urlAttr] : response.config.url;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
@@ -1175,7 +1195,7 @@
                                 cache.removeAllObjects();
                             }
 
-                            return data;
+                            return instance;
                         }
                     },
 
@@ -1369,6 +1389,7 @@
                             withCredentials: true,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
+                            interceptor: queryInterceptor,
                             cache: cache.withDataAttr,
                             transformResponse: [
                                 transformResponseFromJson,
@@ -1386,6 +1407,7 @@
                             withCredentials: true,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
+                            interceptor: queryInterceptor,
                             transformResponse: [
                                 transformResponseFromJson,
                                 queryTransformResponseData,

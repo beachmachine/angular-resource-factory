@@ -1,4 +1,4 @@
-describe("Test ResourceFactoryService",
+describe("ResourceFactoryService",
     function () {
         'use strict';
 
@@ -13,13 +13,11 @@ describe("Test ResourceFactoryService",
             $rootScope = $injector.get('$rootScope');
         }));
 
-        it("Default RESTful methods existing", function () {
+        it("Does have all static REST methods", function () {
             inject(function (ResourceFactoryService) {
                 var
-                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
-                    instance = service.new();
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
 
-                // Test class methods
                 expect(service.restore).toBeDefined();
                 expect(service.get).toBeDefined();
                 expect(service.getNoCache).toBeDefined();
@@ -28,8 +26,15 @@ describe("Test ResourceFactoryService",
                 expect(service.save).toBeDefined();
                 expect(service.update).toBeDefined();
                 expect(service.remove).toBeDefined();
+            });
+        });
 
-                // Test instance methods
+        it("Does have all instance REST methods", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance = service.new();
+
                 expect(instance.$restore).toBeDefined();
                 expect(instance.$get).toBeDefined();
                 expect(instance.$getNoCache).toBeDefined();
@@ -41,11 +46,10 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Background RESTful methods existing", function () {
+        it("Does have all static background REST methods", function () {
             inject(function (ResourceFactoryService) {
                 var
-                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
-                    instance = service.new();
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
 
                 // Test class methods
                 expect(service.restoreBg).toBeDefined();
@@ -56,8 +60,15 @@ describe("Test ResourceFactoryService",
                 expect(service.saveBg).toBeDefined();
                 expect(service.updateBg).toBeDefined();
                 expect(service.removeBg).toBeDefined();
+            });
+        });
 
-                // Test instance methods
+        it("Does have all instance background REST methods", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance = service.new();
+
                 expect(instance.$restoreBg).toBeDefined();
                 expect(instance.$getBg).toBeDefined();
                 expect(instance.$getNoCacheBg).toBeDefined();
@@ -69,7 +80,54 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Query method without query params", function (done) {
+        it("Does generate extra static background REST method", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    });
+
+                expect(service.extraBg).toBeDefined();
+            });
+        });
+
+        it("Does generate extra instance background REST method", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    }),
+                    instance = service.new();
+
+                expect(instance.$extraBg).toBeDefined();
+            });
+        });
+
+        it("Does generate extra instance functions", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraFunctions: {
+                            extra: function () { }
+                        }
+                    }),
+                    instance = service.new();
+
+                expect(instance.extra).toBeDefined();
+            });
+        });
+
+        it("Does query without query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
@@ -86,7 +144,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Query method with query params", function (done) {
+        it("Does query with query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
@@ -103,7 +161,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Get method without query params", function (done) {
+        it("Does get without query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
@@ -120,7 +178,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Get method with query params", function (done) {
+        it("Does get with query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
@@ -137,7 +195,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Save method without query params", function (done) {
+        it("Does save without query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -155,7 +213,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Save method with query params", function (done) {
+        it("Does save with query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -173,7 +231,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Update method without query params", function (done) {
+        it("Does update without query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -194,7 +252,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Update method with query params", function (done) {
+        it("Does update with query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -215,7 +273,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Remove method without query params", function (done) {
+        it("Does remove without query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -236,7 +294,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Remove method with query params", function (done) {
+        it("Does remove with query params", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -257,7 +315,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Post-process from RESTful API", function (done) {
+        it("Does post-process from RESTful API", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
@@ -279,7 +337,7 @@ describe("Test ResourceFactoryService",
             });
         });
 
-        it("Post-process to RESTful API", function (done) {
+        it("Does post-process to RESTful API", function (done) {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
@@ -299,6 +357,197 @@ describe("Test ResourceFactoryService",
                     });
 
                 $httpBackend.flush();
+            });
+        });
+
+        it("Does strip trailing slashes if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        stripTrailingSlashes: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test').respond(200, [{pk: 1}, {pk: 2}]);
+                $httpBackend.expect('GET', 'http://test/1').respond(200, {pk: 1});
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.length).toBe(2);
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.pk).toBe(1);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+            });
+        });
+
+        it("Does not generate phantom IDs if configured so", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        generatePhantomIds: false
+                    }),
+                    instance = service.new();
+
+                expect(instance.pk).not.toBeDefined();
+            });
+        });
+
+        it("Does generate extra static REST method", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    });
+
+                expect(service.extra).toBeDefined();
+            });
+        });
+
+        it("Does generate extra instance REST method", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    }),
+                    instance = service.new();
+
+                expect(instance.$extra).toBeDefined();
+            });
+        });
+
+        it("Does use 'id' as primary key attribute if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:id/', {
+                        pkAttr: 'id'
+                    }),
+                    instance = service.new();
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, [{id: 1}, {id: 2}]);
+                $httpBackend.expect('PATCH', 'http://test/1/', {id: 1}).respond(200, {id: 1});
+                $httpBackend.expect('POST', 'http://test/', {id: -1}).respond(201, {id: 3});
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        return service.update(service.getInstanceByPk(result, 1)).$promise;
+                    })
+                    .then(function () {
+                        return service.save(instance).$promise;
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+            });
+        });
+
+        it("Does use 'data' as query data attribute if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        queryDataAttr: 'data'
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1}, {pk: 2}]});
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.length).toBe(2);
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.pk).toBe(1);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+            });
+        });
+
+        it("Does use 'count' as query total attribute if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        queryDataAttr: 'data',
+                        queryTotalAttr: 'count'
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {count: 50, data: [{pk: 1}, {pk: 2}]});
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.total).toBe(50);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+            });
+        });
+
+        it("Does use shared filter object", function (done) {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        queryFilter: {
+                            filter: 1
+                        }
+                    });
+
+                $httpBackend.expect('GET', 'http://test/?filter=1').respond(200, [{pk: 1}, {pk: 2}]);
+
+                service.filter().$promise
+                    .then(function (result) {
+                        expect(result.length).toBe(2);
+                        done();
+                    });
+
+                $httpBackend.flush();
+            });
+        });
+
+        it("Does use custom cache class if configured so", function () {
+            inject(function (ResourceFactoryService, ResourceCacheService) {
+                var
+                    cacheInstantiated = false,
+                    cache = function () {
+                        ResourceCacheService.bind(this, arguments);
+                        cacheInstantiated = true;
+                    },
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        cacheClass: cache
+                    });
+
+                expect(cacheInstantiated).toBe(true);
             });
         });
 

@@ -1,4 +1,4 @@
-describe("Test ResourcePhantomIdFactoryService",
+describe("ResourcePhantomIdFactoryService",
     function () {
         'use strict';
 
@@ -13,7 +13,7 @@ describe("Test ResourcePhantomIdFactoryService",
             $rootScope = $injector.get('$rootScope');
         }));
 
-        it("Default phantom ID generator", function () {
+        it("Does generate phantom IDs with default phantom ID generator", function () {
             inject(function (ResourceFactoryService) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
@@ -38,7 +38,7 @@ describe("Test ResourcePhantomIdFactoryService",
             });
         });
 
-        it("Negative integer phantom ID generator", function () {
+        it("Does generate phantom IDs with negative integer phantom ID generator", function () {
             inject(function (ResourceFactoryService, ResourcePhantomIdNegativeInt) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
@@ -65,7 +65,7 @@ describe("Test ResourcePhantomIdFactoryService",
             });
         });
 
-        it("UUID4 phantom ID generator", function () {
+        it("Does generate phantom IDs with UUID4 phantom ID generator", function () {
             inject(function (ResourceFactoryService, ResourcePhantomIdUuid4) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
@@ -92,7 +92,7 @@ describe("Test ResourcePhantomIdFactoryService",
             });
         });
 
-        it("Custom phantom ID generator", function () {
+        it("Does generate phantom IDs with custom phantom ID generator", function () {
             inject(function (ResourceFactoryService, ResourcePhantomIdFactoryService) {
                 var
                     generator = ResourcePhantomIdFactoryService.createPhantomIdFactory({

@@ -1,6 +1,6 @@
 {
   "name": "angular-resource-factory",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "A factory build upon $resource helping you to interact with RESTful APIs with advanced features as caches and data stores.",
   "main": "dist/ngresourcefactory.min.js",
   "repository": {
