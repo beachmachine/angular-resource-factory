@@ -234,6 +234,12 @@
                     resource,
 
                     /**
+                     * Error class for resource factory
+                     * @type {*}
+                     */
+                    minError = angular.$$minErr('ngResourceFactory'),
+
+                    /**
                      * Default parameter configuration
                      * @type {{}}
                      */
@@ -245,6 +251,13 @@
                      * @type {{}}
                      */
                     saveParams = {},
+
+                    /**
+                     * Parameter configuration for query. Used to
+                     * disable the PK url template for query
+                     * @type {{}}
+                     */
+                    queryParams = {},
 
                     /**
                      * The cache instance for the resource.
@@ -656,8 +669,17 @@
                 // build the default params configuration
                 paramsDefaults[options.pkAttr] = '@' + options.pkAttr;
                 saveParams[options.pkAttr] = null;
+                queryParams[options.pkAttr] = null;
 
+                // save methods should not put PK in the URL
                 methods.save.params = saveParams;
+                methods.saveBg.params = saveParams;
+
+                // query methods should not put PK in the URL
+                methods.query.params = queryParams;
+                methods.queryBg.params = queryParams;
+                methods.queryNoCache.params = queryParams;
+                methods.queryNoCacheBg.params = queryParams;
 
                 // build the resource object
                 resource = $resource(url, paramsDefaults, methods, {
@@ -680,8 +702,28 @@
                  * @memberOf ResourceFactory
                  * @return {String|null}
                  */
-                resource.getDataAttr = function () {
-                    return options.dataAttr;
+                resource.getQueryDataAttr = function () {
+                    return options.queryDataAttr;
+                };
+
+                /**
+                 * Gets the total attribute name
+                 *
+                 * @memberOf ResourceFactory
+                 * @return {String|null}
+                 */
+                resource.getQueryTotalAttr = function () {
+                    return options.queryTotalAttr;
+                };
+
+                /**
+                 * Gets the cache class
+                 *
+                 * @memberOf ResourceFactory
+                 * @return {Function}
+                 */
+                resource.getCacheClass = function () {
+                    return options.cacheClass;
                 };
 
                 /**
@@ -870,30 +912,86 @@
                  * is phantom, else the `$update` method.
                  *
                  * @memberOf ResourceFactory
-                 * @param instance
-                 * @param [params]
+                 * @param [a1] Query params
+                 * @param [a2] Instance
+                 * @param [a3] Success callback
+                 * @param [a4] Error callback
                  * @return {*}
                  */
-                resource.persist = function (instance, params) {
-                    // make sure `instance` has a value
-                    instance = instance || {};
-
+                resource.persist = function (a1, a2, a3, a4) {
                     var
-                        saveFn = resource.isPhantom(instance) ? resource.save : resource.update;
+                        params = {},
+                        instance,
+                        successFn,
+                        errorFn,
+                        saveFn;
 
-                    if (saveFn) {
-                        return saveFn({}, instance, params);
+                    /*
+                     * Mimic the wired $resource action method signature, where the method can be
+                     * called as follows:
+                     * - params, instance, successFn, errorFn
+                     * - instance, successFn, errorFn
+                     * - params, instance, successFn
+                     * - instance, successFn
+                     * - params, instance
+                     * - instance
+                     */
+                    switch (arguments.length) {
+                        // handle case: params, instance, successFn, errorFn
+                        case 4:
+                            params = a1;
+                            instance = a2;
+                            successFn = a3;
+                            errorFn = a4;
+                            break;
+
+                        case 3:
+                            // handle case: instance, successFn, errorFn
+                            if (angular.isFunction(a2)) {
+                                instance = a1;
+                                successFn = a2;
+                                errorFn = a3;
+                            }
+
+                            // handle case: params, instance, successFn
+                            else {
+                                params = a1;
+                                instance = a2;
+                                successFn = a3;
+                            }
+                            break;
+
+                        case 2:
+                            // handle case: instance, successFn
+                            if (angular.isFunction(a2)) {
+                                instance = a1;
+                                successFn = a2;
+                            }
+
+                            // handle case: params, instance
+                            else {
+                                params = a1;
+                                instance = a2;
+                            }
+                            break;
+
+                        // handle case: instance
+                        case 1:
+                            instance = a1;
+                            break;
+
+                        // any other case is considered an error
+                        default:
+                            throw minError(
+                                'badargs',
+                                'Expected up to 4 arguments [params, instance, success, error], got {0} arguments',
+                                arguments.length
+                            );
                     }
-                    else {
-                        console.error("ResourceFactoryService: Object to persist is not a valid resource instance.");
 
-                        var
-                            reject = $q.reject(instance);
+                    saveFn = resource.isPhantom(instance) ? resource.save : resource.update;
 
-                        reject.$promise = reject; // fake promise API of resource
-
-                        return reject;
-                    }
+                    return saveFn(params, instance, successFn, errorFn);
                 };
 
                 /*
@@ -903,14 +1001,32 @@
                 angular.extend(resource.prototype, {
                     /**
                      * Saves or updates the instance
-                     * @param params
+                     * @param [a1] Query params
+                     * @param [a2] Success callback
+                     * @param [a3] Error callback
                      * @return {*}
                      */
-                    $persist: function (params) {
+                    $persist: function (a1, a2, a3) {
                         var
-                            result = resource.persist(this, params);
+                            instance = this;
 
-                        return result.$promise || result;
+                        /*
+                         * Mimic the wired $resource action method signature, where the method can be
+                         * called as follows:
+                         * - params, successFn, errorFn
+                         * - params, successFn
+                         * - successFn, errorFn
+                         * - params
+                         * - successFn
+                         * - no parameters
+                         */
+                        if (angular.isFunction(a1)) {
+                            a2 = a1;
+                            a3 = a2;
+                            a1 = {};
+                        }
+
+                        return resource.persist(a1, instance, a2, a3).$promise;
                     },
 
                     /**

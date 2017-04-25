@@ -128,195 +128,308 @@ describe("ResourceFactoryService",
         });
 
         it("Does query without query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
-                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+                    service = ResourceFactoryService('Test1ResourceService', 'http://test/:pk/');
 
-                $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1}, {pk: 2}, {pk:3}]);
+                $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1}, {pk: 2}]);
 
-                service.query().$promise
-                    .then(function (result) {
-                        expect(result.length).toBe(3);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does query with query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
-                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+                    service = ResourceFactoryService('Test2ResourceService', 'http://test/:pk/');
 
                 $httpBackend.expect('GET', 'http://test/?filter=1').respond(200, [{pk: 1}, {pk: 2}]);
 
-                service.query({filter: 1}).$promise
-                    .then(function (result) {
-                        expect(result.length).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.query({filter: 1}).$promise;
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does get without query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
 
                 $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
+                $httpBackend.expect('GET', 'http://test/2/').respond(200, {pk: 1});
 
-                service.get({pk: 1}).$promise
+                $q.when()
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
                     .then(function (result) {
-                        expect(result.pk).toBe(1);
-                        done();
-                    });
+                        result.pk = 2;
+                        return result.$get();
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does get with query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
 
                 $httpBackend.expect('GET', 'http://test/1/?filter=1').respond(200, {pk: 1});
+                $httpBackend.expect('GET', 'http://test/1/?filter=2').respond(200, {pk: 1});
 
-                service.get({pk: 1, filter: 1}).$promise
+                $q.when()
+                    .then(function () {
+                        return service.get({pk: 1, filter: 1}).$promise;
+                    })
                     .then(function (result) {
-                        expect(result.pk).toBe(1);
-                        done();
-                    });
+                        return result.$get({filter: 2});
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does save without query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
                 $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
 
-                service.save(instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(1);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.save(instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$save();
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does save with query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
                 $httpBackend.expect('POST', 'http://test/?filter=1').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/?filter=1').respond(201, {pk: 1});
 
-                service.save({filter: 1}, instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(1);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.save({filter: 1}, instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$save({filter: 1});
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does update without query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
                 $httpBackend.expect('PATCH', 'http://test/1/').respond(201, {pk: 2});
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(201, {pk: 2});
 
                 // Make the instance concrete
                 instance.pk = 1;
 
-                service.update(instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.update(instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$update();
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does update with query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
                 $httpBackend.expect('PATCH', 'http://test/1/?filter=1').respond(201, {pk: 2});
+                $httpBackend.expect('PATCH', 'http://test/1/?filter=1').respond(201, {pk: 2});
 
                 // Make the instance concrete
                 instance.pk = 1;
 
-                service.update({filter: 1}, instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.update({filter: 1}, instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$update({filter: 1});
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does remove without query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
-                $httpBackend.expect('DELETE', 'http://test/1/').respond(201, {pk: 2});
+                $httpBackend.expect('DELETE', 'http://test/1/').respond(204, '');
+                $httpBackend.expect('DELETE', 'http://test/1/').respond(204, '');
 
                 // Make the instance concrete
                 instance.pk = 1;
 
-                service.remove(instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.remove(instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$remove();
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does remove with query params", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
                     instance = service.new();
 
-                $httpBackend.expect('DELETE', 'http://test/1/?filter=1').respond(201, {pk: 2});
+                $httpBackend.expect('DELETE', 'http://test/1/?filter=1').respond(204, '');
+                $httpBackend.expect('DELETE', 'http://test/1/?filter=1').respond(204, '');
 
                 // Make the instance concrete
                 instance.pk = 1;
 
-                service.remove({filter: 1}, instance).$promise
-                    .then(function (result) {
-                        expect(result.pk).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.remove({filter: 1}, instance).$promise;
+                    })
+                    .then(function () {
+                        return instance.$remove({filter: 1});
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does persist without query params", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instanceToInsert = service.new(),
+                    instanceToUpdate = service.new();
+
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+
+                // Make the instance concrete
+                instanceToUpdate.pk = 1;
+
+                $q.when()
+                    .then(function () {
+                        return service.persist(instanceToInsert).$promise
+                    })
+                    .then(function () {
+                        return instanceToInsert.$persist();
+                    })
+                    .then(function () {
+                        return service.persist(instanceToUpdate).$promise
+                    })
+                    .then(function () {
+                        return instanceToUpdate.$persist();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does persist with query params", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instanceToInsert = service.new(),
+                    instanceToUpdate = service.new();
+
+                $httpBackend.expect('POST', 'http://test/?filter=1').respond(201, {pk: 2});
+                $httpBackend.expect('POST', 'http://test/?filter=1').respond(201, {pk: 2});
+                $httpBackend.expect('PATCH', 'http://test/1/?filter=1').respond(200, {pk: 1});
+                $httpBackend.expect('PATCH', 'http://test/1/?filter=1').respond(200, {pk: 1});
+
+                // Make the instance concrete
+                instanceToUpdate.pk = 1;
+
+                $q.when()
+                    .then(function () {
+                        return service.persist({filter: 1}, instanceToInsert).$promise
+                    })
+                    .then(function () {
+                        return instanceToInsert.$persist({filter: 1});
+                    })
+                    .then(function () {
+                        return service.persist({filter: 1}, instanceToUpdate).$promise
+                    })
+                    .then(function () {
+                        return instanceToUpdate.$persist({filter: 1});
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does post-process from RESTful API", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
                         toInternal: function (obj) {
@@ -327,18 +440,22 @@ describe("ResourceFactoryService",
 
                 $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
 
-                service.get({pk: 1}).$promise
+                $q.when()
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
                     .then(function (result) {
                         expect(result.processed).toBe(true);
-                        done();
-                    });
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does post-process to RESTful API", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
                         fromInternal: function (obj) {
@@ -350,13 +467,17 @@ describe("ResourceFactoryService",
 
                 $httpBackend.expect('POST', 'http://test/', {pk: -1, processed: true}).respond(201, {pk: 1});
 
-                service.save(instance).$promise
+                $q.when()
+                    .then(function () {
+                        return service.save(instance).$promise;
+                    })
                     .then(function (result) {
                         expect(result.pk).toBe(1);
-                        done();
-                    });
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
@@ -386,6 +507,7 @@ describe("ResourceFactoryService",
                     .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
@@ -442,6 +564,8 @@ describe("ResourceFactoryService",
                     }),
                     instance = service.new();
 
+                expect(service.getPkAttr()).toBe('id');
+
                 $httpBackend.expect('GET', 'http://test/').respond(200, [{id: 1}, {id: 2}]);
                 $httpBackend.expect('PATCH', 'http://test/1/', {id: 1}).respond(200, {id: 1});
                 $httpBackend.expect('POST', 'http://test/', {id: -1}).respond(201, {id: 3});
@@ -459,6 +583,7 @@ describe("ResourceFactoryService",
                     .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
@@ -468,6 +593,8 @@ describe("ResourceFactoryService",
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
                         queryDataAttr: 'data'
                     });
+
+                expect(service.getQueryDataAttr()).toBe('data');
 
                 $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1}, {pk: 2}]});
                 $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
@@ -488,6 +615,7 @@ describe("ResourceFactoryService",
                     .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
@@ -498,6 +626,8 @@ describe("ResourceFactoryService",
                         queryDataAttr: 'data',
                         queryTotalAttr: 'count'
                     });
+
+                expect(service.getQueryTotalAttr()).toBe('count');
 
                 $httpBackend.expect('GET', 'http://test/').respond(200, {count: 50, data: [{pk: 1}, {pk: 2}]});
 
@@ -511,17 +641,21 @@ describe("ResourceFactoryService",
                     .then(done);
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
         it("Does use shared filter object", function (done) {
             inject(function (ResourceFactoryService) {
                 var
+                    queryFilters = {
+                        filter: 1
+                    },
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
-                        queryFilter: {
-                            filter: 1
-                        }
+                        queryFilter: queryFilters
                     });
+
+                expect(service.getQueryFilters()).toBe(queryFilters);
 
                 $httpBackend.expect('GET', 'http://test/?filter=1').respond(200, [{pk: 1}, {pk: 2}]);
 
@@ -532,6 +666,7 @@ describe("ResourceFactoryService",
                     });
 
                 $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
             });
         });
 
@@ -547,9 +682,48 @@ describe("ResourceFactoryService",
                         cacheClass: cache
                     });
 
+                expect(service.getCacheClass()).toBe(cache);
                 expect(cacheInstantiated).toBe(true);
             });
         });
 
+        it("Does filter instances by attribute", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    instances = [{pk: 1, data: true}, {pk: 2, data: true}, {pk: 3, data: false}],
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                expect(service.filterInstancesByAttr(instances, 'data', true).length).toBe(2);
+            });
+        });
+
+        it("Does get instance by attribute", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    instances = [{pk: 1, data: true}, {pk: 2, data: true}, {pk: 3, data: false}],
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                expect(service.getInstanceByAttr(instances, 'data', false).pk).toBe(3);
+            });
+        });
+
+        it("Does get instance by primary key attribute", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    instances = [{pk: 1, data: true}, {pk: 2, data: true}, {pk: 3, data: false}],
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                expect(service.getInstanceByPk(instances, 1).pk).toBe(1);
+            });
+        });
+
+        it("Does get resource name", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                expect(service.getResourceName()).toBe('TestResourceService');
+            });
+        });
     }
 );
