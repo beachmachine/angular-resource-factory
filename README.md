@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/beachmachine/angular-resource-factory.svg?branch=master)](https://travis-ci.org/beachmachine/angular-resource-factory)
+
 # Angular ResourceFactory
 
 Angular ResourceFactory is an AngularJS library that extends the capabilities of ngResource in various ways. The main 
