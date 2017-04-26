@@ -1,0 +1,17 @@
+dist: trusty
+sudo: false
+addons:
+  apt:
+    packages:
+      - gettext
+language: node_js
+node_js:
+  - "7"
+install:
+  - npm install --global
+      gulp-cli
+      karma
+      phantomjs
+  - npm install
+script:
+  - gulp run-tests

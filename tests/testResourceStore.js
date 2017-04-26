@@ -681,7 +681,6 @@ describe("ResourceStore",
                     })
                     .then(done);
 
-                $httpBackend.flush();
                 $httpBackend.verifyNoOutstandingRequest();
             });
         });
