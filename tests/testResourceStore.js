@@ -520,5 +520,230 @@ describe("ResourceStore",
                 expect(store.getUpdateQueue().length).toBe(0);
             });
         });
+
+        it("Does forget managed instance", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                store.forget(instance1);
+
+                expect(instance1.$store).not.toBeDefined();
+                expect(store.getVisibleQueue().length).toBe(1);
+                expect(store.getPersistQueue().length).toBe(0);
+                expect(store.getRemoveQueue().length).toBe(0);
+                expect(store.getSaveQueue().length).toBe(0);
+                expect(store.getUpdateQueue().length).toBe(0);
+            });
+        });
+
+        it("Does forget managed instances", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                store.forget([instance1]);
+
+                expect(instance1.$store).not.toBeDefined();
+                expect(store.getVisibleQueue().length).toBe(1);
+                expect(store.getPersistQueue().length).toBe(0);
+                expect(store.getRemoveQueue().length).toBe(0);
+                expect(store.getSaveQueue().length).toBe(0);
+                expect(store.getUpdateQueue().length).toBe(0);
+            });
+        });
+
+        it("Does get instance by primary key attribute", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                expect(store.getByPk(instance1.pk)).toBe(instance1);
+            });
+        });
+
+        it("Does get instance by instance copy", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                expect(store.getByInstance(angular.copy(instance1))).toBe(instance1);
+            });
+        });
+
+        it("Does execute multiple saves", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+                store.persist(instance1);
+                store.persist(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does execute multiple updates", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+                $httpBackend.expect('PATCH', 'http://test/2/').respond(200, {pk: 2});
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                store.persist(instance1);
+                store.persist(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does execute multiple removes", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                $httpBackend.expect('DELETE', 'http://test/1/').respond(204, '');
+                $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                store.remove(instance1);
+                store.remove(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does not execute remove for phantom instances", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                store.remove(instance1);
+                store.remove(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does execute remove, update and save in that order", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    instance3 = service.new(),
+                    store = service.createStore([instance1, instance2, instance3]);
+
+                $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                store.remove(instance2);
+                store.persist(instance1);
+                store.persist(instance3);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does set primary key attribute after save", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]);
+
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+                store.persist(instance1);
+                store.persist(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.executeAll();
+                    })
+                    .then(function () {
+                        expect(instance1.pk).toBe(1);
+                        expect(instance2.pk).toBe(2);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
     }
 );

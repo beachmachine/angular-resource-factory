@@ -646,7 +646,7 @@ describe("ResourceFactoryService",
         });
 
         it("Does use shared filter object", function (done) {
-            inject(function (ResourceFactoryService) {
+            inject(function (ResourceFactoryService, $q) {
                 var
                     queryFilters = {
                         filter: 1
@@ -659,11 +659,11 @@ describe("ResourceFactoryService",
 
                 $httpBackend.expect('GET', 'http://test/?filter=1').respond(200, [{pk: 1}, {pk: 2}]);
 
-                service.filter().$promise
-                    .then(function (result) {
-                        expect(result.length).toBe(2);
-                        done();
-                    });
+                $q.when()
+                    .then(function () {
+                        return service.filter().$promise
+                    })
+                    .then(done);
 
                 $httpBackend.flush();
                 $httpBackend.verifyNoOutstandingRequest();
