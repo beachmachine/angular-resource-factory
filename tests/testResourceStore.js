@@ -13,6 +13,27 @@ describe("ResourceStore",
             $rootScope = $injector.get('$rootScope');
         }));
 
+        it("Does get resource service", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    store = service.createStore();
+
+                expect(store.getResourceService()).toBe(service);
+            });
+        });
+
+        it("Does create new managed instance", function () {
+            inject(function (ResourceFactoryService) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    store = service.createStore(),
+                    instance = store.new();
+
+                expect(instance.$store).toBe(store);
+            });
+        });
+
         it("Does manage instances", function () {
             inject(function (ResourceFactoryService) {
                 var
@@ -599,7 +620,7 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(done);
 
@@ -627,7 +648,7 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(done);
 
@@ -655,7 +676,7 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(done);
 
@@ -677,7 +698,7 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(done);
 
@@ -707,7 +728,7 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(done);
 
@@ -732,11 +753,157 @@ describe("ResourceStore",
 
                 $q.when()
                     .then(function () {
-                        return store.executeAll();
+                        return store.execute();
                     })
                     .then(function () {
                         expect(instance1.pk).toBe(1);
                         expect(instance2.pk).toBe(2);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does call before persist listener", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]),
+                    callCount = 0,
+                    callback = function (item) {
+                        callCount++;
+                        expect(item.pk).toBeDefined();
+                    };
+
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+                store.addBeforePersistListener(callback);
+
+                store.persist(instance1);
+                store.persist(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.execute();
+                    })
+                    .then(function () {
+                        expect(callCount).toBe(2);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does call after persist listener", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]),
+                    callCount = 0,
+                    callback = function (item) {
+                        callCount++;
+                        expect(item.pk).toBeDefined();
+                    };
+
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+                $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+                store.addAfterPersistListener(callback);
+
+                store.persist(instance1);
+                store.persist(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.execute();
+                    })
+                    .then(function () {
+                        expect(callCount).toBe(2);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does call before remove listener", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]),
+                    callCount = 0,
+                    callback = function (item) {
+                        callCount++;
+                        expect(item.pk).toBeDefined();
+                    };
+
+                $httpBackend.expect('DELETE', 'http://test/1/').respond(204, '');
+                $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+
+                store.addBeforeRemoveListener(callback);
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                store.remove(instance1);
+                store.remove(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.execute();
+                    })
+                    .then(function () {
+                        expect(callCount).toBe(2);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does call after remove listener", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    store = service.createStore([instance1, instance2]),
+                    callCount = 0,
+                    callback = function (item) {
+                        callCount++;
+                        expect(item.pk).toBeDefined();
+                    };
+
+                $httpBackend.expect('DELETE', 'http://test/1/').respond(204, '');
+                $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+
+                store.addAfterRemoveListener(callback);
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                store.remove(instance1);
+                store.remove(instance2);
+
+                $q.when()
+                    .then(function () {
+                        return store.execute();
+                    })
+                    .then(function () {
+                        expect(callCount).toBe(2);
                     })
                     .then(done);
 

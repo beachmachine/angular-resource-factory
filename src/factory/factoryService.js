@@ -1795,7 +1795,7 @@
                  * @memberOf ResourceStore
                  * @return {*}
                  */
-                self.getResource = function () {
+                self.getResourceService = function () {
                     return resource;
                 };
 
@@ -1849,6 +1849,16 @@
                     if (fnFound) {
                         afterPersistListeners.splice(fnIndex, 1);
                     }
+                };
+
+                /**
+                 * Adds a before-remove listener.
+                 *
+                 * @memberOf ResourceStore
+                 * @param fn
+                 */
+                self.addBeforeRemoveListener = function (fn) {
+                    beforeRemoveListeners.push(fn);
                 };
 
                 /**
@@ -2168,14 +2178,14 @@
                 switch (onUpdate) {
                     case 'update':
                         onUpdate = function (referencingStore, referencingInstance, oldReferencedInstancePk, newReferencedInstancePk, fkAttr) {
-                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResource().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to '" + newReferencedInstancePk + "'.");
+                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResourceService().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to '" + newReferencedInstancePk + "'.");
 
                             referencingInstance[fkAttr] = newReferencedInstancePk;
                         };
                         break;
                     case 'null':
                         onUpdate = function (referencingStore, referencingInstance, oldReferencedInstancePk, newReferencedInstancePk, fkAttr) {
-                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResource().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to null.");
+                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResourceService().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to null.");
 
                             referencingInstance[fkAttr] = null;
                         };
@@ -2188,14 +2198,14 @@
                 switch (onRemove) {
                     case 'forget':
                         onRemove = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) {
-                            console.log("ResourceStoreRelation: Forget '" + relatedStore.getResource().getResourceName() + "' instance '" + oldReferencedInstancePk + "' referencing instance.");
+                            console.log("ResourceStoreRelation: Forget '" + relatedStore.getResourceService().getResourceName() + "' instance '" + oldReferencedInstancePk + "' referencing instance.");
 
                             referencingStore.forget(referencingInstance);
                         };
                         break;
                     case 'null':
                         onRemove = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) {
-                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResource().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to null.");
+                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResourceService().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to null.");
 
                             referencingInstance[fkAttr] = null;
                         };
@@ -2241,7 +2251,7 @@
                  * @param newPkValue
                  */
                 self.handleUpdate = function (oldPkValue, newPkValue) {
-                    console.log("ResourceStoreRelation: Handle update of referenced instance on '" + relatedStore.getResource().getResourceName() + "' store.");
+                    console.log("ResourceStoreRelation: Handle update of referenced instance on '" + relatedStore.getResourceService().getResourceName() + "' store.");
 
                     var
                         referencingInstances = relatedStore.getManagedInstances();
@@ -2264,7 +2274,7 @@
                  * @param pkValue
                  */
                 self.handleRemove = function (pkValue) {
-                    console.log("ResourceStoreRelation: Handle remove of referenced instance on '" + relatedStore.getResource().getResourceName() + "' store.");
+                    console.log("ResourceStoreRelation: Handle remove of referenced instance on '" + relatedStore.getResourceService().getResourceName() + "' store.");
 
                     var
                         referencingInstances = relatedStore.getManagedInstances();
