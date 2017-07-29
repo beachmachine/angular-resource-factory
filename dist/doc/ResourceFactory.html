@@ -1,5 +1,111 @@
-<!doctype html><html>  <head>    <base href="./" />    <title>JSDoc: constructor:ResourceFactory</title>    <link type="text/css" rel="stylesheet" href="css/jsdoc-default.css" />    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet" />    <script src="js/prettify.js"></script>  </head>  <body>    <nav>      <h2><a href="index.html">Index</a></h2>          <h3>module: docs</h3>        <ul>        </ul>        <ul>            <h3>constructor</h3>            <ul>                <li><a href="ResourceCache.html">ResourceCache</a></li>                <li><a href="ResourceFactory.html">ResourceFactory</a></li>                <li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a></li>                <li><a href="ResourceStore.html">ResourceStore</a></li>                <li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a></li>            </ul>            <h3>factory</h3>            <ul>                <li><a href="ResourceCacheService.html">ResourceCacheService</a></li>                <li><a href="ResourceFactoryService.html">ResourceFactoryService</a></li>                <li><a href="ResourcePhantomIdNegativeInt.html">ResourcePhantomIdNegativeInt</a></li>                <li><a href="ResourcePhantomIdUuid4.html">ResourcePhantomIdUuid4</a></li>            </ul>            <h3>service</h3>            <ul>                <li><a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a></li>            </ul>        </ul>    </nav>    <h1 class="title">      constructor:ResourceFactory        <a class="name-link signature-attributes" href="source/ResourceFactory.html#line58">source</a>    </h1>    <div id="main">      <div class="container-overview">      <dt></dt>      <dd>        <div class="description">          <p>Constructor function for creating a resource service. The resource service is used to make calls to the
-REST-API via the &quot;method&quot; functions. These are the default method functions:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ResourceFactory - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ResourceCacheService.html">ResourceCacheService</a><ul class='methods'><li data-type='method'><a href="ResourceCacheService.html#.get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#.info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#.removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#destroy">destroy</a></li><li data-type='method'><a href="ResourceCacheService.html#get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#insert">insert</a></li><li data-type='method'><a href="ResourceCacheService.html#put">put</a></li><li data-type='method'><a href="ResourceCacheService.html#refresh">refresh</a></li><li data-type='method'><a href="ResourceCacheService.html#remove">remove</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllDependent">removeAllDependent</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllLists">removeAllLists</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllObjects">removeAllObjects</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllRaw">removeAllRaw</a></li></ul></li><li><a href="ResourceFactory.html">ResourceFactory</a><ul class='methods'><li data-type='method'><a href="ResourceFactory.html#.resource.createStore">resource.createStore</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.filter">resource.filter</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.filterInstancesByAttr">resource.filterInstancesByAttr</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.filterNoCache">resource.filterNoCache</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getCache">resource.getCache</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getCacheClass">resource.getCacheClass</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getInstanceByAttr">resource.getInstanceByAttr</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getInstanceByPk">resource.getInstanceByPk</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getPkAttr">resource.getPkAttr</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getQueryDataAttr">resource.getQueryDataAttr</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getQueryFilters">resource.getQueryFilters</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getQueryTotalAttr">resource.getQueryTotalAttr</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.getResourceName">resource.getResourceName</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.isPhantom">resource.isPhantom</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.new">resource.new</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.persist">resource.persist</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.setDefaultQueryFilters">resource.setDefaultQueryFilters</a></li><li data-type='method'><a href="ResourceFactory.html#.resource.setQueryFilters">resource.setQueryFilters</a></li></ul></li><li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactory.html#.self.generate">self.generate</a></li><li data-type='method'><a href="ResourcePhantomIdFactory.html#.self.isPhantom">self.isPhantom</a></li></ul></li><li><a href="ResourceStore.html">ResourceStore</a><ul class='methods'><li data-type='method'><a href="ResourceStore.html#.addResourceInstance">addResourceInstance</a></li><li data-type='method'><a href="ResourceStore.html#.self.addAfterPersistListener">self.addAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.addAfterRemoveListener">self.addAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.addBeforePersistListener">self.addBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.addBeforeRemoveListener">self.addBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.commit">self.commit</a></li><li data-type='method'><a href="ResourceStore.html#.self.createChildStore">self.createChildStore</a></li><li data-type='method'><a href="ResourceStore.html#.self.createRelation">self.createRelation</a></li><li data-type='method'><a href="ResourceStore.html#.self.execute">self.execute</a></li><li data-type='method'><a href="ResourceStore.html#.self.executeAll">self.executeAll</a></li><li data-type='method'><a href="ResourceStore.html#.self.forget">self.forget</a></li><li data-type='method'><a href="ResourceStore.html#.self.getByInstance">self.getByInstance</a></li><li data-type='method'><a href="ResourceStore.html#.self.getByPk">self.getByPk</a></li><li data-type='method'><a href="ResourceStore.html#.self.getManagedInstances">self.getManagedInstances</a></li><li data-type='method'><a href="ResourceStore.html#.self.getPersistQueue">self.getPersistQueue</a></li><li data-type='method'><a href="ResourceStore.html#.self.getRemoveQueue">self.getRemoveQueue</a></li><li data-type='method'><a href="ResourceStore.html#.self.getResourceService">self.getResourceService</a></li><li data-type='method'><a href="ResourceStore.html#.self.getSaveQueue">self.getSaveQueue</a></li><li data-type='method'><a href="ResourceStore.html#.self.getUpdateQueue">self.getUpdateQueue</a></li><li data-type='method'><a href="ResourceStore.html#.self.getVisibleQueue">self.getVisibleQueue</a></li><li data-type='method'><a href="ResourceStore.html#.self.manage">self.manage</a></li><li data-type='method'><a href="ResourceStore.html#.self.new">self.new</a></li><li data-type='method'><a href="ResourceStore.html#.self.persist">self.persist</a></li><li data-type='method'><a href="ResourceStore.html#.self.remove">self.remove</a></li><li data-type='method'><a href="ResourceStore.html#.self.removeAfterPersistListener">self.removeAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.removeAfterRemoveListener">self.removeAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.removeBeforePersistListener">self.removeBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.removeBeforeRemoveListener">self.removeBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#.self.removeRelation">self.removeRelation</a></li></ul></li><li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a><ul class='methods'><li data-type='method'><a href="ResourceStoreRelation.html#.self.getFkAttr">self.getFkAttr</a></li><li data-type='method'><a href="ResourceStoreRelation.html#.self.getRelatedStore">self.getRelatedStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#.self.getStore">self.getStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#.self.handleRemove">self.handleRemove</a></li><li data-type='method'><a href="ResourceStoreRelation.html#.self.handleUpdate">self.handleUpdate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#$isPhantom">$isPhantom</a></li><li><a href="global.html#$persist">$persist</a></li><li><a href="global.html#cacheClass">cacheClass</a></li><li><a href="global.html#dataAttr">dataAttr</a></li><li><a href="global.html#dependent">dependent</a></li><li><a href="global.html#extraFunctions">extraFunctions</a></li><li><a href="global.html#extraMethods">extraMethods</a></li><li><a href="global.html#fromInternal">fromInternal</a></li><li><a href="global.html#generatePhantomIds">generatePhantomIds</a></li><li><a href="global.html#ignoreLoadingBar">ignoreLoadingBar</a></li><li><a href="global.html#phantomIdGenerator">phantomIdGenerator</a></li><li><a href="global.html#pkAttr">pkAttr</a></li><li><a href="global.html#queryDataAttr">queryDataAttr</a></li><li><a href="global.html#queryFilter">queryFilter</a></li><li><a href="global.html#queryTotalAttr">queryTotalAttr</a></li><li><a href="global.html#ResourceFactoryService">ResourceFactoryService</a></li><li><a href="global.html#ResourcePhantomIdFactoryService">ResourcePhantomIdFactoryService</a></li><li><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></li><li><a href="global.html#ResourcePhantomIdUuid4">ResourcePhantomIdUuid4</a></li><li><a href="global.html#stripTrailingSlashes">stripTrailingSlashes</a></li><li><a href="global.html#toInternal">toInternal</a></li><li><a href="global.html#ttl">ttl</a></li><li><a href="global.html#urlAttr">urlAttr</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ResourceFactory</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ResourceFactory
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="ResourceFactory"><span class="type-signature"></span>new ResourceFactory<span class="signature">(name, url, options)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Constructor function for creating a resource service. The resource service is used to make calls to the<br>REST-API via the &quot;method&quot; functions. These are the default method functions:</p>
 <pre class="prettyprint source lang-javascript"><code>{
     // Undo all changes on the instance using the cache or by reloading the data from the server
     'restore': {method:'GET', isArray:false},
@@ -18,20 +124,2962 @@ REST-API via the &quot;method&quot; functions. These are the default method func
     // Delete an instance
     'remove': {method:'DELETE', isArray:false},
 }</code></pre><p>You can extend or override these methods by using the <code>options.extraMethods</code> option.</p>
-<p>Each of these methods is available as &quot;static&quot; version on the returned resource class, or as instance
-method on a resource instance. The instance methods have a <code>&quot;$&quot;</code> prefix. Each of these methods,
-static and instance versions, exists with a <code>&quot;Bg&quot;</code> postfix to make the call in the &quot;background&quot;. This
-means you do not see a loading bar if you are using <code>angular-loading-bar</code> ({@link http://chieffancypants.github.io/angular-loading-bar/}).</p>        </div>        <div class="details"></div>          <h5>Dependencies:</h5>          <table class="params">            <thead>              <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>            </thead>            <tbody>              <tr>                <td class="name" nowrap>name</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Name of the resource service</p></td>              </tr>              <tr>                <td class="name" nowrap>url</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>URL to the resource</p></td>              </tr>              <tr>                <td class="name" nowrap>options</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Options for the resource</p></td>              </tr>              <tr>                <td class="name" nowrap>options.stripTrailingSlashes</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Strip trailing slashes from request URLs. Defaults to <code>false</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.ignoreLoadingBar</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Ignore the resource for automatic loading bars. Defaults to <code>false</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.generatePhantomIds</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Generate IDs for phantom records created via the <code>new</code> method. Defaults to <code>true</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.phantomIdGenerator</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Phantom ID generator instance used for generating phantom IDs. Defaults to <code>{@link ResourcePhantomIdNegativeInt}</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.dependent</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>List of resource services to clean the cache for on modifying requests.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.extraMethods</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Extra request methods to put on the resource service.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.extraFunctions</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Extra functions to put on the resource service instance.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.pkAttr</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Attribute name where to find the ID of objects. Defaults to <code>&quot;pk&quot;</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.urlAttr</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Attribute name where to find the URL of objects. Defaults to <code>&quot;url&quot;</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.queryDataAttr</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Attribute name where to find the data on the query call (resource list calls). Defaults to <code>null</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.queryTotalAttr</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to <code>null</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.cacheClass</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Resource cache class constructor function to use (see <code>{@link ResourceCache}</code>). Defaults to <code>{@link ResourceCacheService}</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.toInternal</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Function to post-process data coming from response. Gets <code>obj</code>, <code>headersGetter</code> and <code>status</code> and should return the processed <code>obj</code>.</p></td>              </tr>              <tr>                <td class="name" nowrap>options.fromInternal</td>                <td class="type"><span class="param-type">                </span></td>                <td class="description last"><p>Function to post-process data that is going to be sent. Gets <code>obj</code> and <code>headersGetter</code> and should return the processed <code>obj</code>.</p></td>              </tr>            </tbody>          </table>          <h5>Example</h5>            <pre class="prettyprint"><code><span class="str">// Getting and updating an resource instance
+<p>Each of these methods is available as &quot;static&quot; version on the returned resource class, or as instance<br>method on a resource instance. The instance methods have a <code>&quot;$&quot;</code> prefix. Each of these methods,<br>static and instance versions, exists with a <code>&quot;Bg&quot;</code> postfix to make the call in the &quot;background&quot;. This<br>means you do not see a loading bar if you are using <code>angular-loading-bar</code> (<a href="http://chieffancypants.github.io/angular-loading-bar/">http://chieffancypants.github.io/angular-loading-bar/</a>).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// Getting and updating an resource instance
  var ex = ExampleResourceService.get({pk: 123});
  ex.$promise.then(function() {
      ex.test = 456;
      ex.$update();
- });</span></code></pre>            <pre class="prettyprint"><code><span class="str">// Saving a new resource instance
+ });</code></pre>
+
+    <pre class="prettyprint"><code>// Saving a new resource instance
  var ex = ExampleResourceService.new({test: 789});
- ex.$save();</span></code></pre>            <pre class="prettyprint"><code><span class="str">// Saving or updating a resource instance
+ ex.$save();</code></pre>
+
+    <pre class="prettyprint"><code>// Saving or updating a resource instance
  var ex = get_a_new_or_existing_instance_from_somewhere();
  ex.test = 123;
- ex.$persist();</span></code></pre>      </dd>    </div>    <section>      <div class="member">      </div>      <div class="functions">        <h3 class="subsection-title">Methods</h3>        <dl>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.createStore              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Creates a new store for the resource</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.filter              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Queries the resource with the configured filters.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.filterInstancesByAttr              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances from the given instances where the given attribute name matches
-the given attribute value.</p>            </div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.filterNoCache              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Queries the resource with the configured filters without using the cache.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getCache              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the cache instance.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getCacheClass              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the cache class</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getInstanceByAttr              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the first instance from the given instances where the given attribute name matches
-the given attribute value.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getInstanceByPk              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the first instance from the given instances where the PK attribute has the given value.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getPkAttr              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the PK attribute name</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getQueryDataAttr              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the data attribute name</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getQueryFilters              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Returns an object holding the filter data for query request</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getQueryTotalAttr              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the total attribute name</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.getResourceName              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the name of the resource.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.isPhantom              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Checks if the given instance is a phantom instance (instance not persisted to the REST API yet)</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.new              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Creates a new instance for the resource</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.persist              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Saves the given resource instance to the REST API. Uses the <code>$save</code> method if instance
-is phantom, else the <code>$update</code> method.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.setDefaultQueryFilters              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Sets the given filter options if the aren't already set on the filter object</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceFactory.html#line58" class="name-link">              <h4 class="name">                resource.setQueryFilters              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Sets the object holding the filter data for query request</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>        </dl>      </div>    </section>    </div>    <footer style="clear:both">      Documentation generated by      <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>      using       <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>     </footer>    <!--%= prettyJson %-->    <script>      prettyPrint();      var lineNo = window.location.hash.match(/#line([0-9]+)$/);      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();    </script>  </body></html>
+ ex.$persist();</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Name of the resource service</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>URL to the resource</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options for the resource</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>stripTrailingSlashes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Strip trailing slashes from request URLs. Defaults to <code>false</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ignoreLoadingBar</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Ignore the resource for automatic loading bars. Defaults to <code>false</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>generatePhantomIds</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Generate IDs for phantom records created via the <code>new</code> method. Defaults to <code>true</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phantomIdGenerator</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Phantom ID generator instance used for generating phantom IDs. Defaults to <code><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dependent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>List of resource services to clean the cache for on modifying requests.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extraMethods</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Extra request methods to put on the resource service.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extraFunctions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Extra functions to put on the resource service instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pkAttr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attribute name where to find the ID of objects. Defaults to <code>&quot;pk&quot;</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>urlAttr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attribute name where to find the URL of objects. Defaults to <code>&quot;url&quot;</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryDataAttr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attribute name where to find the data on the query call (resource list calls). Defaults to <code>null</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryTotalAttr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to <code>null</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cacheClass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Resource cache class constructor function to use (see <code>ResourceCache</code>). Defaults to <code><a href="ResourceCacheService.html">ResourceCacheService</a></code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>toInternal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Function to post-process data coming from response. Gets <code>obj</code>, <code>headersGetter</code> and <code>status</code> and should return the processed <code>obj</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fromInternal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Function to post-process data that is going to be sent. Gets <code>obj</code> and <code>headersGetter</code> and should return the processed <code>obj</code>.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.createStore"><span class="type-signature">(static) </span>resource.createStore<span class="signature">(instances<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="ResourceStore.html">ResourceStore</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line907">line 907</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Creates a new store for the resource</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="ResourceStore.html">ResourceStore</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.filter"><span class="type-signature">(static) </span>resource.filter<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line770">line 770</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Queries the resource with the configured filters.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.filterInstancesByAttr"><span class="type-signature">(static) </span>resource.filterInstancesByAttr<span class="signature">(instances, attrName, attrValue)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line833">line 833</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances from the given instances where the given attribute name matches<br>the given attribute value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attrName</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attrValue</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.filterNoCache"><span class="type-signature">(static) </span>resource.filterNoCache<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line781">line 781</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Queries the resource with the configured filters without using the cache.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getCache"><span class="type-signature">(static) </span>resource.getCache<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="ResourceCacheService.html">ResourceCacheService</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line896">line 896</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the cache instance.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="ResourceCacheService.html">ResourceCacheService</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getCacheClass"><span class="type-signature">(static) </span>resource.getCacheClass<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line725">line 725</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the cache class</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getInstanceByAttr"><span class="type-signature">(static) </span>resource.getInstanceByAttr<span class="signature">(instances, attrName, attrValue)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line852">line 852</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the first instance from the given instances where the given attribute name matches<br>the given attribute value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attrName</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attrValue</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getInstanceByPk"><span class="type-signature">(static) </span>resource.getInstanceByPk<span class="signature">(instances, pkValue)</span><span class="type-signature"> &rarr; {Object|undefined}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line876">line 876</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the first instance from the given instances where the PK attribute has the given value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pkValue</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getPkAttr"><span class="type-signature">(static) </span>resource.getPkAttr<span class="signature">()</span><span class="type-signature"> &rarr; {String|null}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line695">line 695</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the PK attribute name</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getQueryDataAttr"><span class="type-signature">(static) </span>resource.getQueryDataAttr<span class="signature">()</span><span class="type-signature"> &rarr; {String|null}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line705">line 705</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the data attribute name</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getQueryFilters"><span class="type-signature">(static) </span>resource.getQueryFilters<span class="signature">()</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line735">line 735</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns an object holding the filter data for query request</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getQueryTotalAttr"><span class="type-signature">(static) </span>resource.getQueryTotalAttr<span class="signature">()</span><span class="type-signature"> &rarr; {String|null}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line715">line 715</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the total attribute name</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.getResourceName"><span class="type-signature">(static) </span>resource.getResourceName<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line886">line 886</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the name of the resource.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.isPhantom"><span class="type-signature">(static) </span>resource.isPhantom<span class="signature">(instance)</span><span class="type-signature"> &rarr; {boolean|undefined}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line812">line 812</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Checks if the given instance is a phantom instance (instance not persisted to the REST API yet)</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instance</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.new"><span class="type-signature">(static) </span>resource.new<span class="signature">(params)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line793">line 793</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Creates a new instance for the resource</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.persist"><span class="type-signature">(static) </span>resource.persist<span class="signature">(a1<span class="signature-attributes">opt</span>, a2<span class="signature-attributes">opt</span>, a3<span class="signature-attributes">opt</span>, a4<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line929">line 929</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Saves the given resource instance to the REST API. Uses the <code>$save</code> method if instance<br>is phantom, else the <code>$update</code> method.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>a1</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Query params</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>a2</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Instance</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>a3</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Success callback</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>a4</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Error callback</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.setDefaultQueryFilters"><span class="type-signature">(static) </span>resource.setDefaultQueryFilters<span class="signature">(defaultFilters)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line757">line 757</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Sets the given filter options if the aren't already set on the filter object</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>defaultFilters</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".resource.setQueryFilters"><span class="type-signature">(static) </span>resource.setQueryFilters<span class="signature">(filters)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line746">line 746</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Sets the object holding the filter data for query request</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">*</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

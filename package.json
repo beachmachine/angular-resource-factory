@@ -24,8 +24,8 @@
     "angular-resource": "^1.6.0"
   },
   "devDependencies": {
-    "angular-jsdoc": "^1.5.0",
     "angular-mocks": "^1.6.0",
+    "docdash": "^0.4.0",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.2",
@@ -49,7 +49,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-spec-reporter": "0.0.31",
     "karma-verbose-reporter": "0.0.6",
-    "lodash": "^4.17.4",
-    "license-checker": "^8.0.4"
+    "license-checker": "^8.0.4",
+    "lodash": "^4.17.4"
   }
 }

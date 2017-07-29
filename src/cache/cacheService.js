@@ -25,10 +25,39 @@
         module = angular.module('ngResourceFactory');
 
     /**
-     * Factory service to create new cache.
+     * Factory that gives a cache class whose instances can be used for caching resources. Instances of this cache class
+     * are capable of invalidating related caches, updating resource list instances when getting data from detail calls
+     * and respecting the `dataAttr` of resource instances.
      *
      * @name ResourceCacheService
-     * @ngdoc factory
+     * @param {String} name Name of the cache
+     * @param {String} pkAttr Name of the primary key attribute on cached instances
+     * @param {Object} options Additional configuration
+     * @param {String|null} options.urlAttr Name of the attribute to get the URL of the objects (default: `null`)
+     * @param {String|null} options.dataAttr Name of the attribute to get the actual data from (default: `null`)
+     * @param {Array<String>} options.dependent List of dependent cache names (default: `[]`)
+     * @param {int} options.ttl Time to live for cache entries in seconds (default: `3600`)
+     * @class
+     * @example
+     * // Directly using `ResourceCacheService`
+     * inject(function (ResourceCacheService) {
+     *    var
+     *        exampleValue = {pk: 123, attr1: 1, attr2: 2},
+     *        cacheInstance = new ResourceCacheService('MyExampleResourceCache', 'pk');
+     *
+     *    cacheInstance.put('example-1', exampleValue, false);
+     *    expect(cacheInstance.get('example-1', false)).toEqual(exampleValue);
+     * });
+     *
+     * @example
+     * // Using `ResourceCacheService` for `$http`
+     * inject(function (ResourceCacheService, $http) {
+     *    var
+     *        cacheInstance = new ResourceCacheService('MyExampleResourceCache', 'pk'),
+     *        httpInstance = $http({cache: cacheInstance.withoutDataAttr});
+     *
+     *    httpInstance.get('http://example.com/api/endpoint-1/');
+     * });
      */
     module.factory('ResourceCacheService',
         function () {
@@ -37,13 +66,6 @@
             var
                 caches = {};
 
-            /**
-             * Constructor function for the cache.
-             *
-             * @name ResourceCache
-             * @ngdoc constructor
-             * @constructor
-             */
             function constructor (name, pkAttr, options) {
                 var
                     self = this,
@@ -51,55 +73,57 @@
                     /**
                      * The cache object
                      * @type {{}}
+                     * @private
                      */
                     cache = {},
 
                     /**
                      * Mapping of cache keys to boolean that indicates whether to use the `dataAttr` or not
                      * @type {{}}
+                     * @private
                      */
                     cacheUseDataAttr = {},
 
                     /**
                      * Mapping of cache keys to boolean that indicates whether the value is managed or not
                      * @type {{}}
+                     * @private
                      */
                     cacheIsManaged = {},
 
                     /**
                      * Mapping of cache keys to timestamps for automatic invalidation
                      * @type {{}}
+                     * @private
                      */
                     cacheTimestamps = {};
 
                 options = angular.extend({
                     /**
-                     * Name of the attribute to get the ID of the objects
-                     * @type {String|null}
-                     */
-                    pkAttr: null,
-
-                    /**
                      * Name of the attribute to get the URL of the objects
                      * @type {String|null}
+                     * @private
                      */
                     urlAttr: null,
 
                     /**
                      * Name of the attribute to get the actual data from
                      * @type {String|null}
+                     * @private
                      */
                     dataAttr: null,
 
                     /**
                      * Dependent caches
                      * @type {Array<String>}
+                     * @private
                      */
                     dependent: [],
 
                     /**
                      * Time to live for cache entries in seconds
                      * @type {int}
+                     * @private
                      */
                     ttl: 60 * 60
                 }, options || {});
@@ -111,8 +135,10 @@
                  * Refreshes the cache entries with the new value or values. The existing objects in the cache
                  * are matched by the `pkAttr` value, and additionally by the `urlAttr`, if available.
                  *
-                 * @memberOf ResourceCache
-                 * @param {Object|Array<Object>} value
+                 * @memberOf ResourceCacheService
+                 * @function refresh
+                 * @param {Object|Array<Object>} value Instance or list of instances used to refresh data on the cache
+                 * @instance
                  */
                 self.refresh = function (value) {
                     // refresh the existing values in the cache with the new entries
@@ -135,11 +161,13 @@
                 /**
                  * Creates a cache entry for the given value and puts it on the cache.
                  *
-                 * @memberOf ResourceCache
-                 * @param key
-                 * @param value
-                 * @param useDataAttr
-                 * @param [refresh]
+                 * @memberOf ResourceCacheService
+                 * @function insert
+                 * @param {String} key Cache entry key
+                 * @param {*} value Cache entry value
+                 * @param {Boolean} useDataAttr Use the `dataAttr` to get actual cache entry value
+                 * @param {Boolean} [refresh] Refresh the existing cache entries by using the new value
+                 * @instance
                  */
                 self.insert = function (key, value, useDataAttr, refresh) {
                     console.log("ResourceCacheService: Insert value with key '" + key + "' on the cache '" + name + "'.");
@@ -170,10 +198,12 @@
                 /**
                  * Puts the given entry with the given key on the cache.
                  *
-                 * @memberOf ResourceCache
-                 * @param key
-                 * @param value
-                 * @param useDataAttr
+                 * @memberOf ResourceCacheService
+                 * @function put
+                 * @param {String} key Cache entry key
+                 * @param {*} value Cache entry value
+                 * @param {Boolean} useDataAttr Use the `dataAttr` to get actual cache entry value
+                 * @instance
                  */
                 self.put = function (key, value, useDataAttr) {
                     console.log("ResourceCacheService: Put entry with key '" + key + "' on the cache '" + name + "'.");
@@ -219,10 +249,12 @@
                 /**
                  * Gets the entry with the given key from the cache, or undefined.
                  *
-                 * @memberOf ResourceCache
-                 * @param key
-                 * @param useCacheTtl
+                 * @memberOf ResourceCacheService
+                 * @function get
+                 * @param {String} key Cache entry key
+                 * @param {Boolean} [useCacheTtl] If `true` this method will return `undefined` when the TTL of the entry is outreached (default: `true`)
                  * @returns {*|undefined}
+                 * @instance
                  */
                 self.get = function (key, useCacheTtl) {
                     var
@@ -259,8 +291,10 @@
                 /**
                  * Removes the entry with the given key from the cache.
                  *
-                 * @memberOf ResourceCache
-                 * @param key
+                 * @memberOf ResourceCacheService
+                 * @function remove
+                 * @param {String} key Cache entry key
+                 * @instance
                  */
                 self.remove = function (key) {
                     if (cache.hasOwnProperty(key)) {
@@ -276,7 +310,9 @@
                 /**
                  * Removes all entries from the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function removeAll
+                 * @instance
                  */
                 self.removeAll = function () {
                     console.log("ResourceCacheService: Remove all entries from the cache '" + name + "'.");
@@ -294,7 +330,9 @@
                 /**
                  * Removes all list entries from the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function removeAllLists
+                 * @instance
                  */
                 self.removeAllLists = function () {
                     console.log("ResourceCacheService: Remove all list entries from the cache '" + name + "'.");
@@ -312,7 +350,9 @@
                 /**
                  * Removes all list entries from the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function removeAllObjects
+                 * @instance
                  */
                 self.removeAllObjects = function () {
                     console.log("ResourceCacheService: Remove all object entries from the cache '" + name + "'.");
@@ -330,7 +370,9 @@
                 /**
                  * Removes all raw entries from the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function removeAllRaw
+                 * @instance
                  */
                 self.removeAllRaw = function () {
                     console.log("ResourceCacheService: Remove all raw entries from the cache '" + name + "'.");
@@ -349,7 +391,9 @@
                  * Removes all entries of the dependent caches, including the dependent caches of the
                  * dependent caches (and so on ...).
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function removeAllDependent
+                 * @instance
                  */
                 self.removeAllDependent = function () {
                     var
@@ -363,7 +407,9 @@
                 /**
                  * Destroys the cache object.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function destroy
+                 * @instance
                  */
                 self.destroy = function () {
                     var
@@ -381,8 +427,10 @@
                 /**
                  * Retrieve information regarding the cache.
                  *
-                 * @memberOf ResourceCache
-                 * @returns {{id: *, size: number}}
+                 * @memberOf ResourceCacheService
+                 * @function info
+                 * @returns {{id: *, size: number, options: object}}
+                 * @instance
                  */
                 self.info = function () {
                     console.log("ResourceCacheService: Get cache information from the cache '" + name + "'.");
@@ -407,8 +455,10 @@
                 /**
                  * Cache interface to put entries using `dataAttr` on the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @member withDataAttr
                  * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @instance
                  */
                 self.withDataAttr = {
                     put: function (key, value) {
@@ -425,8 +475,10 @@
                 /**
                  * Cache interface to put entries without using `dataAttr` on the cache.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @member withoutDataAttr
                  * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @instance
                  */
                 self.withoutDataAttr = {
                     put: function (key, value) {
@@ -443,8 +495,10 @@
                 /**
                  * Cache interface to put entries using `dataAttr` on the cache and ignoring TTL.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @member withDataAttrNoTtl
                  * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @instance
                  */
                 self.withDataAttrNoTtl = {
                     put: function (key, value) {
@@ -461,8 +515,10 @@
                 /**
                  * Cache interface to put entries without using `dataAttr` on the cache and ignoring TTL.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @member withoutDataAttrNoTtl
                  * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @instance
                  */
                 self.withoutDataAttrNoTtl = {
                     put: function (key, value) {
@@ -478,8 +534,12 @@
 
                 /**
                  * Checks if the given content type string indicates JSON.
-                 * @param contentType
-                 * @return {boolean}
+                 *
+                 * @memberOf ResourceCacheService
+                 * @function isJsonContentType
+                 * @param {String} contentType Content type string to check for
+                 * @return {Boolean}
+                 * @private
                  */
                 function isJsonContentType (contentType) {
                     if (!contentType) {
@@ -491,9 +551,10 @@
                 /**
                  * Gets the cache data for the given key.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function getDataForKey
+                 * @param {String} key Cache entry key
                  * @private
-                 * @param key
                  */
                 function getDataForKey (key) {
                     if (cache.hasOwnProperty(key)) {
@@ -508,11 +569,12 @@
                 /**
                  * Gets the cache data for the given cache entry.
                  *
-                 * @memberOf ResourceCache
-                 * @private
-                 * @param value
-                 * @param useDataAttr
+                 * @memberOf ResourceCacheService
+                 * @function getDataForEntry
+                 * @param {Object} value Object to get the actual value from
+                 * @param {Boolean} useDataAttr Use the `dataAttr` to get the actual value from the given object
                  * @returns {*}
+                 * @private
                  */
                 function getDataForEntry (value, useDataAttr) {
                     var
@@ -529,10 +591,11 @@
                 /**
                  * Sets the cache data for the given key.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function setDataForKey
+                 * @param {String} key Cache entry key
+                 * @param {*} newData New value for the cache entry
                  * @private
-                 * @param key
-                 * @param newData
                  */
                 function setDataForKey (key, newData) {
                     if (cache.hasOwnProperty(key)) {
@@ -555,9 +618,10 @@
                 /**
                  * Returns the current unix epoch in seconds.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function getCurrentTimestamp
+                 * @returns {int} Current unix epoch
                  * @private
-                 * @returns {int}
                  */
                 function getCurrentTimestamp () {
                     return Math.floor(Date.now() / 1000);
@@ -566,10 +630,11 @@
                 /**
                  * Sets the timestamp for the given key to the current unix epoch in seconds.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function createOrUpdateTimestamp
+                 * @param {String} key Cache entry key
+                 * @returns {int} Current unix epoch
                  * @private
-                 * @param key
-                 * @returns {int}
                  */
                 function createOrUpdateTimestamp (key) {
                     cacheTimestamps[key] = getCurrentTimestamp();
@@ -580,10 +645,11 @@
                  * Checks if the cache entry for the given key is still alive. Also returns
                  * `false` if there is no cache entry for the given key.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function isEntryAlive
+                 * @param {String} key Cache entry key
+                 * @returns {Boolean} Cache entry alive or not alive
                  * @private
-                 * @param key
-                 * @returns {boolean}
                  */
                 function isEntryAlive (key) {
                     if (cache.hasOwnProperty(key)) {
@@ -600,9 +666,10 @@
                  * Takes a new cache entry and refreshes the existing instances of the entry, matching by the
                  * `pkAttr` value.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function refreshSingle
+                 * @param {Object} newData New data to refresh the cache with
                  * @private
-                 * @param {Object} newData
                  */
                 function refreshSingle (newData) {
                     var
@@ -654,9 +721,10 @@
                 /**
                  * Refreshes each entry in the given list using the `refreshSingle` method.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function refreshEach
+                 * @param {Array<Object>} newEntries List of new data to refresh the cache with
                  * @private
-                 * @param {Array<Object>} newEntries
                  */
                 function refreshEach (newEntries) {
                     for (var i = 0; i < newEntries.length; i++) {
@@ -667,7 +735,8 @@
                 /**
                  * Initializes the cache object.
                  *
-                 * @memberOf ResourceCache
+                 * @memberOf ResourceCacheService
+                 * @function init
                  * @private
                  */
                 function init () {
@@ -683,7 +752,8 @@
             /**
              * Calls the removeAll method on all managed caches.
              *
-             * @memberOf ResourceCache
+             * @memberOf ResourceCacheService
+             * @function removeAll
              * @static
              */
             constructor.removeAll = function () {
@@ -697,10 +767,11 @@
             /**
              * Gets the cache with the given name, or null.
              *
-             * @memberOf ResourceCache
+             * @memberOf ResourceCacheService
+             * @function get
+             * @param {String} key Cache name
+             * @returns {*|null} Cache instance with the given name
              * @static
-             * @param key
-             * @returns {*|null}
              */
             constructor.get = function (key) {
                 if (caches.hasOwnProperty(key)) {
@@ -716,9 +787,10 @@
              * Gets the cache information for all managed caches as mapping of cacheId to the result
              * of the info method on the cache.
              *
-             * @memberOf ResourceCache
+             * @memberOf ResourceCacheService
+             * @function info
+             * @returns {{}} Information object for all caches
              * @static
-             * @returns {{}}
              */
             constructor.info = function () {
                 var
@@ -741,10 +813,11 @@
              * caches (and so on ...).
              *
              * @memberOf ResourceCacheService
-             * @private
+             * @function collectDependentCacheNames
              * @param {Object} cache
              * @param {Array<String>|undefined} collectedDependentCacheNames
              * @returns {Array<String>}
+             * @private
              */
             function collectDependentCacheNames (cache, collectedDependentCacheNames) {
                 var

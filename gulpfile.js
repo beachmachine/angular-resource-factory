@@ -143,8 +143,8 @@ gulp.task('scripts-js', function () {
 gulp.task('docs', function (cb) {
     childProcess.exec(
         'node_modules/jsdoc/jsdoc.js '+
-        '--configure node_modules/angular-jsdoc/common/conf.json '+ // config file
-        '--template node_modules/angular-jsdoc/default '+ // template file
+        '--configure jsdoc.json '+ // config file
+        '--template node_modules/docdash '+ // template file
         '--destination "' + config.documentationDir + '" '+ // output directory
         '--readme ./README.md ' + // to include README.md as index contents
         '--recurse "' + config.documentationSources + '" ', // source code directory

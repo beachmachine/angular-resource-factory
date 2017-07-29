@@ -25,28 +25,160 @@
         module = angular.module('ngResourceFactory');
 
     /**
-     * Factory service to create new resource classes. This factory is used to inject a `{@link ResourceFactory}`
-     * to create new resource services.
+     * A resource instance created via an instance of `ResourceFactoryService`.
+     * @typedef {Object|Array.<Object>} ResourceInstance
+     */
+
+    /**
+     * Factory that gives a constructor function for creating a resource service. The resource service is used to make
+     * calls to the REST-API via the "method" functions. These are the default method functions:
+     * ```javascript
+     * {
+     *     // Undo all changes on the instance using the cache or by reloading the data from the server
+     *     'restore': {method:'GET', isArray:false},
+     *     // Get a single instance from the API
+     *     'get': {method:'GET', isArray:false},
+     *     // Get a single instance from the API bypassing the cache
+     *     'getNoCache': {method:'GET', isArray:false},
+     *     // Get a list of instances from the API
+     *     'query': {method:'GET', isArray:true},
+     *     // Get a list of instances from the API bypassing the cache
+     *     'queryNoCache': {method:'GET', isArray:true},
+     *     // Save a new instance
+     *     'save': {method:'POST', isArray:false},
+     *     // Update an existing instance
+     *     'update': {method:'PATCH', isArray:false},
+     *     // Delete an instance
+     *     'remove': {method:'DELETE', isArray:false},
+     * }
+     * ```
+     *
+     * You can extend or override these methods by using the `options.extraMethods` option.
+     *
+     * Each of these methods is available as "static" version on the returned resource class, or as instance
+     * method on a resource instance. The instance methods have a `"$"` prefix. Each of these methods,
+     * static and instance versions, exists with a `"Bg"` postfix to make the call in the "background". This
+     * means you do not see a loading bar if you are using `angular-loading-bar` ({@link http://chieffancypants.github.io/angular-loading-bar/}).
      *
      * @name ResourceFactoryService
-     * @ngdoc factory
-     * @param {service} $q
-     * @param {service} $resource
-     * @param {ResourceCacheService} ResourceCacheService Default cache service
-     * @param {ResourcePhantomIdNegativeInt} ResourcePhantomIdNegativeInt Default phantom ID generator
-     * @see ResourceFactory
+     * @param {String} name Name of the resource service
+     * @param {String} url URL to the resource
+     * @param {Object} options Options for the resource
+     * @param {Boolean} options.stripTrailingSlashes Strip trailing slashes from request URLs. Defaults to `false`.
+     * @param {Boolean} options.ignoreLoadingBar Ignore the resource for automatic loading bars. Defaults to `false`.
+     * @param {Boolean} options.generatePhantomIds Generate IDs for phantom records created via the `new` method. Defaults to `true`.
+     * @param {ResourcePhantomIdFactory} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
+     * @param {String[]} options.dependent List of resource services to clean the cache for on modifying requests.
+     * @param {Object} options.extraMethods Extra request methods to put on the resource service.
+     * @param {Object} options.extraFunctions Extra functions to put on the resource service instance.
+     * @param {String} options.pkAttr Attribute name where to find the ID of objects. Defaults to `"pk"`.
+     * @param {String} options.urlAttr Attribute name where to find the URL of objects. Defaults to `"url"`.
+     * @param {String} options.queryDataAttr Attribute name where to find the data on the query call (resource list calls). Defaults to `null`.
+     * @param {String} options.queryTotalAttr Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to `null`.
+     * @param {String} options.cacheClass Resource cache class constructor function to use (see `{@link ResourceCache}`). Defaults to `{@link ResourceCacheService}`.
+     * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
+     * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
+     * @class
      * @example
-     *  // Define a resource service for an REST endpoint.
-     *  angular.module('example').factory('ExampleResourceService',
-     *      function(ResourceFactoryService) {
-     *          return ResourceFactoryService('ExampleResourceService', 'http://example.api/example/:pk/', {
-     *              queryDataAttr: 'results',
-     *              queryTotalAttr: 'count',
-     *              pkAttr: 'pk',
-     *              urlAttr: 'url'
-     *          });
-     *      }
-     *  );
+     * // Basic GET calls
+     * inject(function (ResourceFactoryService, $q) {
+     *     var
+     *         service = ResourceFactoryService('Test1ResourceService', 'http://test/:pk/');
+     *
+     *     $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1}, {pk: 2}]);
+     *     $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
+     *     $httpBackend.expect('GET', 'http://test/2/').respond(200, {pk: 2});
+     *
+     *     $q.when()
+     *         .then(function () {
+     *             return service.query().$promise;
+     *         })
+     *         .then(function () {
+     *             return service.get({pk: 1}).$promise;
+     *         })
+     *         .then(function () {
+     *             return service.get({pk: 2}).$promise;
+     *         })
+     *         .then(done);
+     *
+     *     $httpBackend.flush();
+     *     $httpBackend.verifyNoOutstandingRequest();
+     * });
+     *
+     * @example
+     * // GET calls with query parameters
+     * inject(function (ResourceFactoryService, $q) {
+     *     var
+     *         service = ResourceFactoryService('Test2ResourceService', 'http://test/:pk/');
+     *
+     *     $httpBackend.expect('GET', 'http://test/?filter=1').respond(200, [{pk: 1}, {pk: 2}]);
+     *
+     *     $q.when()
+     *         .then(function () {
+     *             return service.query({filter: 1}).$promise;
+     *         })
+     *        .then(done);
+     *
+     *     $httpBackend.flush();
+     *     $httpBackend.verifyNoOutstandingRequest();
+     * });
+     *
+     * @example
+     * // Process list GET calls with data attribute
+     * inject(function (ResourceFactoryService, $q) {
+     *     var
+     *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+     *             queryDataAttr: 'data'
+     *         });
+     *
+     *     expect(service.getQueryDataAttr()).toBe('data');
+     *
+     *     $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1}, {pk: 2}]});
+     *     $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
+     *
+     *     $q.when()
+     *         .then(function () {
+     *             return service.query().$promise;
+     *         })
+     *         .then(function (result) {
+     *             expect(result.length).toBe(2);
+     *         })
+     *         .then(function () {
+     *             return service.get({pk: 1}).$promise;
+     *         })
+     *         .then(function (result) {
+     *             expect(result.pk).toBe(1);
+     *         })
+     *         .then(done);
+     *
+     *     $httpBackend.flush();
+     * });
+     *
+     * @example
+     * // Resource and instance level methods
+     * inject(function (ResourceFactoryService) {
+     *     var
+     *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+     *         instance = service.new();
+     *
+     *     expect(service.restore).toBeDefined();
+     *     expect(service.get).toBeDefined();
+     *     expect(service.getNoCache).toBeDefined();
+     *     expect(service.query).toBeDefined();
+     *     expect(service.queryNoCache).toBeDefined();
+     *     expect(service.save).toBeDefined();
+     *     expect(service.update).toBeDefined();
+     *     expect(service.remove).toBeDefined();
+     *
+     *     expect(instance.$restore).toBeDefined();
+     *     expect(instance.$get).toBeDefined();
+     *     expect(instance.$getNoCache).toBeDefined();
+     *     expect(instance.$query).toBeDefined();
+     *     expect(instance.$queryNoCache).toBeDefined();
+     *     expect(instance.$save).toBeDefined();
+     *     expect(instance.$update).toBeDefined();
+     *     expect(instance.$remove).toBeDefined();
+     * });
      */
     module.factory('ResourceFactoryService',
         function ($q,
@@ -55,74 +187,6 @@
                   ResourcePhantomIdNegativeInt) {
             'ngInject';
 
-            /**
-             * Constructor function for creating a resource service. The resource service is used to make calls to the
-             * REST-API via the "method" functions. These are the default method functions:
-             * ```javascript
-             * {
-             *     // Undo all changes on the instance using the cache or by reloading the data from the server
-             *     'restore': {method:'GET', isArray:false},
-             *     // Get a single instance from the API
-             *     'get': {method:'GET', isArray:false},
-             *     // Get a single instance from the API bypassing the cache
-             *     'getNoCache': {method:'GET', isArray:false},
-             *     // Get a list of instances from the API
-             *     'query': {method:'GET', isArray:true},
-             *     // Get a list of instances from the API bypassing the cache
-             *     'queryNoCache': {method:'GET', isArray:true},
-             *     // Save a new instance
-             *     'save': {method:'POST', isArray:false},
-             *     // Update an existing instance
-             *     'update': {method:'PATCH', isArray:false},
-             *     // Delete an instance
-             *     'remove': {method:'DELETE', isArray:false},
-             * }
-             * ```
-             *
-             * You can extend or override these methods by using the `options.extraMethods` option.
-             *
-             * Each of these methods is available as "static" version on the returned resource class, or as instance
-             * method on a resource instance. The instance methods have a `"$"` prefix. Each of these methods,
-             * static and instance versions, exists with a `"Bg"` postfix to make the call in the "background". This
-             * means you do not see a loading bar if you are using `angular-loading-bar` ({@link http://chieffancypants.github.io/angular-loading-bar/}).
-             *
-             * @name ResourceFactory
-             * @ngdoc constructor
-             * @param {String} name Name of the resource service
-             * @param {String} url URL to the resource
-             * @param {Object} options Options for the resource
-             * @param {Boolean} options.stripTrailingSlashes Strip trailing slashes from request URLs. Defaults to `false`.
-             * @param {Boolean} options.ignoreLoadingBar Ignore the resource for automatic loading bars. Defaults to `false`.
-             * @param {Boolean} options.generatePhantomIds Generate IDs for phantom records created via the `new` method. Defaults to `true`.
-             * @param {ResourcePhantomIdFactory} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
-             * @param {String[]} options.dependent List of resource services to clean the cache for on modifying requests.
-             * @param {Object} options.extraMethods Extra request methods to put on the resource service.
-             * @param {Object} options.extraFunctions Extra functions to put on the resource service instance.
-             * @param {String} options.pkAttr Attribute name where to find the ID of objects. Defaults to `"pk"`.
-             * @param {String} options.urlAttr Attribute name where to find the URL of objects. Defaults to `"url"`.
-             * @param {String} options.queryDataAttr Attribute name where to find the data on the query call (resource list calls). Defaults to `null`.
-             * @param {String} options.queryTotalAttr Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to `null`.
-             * @param {String} options.cacheClass Resource cache class constructor function to use (see `{@link ResourceCache}`). Defaults to `{@link ResourceCacheService}`.
-             * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
-             * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
-             * @constructor
-             * @example
-             *  // Getting and updating an resource instance
-             *  var ex = ExampleResourceService.get({pk: 123});
-             *  ex.$promise.then(function() {
-             *      ex.test = 456;
-             *      ex.$update();
-             *  });
-             * @example
-             *  // Saving a new resource instance
-             *  var ex = ExampleResourceService.new({test: 789});
-             *  ex.$save();
-             * @example
-             *  // Saving or updating a resource instance
-             *  var ex = get_a_new_or_existing_instance_from_somewhere();
-             *  ex.test = 123;
-             *  ex.$persist();
-             */
             return function (name, url, options) {
                 /**
                  * Options for the resource
@@ -132,12 +196,14 @@
                     /**
                      * Option to strip trailing slashes from request URLs
                      * @type {Boolean}
+                     * @private
                      */
                     stripTrailingSlashes: false,
 
                     /**
                      * Option to ignore the resource for automatic loading bars
                      * @type {Boolean}
+                     * @private
                      */
                     ignoreLoadingBar: false,
 
@@ -145,75 +211,89 @@
                      * Generate IDs for phantom records created via the `new`
                      * method on the resource service
                      * @type {Boolean}
+                     * @private
                      */
                     generatePhantomIds: true,
 
                     /**
                      * Phantom ID generator instance to use
                      * @type {ResourcePhantomIdFactory}
+                     * @private
                      */
                     phantomIdGenerator: ResourcePhantomIdNegativeInt,
 
                     /**
                      * List of resource services to clean the cache for, on modifying requests
                      * @type {Array<String>}
+                     * @private
                      */
                     dependent: [],
 
                     /**
                      * Extra methods to put on the resource service
                      * @type {Object}
+                     * @private
                      */
                     extraMethods: {},
 
                     /**
                      * Extra functions to put on the resource instances
                      * @type {Object}
+                     * @private
                      */
                     extraFunctions: {},
 
                     /**
                      * Attribute name where to find the ID of objects
                      * @type {String}
+                     * @private
                      */
                     pkAttr: 'pk',
 
                     /**
                      * Attribute name where to find the URL of objects
                      * @type {String}
+                     * @private
                      */
                     urlAttr: 'url',
 
                     /**
                      * Attribute name where to find the data on the query call
                      * @type {String|null}
+                     * @private
                      */
                     queryDataAttr: null,
 
                     /**
                      * Attribute name where to find the total amount of data on the query call
                      * @type {String|null}
+                     * @private
                      */
                     queryTotalAttr: null,
 
                     /**
                      * Storage for the query filters
-                     * @type {*}
+                     * @type {Object}
+                     * @private
                      */
                     queryFilter: {},
 
                     /**
                      * Resource cache class constructor function to use (see `{@link ResourceCache}`)
                      * @type {Function}
+                     * @private
                      */
                     cacheClass: ResourceCacheService,
 
                     /**
                      * Function to post-process data coming from response
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param obj
                      * @param headersGetter
                      * @param status
                      * @return {*}
+                     * @private
                      */
                     toInternal: function (obj, headersGetter, status) {
                         return obj;
@@ -221,9 +301,12 @@
 
                     /**
                      * Function to post-process data that is going to be sent
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param obj
                      * @param headersGetter
                      * @return {*}
+                     * @private
                      */
                     fromInternal: function (obj, headersGetter) {
                         return obj;
@@ -383,10 +466,13 @@
 
                     /**
                      * Parses the response text as JSON and returns it as object.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param responseText
                      * @param headersGetter
                      * @param status
                      * @return {Object|Array|string|number}
+                     * @private
                      */
                     transformResponseFromJson = function (responseText, headersGetter, status) {
                         console.log("ResourceFactoryService: Deserialize data.");
@@ -396,10 +482,13 @@
 
                     /**
                      * Calls the `toInternal` function on each object of the response array.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param responseData
                      * @param headersGetter
                      * @param status
                      * @return {*}
+                     * @private
                      */
                     queryTransformResponseToInternal = function (responseData, headersGetter, status) {
                         console.log("ResourceFactoryService: Post-process query data for internal use.");
@@ -420,10 +509,13 @@
 
                     /**
                      * Calls the `toInternal` function on the response data object.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param responseData
                      * @param headersGetter
                      * @param status
                      * @return {*}
+                     * @private
                      */
                     singleTransformResponseToInternal = function (responseData, headersGetter, status) {
                         console.log("ResourceFactoryService: Post-process data for internal use.");
@@ -434,10 +526,13 @@
                     /**
                      * Transforms query responses to get the actual data from the `queryDataAttr` option, if
                      * configured. Also sets the `total` attribute on the list if `queryTotalAttr` is configured.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param responseData
                      * @param headersGetter
                      * @param status
                      * @returns {Array|Object}
+                     * @private
                      */
                     queryTransformResponseData = function (responseData, headersGetter, status) {
                         var
@@ -480,9 +575,12 @@
 
                     /**
                      * Serializes the request data as JSON and returns it as string.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param requestData
                      * @param headersGetter
                      * @return {string}
+                     * @private
                      */
                     transformRequestToJson = function (requestData, headersGetter) {
                         console.log("ResourceFactoryService: Serialize data.");
@@ -503,9 +601,12 @@
 
                     /**
                      * Calls the `fromInternal` function on the request data object.
+                     *
+                     * @memberOf ResourceFactoryService
                      * @param requestData
                      * @param headersGetter
                      * @return {*}
+                     * @private
                      */
                     singleTransformRequestFromInternal = function (requestData, headersGetter) {
                         console.log("ResourceFactoryService: Post-process data for external use.");
@@ -689,8 +790,10 @@
                 /**
                  * Gets the PK attribute name
                  *
-                 * @memberOf ResourceFactory
-                 * @return {String|null}
+                 * @memberOf ResourceFactoryService
+                 * @function getPkAttr
+                 * @return {String|null} PK attribute name
+                 * @instance
                  */
                 resource.getPkAttr = function () {
                     return options.pkAttr;
@@ -699,8 +802,10 @@
                 /**
                  * Gets the data attribute name
                  *
-                 * @memberOf ResourceFactory
-                 * @return {String|null}
+                 * @memberOf ResourceFactoryService
+                 * @function getQueryDataAttr
+                 * @return {String|null} Data attribute name
+                 * @instance
                  */
                 resource.getQueryDataAttr = function () {
                     return options.queryDataAttr;
@@ -709,8 +814,10 @@
                 /**
                  * Gets the total attribute name
                  *
-                 * @memberOf ResourceFactory
-                 * @return {String|null}
+                 * @memberOf ResourceFactoryService
+                 * @function getQueryTotalAttr
+                 * @return {String|null} Total attribute name
+                 * @instance
                  */
                 resource.getQueryTotalAttr = function () {
                     return options.queryTotalAttr;
@@ -719,8 +826,10 @@
                 /**
                  * Gets the cache class
                  *
-                 * @memberOf ResourceFactory
-                 * @return {Function}
+                 * @memberOf ResourceFactoryService
+                 * @function getCacheClass
+                 * @return {Function} Cache class
+                 * @instance
                  */
                 resource.getCacheClass = function () {
                     return options.cacheClass;
@@ -729,19 +838,23 @@
                 /**
                  * Returns an object holding the filter data for query request
                  *
-                 * @memberOf ResourceFactory
-                 * @returns {*}
+                 * @memberOf ResourceFactoryService
+                 * @function getQueryFilters
+                 * @returns {Object} Filter object
+                 * @instance
                  */
                 resource.getQueryFilters = function () {
                     return options.queryFilter;
                 };
 
                 /**
-                 * Sets the object holding the filter data for query request
+                 * Sets a clone of the given object as the object holding the filter data for query request
                  *
-                 * @memberOf ResourceFactory
-                 * @param filters
-                 * @returns {*}
+                 * @memberOf ResourceFactoryService
+                 * @function setQueryFilters
+                 * @param {Object} filters Object holding filter attributes
+                 * @returns {Object} Filter object
+                 * @instance
                  */
                 resource.setQueryFilters = function (filters) {
                     return angular.copy(filters, options.queryFilter);
@@ -750,9 +863,11 @@
                 /**
                  * Sets the given filter options if the aren't already set on the filter object
                  *
-                 * @memberOf ResourceFactory
-                 * @param defaultFilters
-                 * @returns {*}
+                 * @memberOf ResourceFactoryService
+                 * @function setDefaultQueryFilters
+                 * @param {Object} defaultFilters Object holding filter attributes
+                 * @returns {Object} Filter object
+                 * @instance
                  */
                 resource.setDefaultQueryFilters = function (defaultFilters) {
                     var
@@ -764,8 +879,11 @@
                 /**
                  * Queries the resource with the configured filters.
                  *
-                 * @memberOf ResourceFactory
-                 * @returns {*}
+                 * @memberOf ResourceFactoryService
+                 * @function filter
+                 * @param {Object} [filters] Object holding filter attributes
+                 * @returns {Object} Query result object
+                 * @instance
                  */
                 resource.filter = function (filters) {
                     filters = angular.extend({}, resource.getQueryFilters(), filters);
@@ -775,8 +893,11 @@
                 /**
                  * Queries the resource with the configured filters without using the cache.
                  *
-                 * @memberOf ResourceFactory
-                 * @returns {*}
+                 * @memberOf ResourceFactoryService
+                 * @function filterNoCache
+                 * @param {Object} [filters] Object holding filter attributes
+                 * @returns {Object} Query result object
+                 * @instance
                  */
                 resource.filterNoCache = function (filters) {
                     filters = angular.extend({}, resource.getQueryFilters(), filters);
@@ -786,16 +907,18 @@
                 /**
                  * Creates a new instance for the resource
                  *
-                 * @memberOf ResourceFactory
-                 * @param params
-                 * @return {*}
+                 * @memberOf ResourceFactoryService
+                 * @function new
+                 * @param {Object} [params] Object holding attributes to set on the resource instance
+                 * @return {ResourceInstance} Resource instance
+                 * @instance
                  */
                 resource.new = function (params) {
                     var
                         phantomInstance = new resource(params);
 
                     // Generate phantom ID if desired
-                    if (options.pkAttr && options.generatePhantomIds && options.phantomIdGenerator) {
+                    if (options.pkAttr && options.generatePhantomIds && options.phantomIdGenerator && !phantomInstance[options.pkAttr]) {
                         phantomInstance[options.pkAttr] = options.phantomIdGenerator.generate(phantomInstance);
                     }
 
@@ -805,9 +928,11 @@
                 /**
                  * Checks if the given instance is a phantom instance (instance not persisted to the REST API yet)
                  *
-                 * @memberOf ResourceFactory
-                 * @param instance
-                 * @return {boolean|undefined}
+                 * @memberOf ResourceFactoryService
+                 * @function isPhantom
+                 * @param {ResourceInstance} instance Instance to check
+                 * @return {Boolean|undefined} If is phantom or not
+                 * @instance
                  */
                 resource.isPhantom = function (instance) {
                     var
@@ -825,10 +950,13 @@
                  * Gets a list of instances from the given instances where the given attribute name matches
                  * the given attribute value.
                  *
-                 * @memberOf ResourceFactory
-                 * @param instances
-                 * @param attrName
-                 * @param attrValue
+                 * @memberOf ResourceFactoryService
+                 * @function filterInstancesByAttr
+                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {String} attrName Attribute name to filter on
+                 * @param {*} attrValue Value to filter for
+                 * @return {Array.<ResourceInstance>} Filtered list of instances
+                 * @instance
                  */
                 resource.filterInstancesByAttr = function (instances, attrName, attrValue) {
                     var
@@ -843,11 +971,13 @@
                  * Gets the first instance from the given instances where the given attribute name matches
                  * the given attribute value.
                  *
-                 * @memberOf ResourceFactory
-                 * @param instances
-                 * @param attrName
-                 * @param attrValue
-                 * @return {*}
+                 * @memberOf ResourceFactoryService
+                 * @function getInstanceByAttr
+                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {String} attrName Attribute name to filter on
+                 * @param {*} attrValue Value to filter for
+                 * @return {ResourceInstance|null} First instances matching the filter
+                 * @instance
                  */
                 resource.getInstanceByAttr = function (instances, attrName, attrValue) {
                     var
@@ -868,10 +998,12 @@
                 /**
                  * Gets the first instance from the given instances where the PK attribute has the given value.
                  *
-                 * @memberOf ResourceFactory
-                 * @param instances
-                 * @param pkValue
-                 * @return {Object|undefined}
+                 * @memberOf ResourceFactoryService
+                 * @function getInstanceByPk
+                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {String|int} pkValue PK value to filter for
+                 * @return {ResourceInstance|null} Instance with the given PK
+                 * @instance
                  */
                 resource.getInstanceByPk = function (instances, pkValue) {
                     return resource.getInstanceByAttr(instances, options.pkAttr, pkValue);
@@ -880,8 +1012,10 @@
                 /**
                  * Gets the name of the resource.
                  *
-                 * @memberOf ResourceFactory
-                 * @return {String}
+                 * @memberOf ResourceFactoryService
+                 * @function getResourceName
+                 * @return {String} Resource name
+                 * @instance
                  */
                 resource.getResourceName = function () {
                     return name;
@@ -890,8 +1024,10 @@
                 /**
                  * Gets the cache instance.
                  *
-                 * @memberOf ResourceFactory
-                 * @return {ResourceCacheService}
+                 * @memberOf ResourceFactoryService
+                 * @function getCache
+                 * @return {ResourceCacheService} Cache class instance
+                 * @instance
                  */
                 resource.getCache = function () {
                     return cache;
@@ -900,9 +1036,11 @@
                 /**
                  * Creates a new store for the resource
                  *
-                 * @memberOf ResourceFactory
-                 * @param [instances]
-                 * @return {ResourceStore}
+                 * @memberOf ResourceFactoryService
+                 * @function createStore
+                 * @param [instances] List of instances that should be managed by the new store
+                 * @return {ResourceStore} New store instance
+                 * @instance
                  */
                 resource.createStore = function (instances) {
                     instances = instances || [];
@@ -919,12 +1057,14 @@
                  * Saves the given resource instance to the REST API. Uses the `$save` method if instance
                  * is phantom, else the `$update` method.
                  *
-                 * @memberOf ResourceFactory
-                 * @param [a1] Query params
-                 * @param [a2] Instance
-                 * @param [a3] Success callback
-                 * @param [a4] Error callback
-                 * @return {*}
+                 * @memberOf ResourceFactoryService
+                 * @function persist
+                 * @param {Object} [a1] Query params
+                 * @param {ResourceInstance} [a2] Instance
+                 * @param {Function} [a3] Success callback
+                 * @param {Function} [a4] Error callback
+                 * @return {ResourceInstance} Resource instance
+                 * @instance
                  */
                 resource.persist = function (a1, a2, a3, a4) {
                     var
@@ -1013,6 +1153,7 @@
                      * @param [a2] Success callback
                      * @param [a3] Error callback
                      * @return {*}
+                     * @private
                      */
                     $persist: function (a1, a2, a3) {
                         var
@@ -1040,6 +1181,7 @@
                     /**
                      * Checks if instance is a phantom record (not saved via the REST API yet)
                      * @return {*}
+                     * @private
                      */
                     $isPhantom: function () {
                         return resource.isPhantom(this);
@@ -1061,11 +1203,40 @@
              * sets up relations between resource types (e.g. to update reference keys).
              *
              * @name ResourceStore
-             * @ngdoc constructor
-             * @param resource
-             * @param managedInstances
-             * @param parentStore
-             * @constructor
+             * @param {ResourceFactoryService} resource Resource service instance
+             * @param {Array.<ResourceInstance>} managedInstances List of resource instances to manage
+             * @param {ResourceStore|null} parentStore The store of which the new store is a sub-store of
+             * @class
+             *
+             * @example
+             * // Basic usage of a resource store
+             * inject(function (ResourceFactoryService, $q) {
+             *     var
+             *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+             *         instance1 = service.new(),
+             *         instance2 = service.new(),
+             *         instance3 = service.new(),
+             *         store = service.createStore([instance1, instance2, instance3]);
+             *
+             *     $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+             *     $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+             *     $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+             *
+             *     instance1.pk = 1;
+             *     instance2.pk = 2;
+             *
+             *     store.remove(instance2);
+             *     store.persist(instance1);
+             *     store.persist(instance3);
+             *
+             *     $q.when()
+             *         .then(function () {
+             *             return store.execute();
+             *         })
+             *         .then(done);
+             *
+             *     $httpBackend.flush();
+             * });
              */
             function ResourceStore (resource, managedInstances, parentStore) {
                 var
@@ -1074,60 +1245,70 @@
                     /**
                      * Name of the resource service
                      * @type {String}
+                     * @private
                      */
                     resourceName = resource.getResourceName(),
 
                     /**
                      * Indicator for running execution (stops another execution from being issued)
                      * @type {boolean}
+                     * @private
                      */
                     executionRunning = false,
 
                     /**
                      * Contains relations to other stores (for updating references)
                      * @type {Array<ResourceStoreRelation>}
+                     * @private
                      */
                     relations = [],
 
                     /**
                      * Stores resource items that are visible for the user (not queued for remove)
                      * @type {Array}
+                     * @private
                      */
                     visibleQueue = [],
 
                     /**
                      * Stores resource items queued for persisting (save or update)
                      * @type {Array}
+                     * @private
                      */
                     persistQueue = [],
 
                     /**
                      * Stores resource items queued for deleting
                      * @type {Array}
+                     * @private
                      */
                     removeQueue = [],
 
                     /**
                      * Callbacks executed before each item persists
                      * @type {Array}
+                     * @private
                      */
                     beforePersistListeners = [],
 
                     /**
                      * Callbacks executed after each item persists
                      * @type {Array}
+                     * @private
                      */
                     afterPersistListeners = [],
 
                     /**
                      * Callbacks executed before each item removes
                      * @type {Array}
+                     * @private
                      */
                     beforeRemoveListeners = [],
 
                     /**
                      * Callbacks executed after each item removes
                      * @type {Array}
+                     * @private
                      */
                     afterRemoveListeners = [];
 
@@ -1136,7 +1317,10 @@
                  * a promise, a list of instances or a single instance.
                  *
                  * @memberOf ResourceStore
-                 * @param newInstances
+                 * @function manage
+                 * @param {ResourceInstance|Array.<ResourceInstance>} newInstances List of instances to manage
+                 * @return {Promise} Promise that resolves if all given instances are resolved
+                 * @instance
                  */
                 self.manage = function (newInstances) {
                     var
@@ -1198,7 +1382,10 @@
                  * a promise, a list of instances or a single instance.
                  *
                  * @memberOf ResourceStore
-                 * @param oldInstances
+                 * @function forget
+                 * @param {ResourceInstance|Array.<ResourceInstance>} oldInstances Instances the store should forget
+                 * @return {Promise} Promise that resolves if all given instances are resolved
+                 * @instance
                  */
                 self.forget = function (oldInstances) {
                     var
@@ -1261,8 +1448,10 @@
                  * Returns a new instance managed by the store.
                  *
                  * @memberOf ResourceStore
-                 * @param params
-                 * @return {*}
+                 * @function new
+                 * @param {Object} [params] Object holding attributes to set on the resource instance
+                 * @return {ResourceInstance} New resource instance that is managed by the store
+                 * @instance
                  */
                 self.new = function (params) {
                     var
@@ -1277,7 +1466,9 @@
                  * Queues given instance for persistence.
                  *
                  * @memberOf ResourceStore
-                 * @param instances
+                 * @function persist
+                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances that should be queued for persistence
+                 * @instance
                  */
                 self.persist = function (instances) {
                     console.log("ResourceStore: Queue '" + resourceName + "' instances for persist.");
@@ -1305,7 +1496,9 @@
                  * Queues given instance for deletion.
                  *
                  * @memberOf ResourceStore
-                 * @param instances
+                 * @function remove
+                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances that should be queued for removing
+                 * @instance
                  */
                 self.remove = function (instances) {
                     console.log("ResourceStore: Queue '" + resourceName + "' instances for remove.");
@@ -1333,6 +1526,8 @@
                  * Commits changes to the parent store
                  *
                  * @memberOf ResourceStore
+                 * @function commit
+                 * @instance
                  */
                 self.commit = function () {
                     // Check if there is a parent store first. We cannot commit to a parent store
@@ -1385,11 +1580,13 @@
 
                 /**
                  * Executes the change queue on this an all related stores and clears the change queue if clearAfter is
-                 * set to true (default).
+                 * set to true.
                  *
                  * @memberOf ResourceStore
-                 * @param [clearAfter]
+                 * @function executeAll
+                 * @param [clearAfter] Clear change queue on all stores after executing (default: `true`)
                  * @return {Promise}
+                 * @instance
                  */
                 self.executeAll = function (clearAfter) {
                     // `clearAfter` should default to true
@@ -1433,8 +1630,10 @@
                  * Execute the change queue and clears the change queue if clearAfter is set to true (default).
                  *
                  * @memberOf ResourceStore
-                 * @param [clearAfter]
+                 * @function execute
+                 * @param [clearAfter] Clear change queue on the store after executing (default: `true`)
                  * @return {Promise}
+                 * @instance
                  */
                 self.execute = function (clearAfter) {
                     // `clearAfter` should default to true
@@ -1460,6 +1659,7 @@
                          * Sets the running flag to false
                          * @param reason
                          * @return {*}
+                         * @private
                          */
                         handleError = function (reason) {
                             executionRunning = false;
@@ -1470,6 +1670,7 @@
                          * Calls a list of listener functions with given item as parameter
                          * @param item
                          * @param listeners
+                         * @private
                          */
                         callListeners = function (item, listeners) {
                             for (var i = 0; i < listeners.length; i++) {
@@ -1498,6 +1699,7 @@
                          * @param beforeListeners
                          * @param afterListeners
                          * @param isRemove
+                         * @private
                          */
                         executeSingle = function (item, execFn, beforeListeners, afterListeners, defer, isRemove) {
                             // Call the before listeners
@@ -1541,6 +1743,7 @@
                          * Executes the remove queue. Returns a promise that resolves as soon as all
                          * REST API calls are done.
                          * @return {Promise}
+                         * @private
                          */
                         executeRemoves = function () {
                             var
@@ -1571,6 +1774,7 @@
                          * Executes the update queue. Returns a promise that resolves as soon as all
                          * REST API calls are done.
                          * @return {Promise}
+                         * @private
                          */
                         executeUpdates = function () {
                             var
@@ -1596,6 +1800,7 @@
                          * Executes the save (insert) queue. Returns a promise that resolves as soon as all
                          * REST API calls are done.
                          * @return {Promise}
+                         * @private
                          */
                         executeSaves = function () {
                             var
@@ -1619,6 +1824,7 @@
 
                         /**
                          * Clears the change queues.
+                         * @private
                          */
                         clear = function () {
                             if (clearAfter) {
@@ -1648,8 +1854,10 @@
                  * instances until the child store commits.
                  *
                  * @memberOf ResourceStore
-                 * @param [instances]
-                 * @return {ResourceStore}
+                 * @function createChildStore
+                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances to manage on the child store (default: all instances on the parent store)
+                 * @return {ResourceStore} New child store
+                 * @instance
                  */
                 self.createChildStore = function (instances) {
                     instances = instances || managedInstances;
@@ -1664,8 +1872,14 @@
                  * Adds a relation to another store.
                  *
                  * @memberOf ResourceStore
-                 * @param config
-                 * @return {ResourceStoreRelation}
+                 * @function createRelation
+                 * @param {Object} config Configuration object
+                 * @param {ResourceStore} config.relatedStore Store instance this store has a relation to
+                 * @param {String} config.fkAttr Foreign key attribute on instances on the related store
+                 * @param {Function|"forget"|"null"} config.onRemove What to do on the related instances if instances on this store are removed (default: `"forget"`)
+                 * @param {Function|"update"|"null"} config.onUpdate What to do on the related instances if instances on this store are updated (default: `"update"`)
+                 * @return {ResourceStoreRelation} New relation
+                 * @instance
                  */
                 self.createRelation = function (config) {
                     config = angular.extend({
@@ -1687,7 +1901,9 @@
                  * Removes a relation from the store.
                  *
                  * @memberOf ResourceStore
-                 * @param relation
+                 * @function removeRelation
+                 * @param {ResourceStoreRelation} relation Relation instance to remove
+                 * @instance
                  */
                 self.removeRelation = function (relation) {
                     var
@@ -1704,8 +1920,10 @@
                  * PK attribute value.
                  *
                  * @memberOf ResourceStore
-                 * @param pkValue
-                 * @return {Object|undefined}
+                 * @function getByPk
+                 * @param {String|int} pkValue
+                 * @return {ResourceInstance|undefined} Resource instance managed by the store with the given PK value
+                 * @instance
                  */
                 self.getByPk = function (pkValue) {
                     return resource.getInstanceByPk(managedInstances, pkValue);
@@ -1717,8 +1935,10 @@
                  * another store). The instances are matched by their PK attribute.
                  *
                  * @memberOf ResourceStore
-                 * @param instance
-                 * @return {Object|undefined}
+                 * @function getByInstance
+                 * @param {ResourceInstance} instance Instance to search for in the store
+                 * @return {ResourceInstance|undefined} Resource instance managed by the store matching the given instance that might by not managed by the store
+                 * @instance
                  */
                 self.getByInstance = function (instance) {
                     var
@@ -1731,17 +1951,21 @@
                  * Gets a list of instances visible for the user.
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getManagedInstances
+                 * @return {Array.<ResourceInstance>} Instances managed by the store
+                 * @instance
                  */
                 self.getManagedInstances = function () {
                     return managedInstances.slice();
                 };
 
                 /**
-                 * Gets a list of instances visible for the user.
+                 * Gets a list of instances visible for the user (e.g. that are not marked for removal).
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getVisibleQueue
+                 * @return {Array.<ResourceInstance>} Instances visible for the user
+                 * @instance
                  */
                 self.getVisibleQueue = function () {
                     return visibleQueue.slice();
@@ -1751,7 +1975,9 @@
                  * Gets a list of instances marked for persist.
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getPersistQueue
+                 * @return {Array.<ResourceInstance>} Instances marked for persistence
+                 * @instance
                  */
                 self.getPersistQueue = function () {
                     return persistQueue.slice();
@@ -1761,17 +1987,21 @@
                  * Gets a list of instances marked for remove.
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getRemoveQueue
+                 * @return {Array.<ResourceInstance>} Instances marked for removal
+                 * @instance
                  */
                 self.getRemoveQueue = function () {
                     return removeQueue.slice();
                 };
 
                 /**
-                 * Gets a list of instances marked for save (insert).
+                 * Gets a list of instances marked for save (e.g. insert).
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getSaveQueue
+                 * @return {Array.<ResourceInstance>} Instances marked for save
+                 * @instance
                  */
                 self.getSaveQueue = function () {
                     var
@@ -1786,7 +2016,9 @@
                  * Gets a list of instances marked for update.
                  *
                  * @memberOf ResourceStore
-                 * @return {Array}
+                 * @function getUpdateQueue
+                 * @return {Array.<ResourceInstance>} Instances marked for update
+                 * @instance
                  */
                 self.getUpdateQueue = function () {
                     var
@@ -1801,7 +2033,9 @@
                  * Gets the managed resource service.
                  *
                  * @memberOf ResourceStore
-                 * @return {*}
+                 * @function getResourceService
+                 * @return {ResourceFactoryService} Resource service instance
+                 * @instance
                  */
                 self.getResourceService = function () {
                     return resource;
@@ -1811,7 +2045,9 @@
                  * Adds a before-persist listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function addBeforePersistListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.addBeforePersistListener = function (fn) {
                     beforePersistListeners.push(fn);
@@ -1821,7 +2057,9 @@
                  * Removes a before-persist listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function removeBeforePersistListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.removeBeforePersistListener = function (fn) {
                     var
@@ -1837,7 +2075,9 @@
                  * Adds a after-persist listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function addAfterPersistListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.addAfterPersistListener = function (fn) {
                     afterPersistListeners.push(fn);
@@ -1847,7 +2087,9 @@
                  * Removes a after-persist listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function removeAfterPersistListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.removeAfterPersistListener = function (fn) {
                     var
@@ -1863,7 +2105,9 @@
                  * Adds a before-remove listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function addBeforeRemoveListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.addBeforeRemoveListener = function (fn) {
                     beforeRemoveListeners.push(fn);
@@ -1873,7 +2117,9 @@
                  * Removes a before-remove listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function removeBeforeRemoveListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.removeBeforeRemoveListener = function (fn) {
                     var
@@ -1889,7 +2135,9 @@
                  * Adds a after-remove listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function addAfterRemoveListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.addAfterRemoveListener = function (fn) {
                     afterRemoveListeners.push(fn);
@@ -1899,7 +2147,9 @@
                  * Removes a after-remove listener.
                  *
                  * @memberOf ResourceStore
-                 * @param fn
+                 * @function removeAfterRemoveListener
+                 * @param {Function} fn Callback function
+                 * @instance
                  */
                 self.removeAfterRemoveListener = function (fn) {
                     var
@@ -1916,8 +2166,10 @@
                  * is already in the list of instances.
                  *
                  * @memberOf ResourceStore
+                 * @function addResourceInstance
                  * @param instances
                  * @param instance
+                 * @private
                  */
                 function addResourceInstance (instances, instance) {
                     var
@@ -1944,9 +2196,9 @@
                  * is not in the list of instances.
                  *
                  * @memberOf ResourceStore
-                 * @private
                  * @param instances
                  * @param instance
+                 * @private
                  */
                 function removeResourceInstance (instances, instance) {
                     var
@@ -1969,9 +2221,9 @@
                  * Internal function for checking if an object can be treated as an promise.
                  *
                  * @memberOf ResourceStore
-                 * @private
                  * @param obj
                  * @return {*|boolean}
+                 * @private
                  */
                 function isPromiseLike (obj) {
                     return obj && angular.isFunction(obj.then);
@@ -1984,11 +2236,11 @@
                  * method will also keep the private attributes of the `dst`.
                  *
                  * @memberOf ResourceStore
-                 * @private
                  * @param dst {Undefined|Object|Array} Destination object
                  * @param src {Object|Array} Source object
                  * @param [keepMissing] boolean Keep attributes on dst that are not present on src
                  * @return {*}
+                 * @private
                  */
                 function populate (dst, src, keepMissing) {
                     // keepMissing defaults to true
@@ -2053,10 +2305,10 @@
                  * attributes on the `dst` object (attributes starting with $ are private).
                  *
                  * @memberOf ResourceStore
-                 * @private
                  * @param src
                  * @param [dst]
                  * @return {*}
+                 * @private
                  */
                 function copy (src, dst) {
                     // if we are working on an array, copy each instance of the array to
@@ -2082,10 +2334,10 @@
                  * attributes on the `dst` object (attributes starting with $ are private).
                  *
                  * @memberOf ResourceStore
-                 * @private
                  * @param src
                  * @param [dst]
                  * @return {*}
+                 * @private
                  */
                 function merge (src, dst) {
                     // if we are working on an array, copy each instance of the array to
@@ -2123,6 +2375,7 @@
                          * Maps instances to a list of PKs
                          * @param instance
                          * @return {*|undefined}
+                         * @private
                          */
                         mapPk = function (instance) {
                             return instance ? String(instance[resource.getPkAttr()]) : undefined;
@@ -2132,6 +2385,7 @@
                          * Filters instances to given list of PKs
                          * @param pks
                          * @return {Function}
+                         * @private
                          */
                         filterPks = function (pks) {
                             return function (instance) {
@@ -2168,13 +2422,54 @@
              * Constructor class for a relation between two stores.
              *
              * @name ResourceStoreRelation
-             * @ngdoc constructor
-             * @param store
-             * @param relatedStore
-             * @param fkAttr
-             * @param onUpdate
-             * @param onRemove
-             * @constructor
+             * @param {ResourceStore} store Store to create the relation on
+             * @param {ResourceStore} relatedStore Related store
+             * @param {String} fkAttr Name of foreign key attribute on instances on related store
+             * @param {Function|"update"|"null"} onUpdate What to do on the related instances if instances on the store are updated
+             * @param {Function|"forget"|"null"} onRemove What to do on the related instances if instances on the store are removed
+             * @class
+             *
+             * @example
+             * // Basic usage of a ResourceStoreRelation
+             * inject(function (ResourceFactoryService, $q) {
+             *     var
+             *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+             *         relatedService = ResourceFactoryService('RelatedTestResourceService', 'http://relatedtest/:pk/'),
+             *         instance1 = service.new(),
+             *         instance2 = service.new(),
+             *         relatedInstance1 = relatedService.new({fk: instance1.pk}),
+             *         relatedInstance2 = relatedService.new({fk: instance2.pk}),
+             *         store = service.createStore([instance1, instance2]),
+             *         relatedStore = relatedService.createStore([relatedInstance1, relatedInstance2]);
+             *
+             *     $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 1});
+             *     $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+             *
+             *     store.createRelation({
+             *         relatedStore: relatedStore,
+             *         fkAttr: 'fk'
+             *     });
+             *
+             *     $q.when()
+             *         .then(function () {
+             *             expect(relatedInstance1.fk).toBe(-1);
+             *             expect(relatedInstance2.fk).toBe(-2);
+             *         })
+             *         .then(function () {
+             *             store.persist(instance1);
+             *             store.persist(instance2);
+             *         })
+             *         .then(function () {
+             *             return store.execute();
+             *         })
+             *         .then(function () {
+             *             expect(relatedInstance1.fk).toBe(1);
+             *             expect(relatedInstance2.fk).toBe(2);
+             *         })
+             *         .then(done);
+             *
+             *     $httpBackend.flush();
+             * });
              */
             function ResourceStoreRelation (store, relatedStore, fkAttr, onUpdate, onRemove) {
                 var
@@ -2224,7 +2519,9 @@
                  * Gets the store the relation is configured on.
                  *
                  * @memberOf ResourceStoreRelation
-                 * @return {*}
+                 * @function getStore
+                 * @return {ResourceStore} Resource store to work on
+                 * @instance
                  */
                 self.getStore = function () {
                     return store;
@@ -2234,7 +2531,9 @@
                  * Gets the store the configured store is related on.
                  *
                  * @memberOf ResourceStoreRelation
-                 * @return {*}
+                 * @function getRelatedStore
+                 * @return {ResourceStore} Related resource store
+                 * @instance
                  */
                 self.getRelatedStore = function () {
                     return relatedStore;
@@ -2244,7 +2543,9 @@
                  * Gets the FK attribute name.
                  *
                  * @memberOf ResourceStoreRelation
-                 * @return {string}
+                 * @function getFkAttr
+                 * @return {String} Name of the foreign key attribute on related instances
+                 * @instance
                  */
                 self.getFkAttr = function () {
                     return fkAttr;
@@ -2255,8 +2556,10 @@
                  * value to the given new value.
                  *
                  * @memberOf ResourceStoreRelation
-                 * @param oldPkValue
-                 * @param newPkValue
+                 * @function handleUpdate
+                 * @param {String|int} oldPkValue Old PK value
+                 * @param {String|int} newPkValue New PK value
+                 * @instance
                  */
                 self.handleUpdate = function (oldPkValue, newPkValue) {
                     console.log("ResourceStoreRelation: Handle update of referenced instance on '" + relatedStore.getResourceService().getResourceName() + "' store.");
@@ -2279,7 +2582,9 @@
                  * referenced instance was deleted.
                  *
                  * @memberOf ResourceStoreRelation
-                 * @param pkValue
+                 * @function handleRemove
+                 * @param {String|int} pkValue PK value
+                 * @instance
                  */
                 self.handleRemove = function (pkValue) {
                     console.log("ResourceStoreRelation: Handle remove of referenced instance on '" + relatedStore.getResourceService().getResourceName() + "' store.");

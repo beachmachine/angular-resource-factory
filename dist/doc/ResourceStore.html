@@ -1,18 +1,4163 @@
-<!doctype html><html>  <head>    <base href="./" />    <title>JSDoc: constructor:ResourceStore</title>    <link type="text/css" rel="stylesheet" href="css/jsdoc-default.css" />    <link href="css/prettify-tomorrow.css" type="text/css" rel="stylesheet" />    <script src="js/prettify.js"></script>  </head>  <body>    <nav>      <h2><a href="index.html">Index</a></h2>          <h3>module: docs</h3>        <ul>        </ul>        <ul>            <h3>constructor</h3>            <ul>                <li><a href="ResourceCache.html">ResourceCache</a></li>                <li><a href="ResourceFactory.html">ResourceFactory</a></li>                <li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a></li>                <li><a href="ResourceStore.html">ResourceStore</a></li>                <li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a></li>            </ul>            <h3>factory</h3>            <ul>                <li><a href="ResourceCacheService.html">ResourceCacheService</a></li>                <li><a href="ResourceFactoryService.html">ResourceFactoryService</a></li>                <li><a href="ResourcePhantomIdNegativeInt.html">ResourcePhantomIdNegativeInt</a></li>                <li><a href="ResourcePhantomIdUuid4.html">ResourcePhantomIdUuid4</a></li>            </ul>            <h3>service</h3>            <ul>                <li><a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a></li>            </ul>        </ul>    </nav>    <h1 class="title">      constructor:ResourceStore        <a class="name-link signature-attributes" href="source/ResourceStore.html#line1058">source</a>    </h1>    <div id="main">      <div class="container-overview">      <dt></dt>      <dd>        <div class="description">          <p>Constructor function for a resource store. A resource store manages inserts, updates and
-deletes of instances, can create sub-stores that commit changes to the parent store, and
-sets up relations between resource types (e.g. to update reference keys).</p>        </div>        <div class="details"></div>      </dd>    </div>    <section>      <div class="member">      </div>      <div class="functions">        <h3 class="subsection-title">Methods</h3>        <dl>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                addResourceInstance                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds the given instance to the given list of instances. Does nothing if the instance
-is already in the list of instances.</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                copy                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Copies the source object to the destination object (or array). Keeps private
-attributes on the <code>dst</code> object (attributes starting with $ are private).</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                init                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Initializes the store instance</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                isPromiseLike                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Internal function for checking if an object can be treated as an promise.</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                merge                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Merges the source object to the destination object (or array). Keeps private
-attributes on the <code>dst</code> object (attributes starting with $ are private).</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                populate                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Populates the destination object <code>dst</code> by copying the non-private data from <code>src</code> object. The data
-on the <code>dst</code> object will be a deep copy of the data on the <code>src</code>. This function will not copy
-attributes of the <code>src</code> whose names start with &quot;$&quot;. These attributes are considered private. The
-method will also keep the private attributes of the <code>dst</code>.</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                removeResourceInstance                  <span class="signature">()</span>              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes the given instance from the given list of instances. Does nothing if the instance
-is not in the list of instances.</p>            </div>              <h5>Parameters:</h5>              <table class="params">                <thead>                  <tr><th>Name</th><th>Type</th><th class="last">Description</th></tr>                </thead>                <tbody>                </tbody>              </table>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.addAfterPersistListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds a after-persist listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.addAfterRemoveListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds a after-remove listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.addBeforePersistListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds a before-persist listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.addBeforeRemoveListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds a before-remove listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.commit              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Commits changes to the parent store</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.createChildStore              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Creates a new child store from the current store. This store can make changes
-to it's managed instances and it will not affect the current stores
-instances until the child store commits.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.createRelation              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Adds a relation to another store.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.execute              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Execute the change queue and clears the change queue if clearAfter is set to true (default).</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.executeAll              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Executes the change queue on this an all related stores and clears the change queue if clearAfter is
-set to true (default).</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.forget              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Forget (un-manage) given instances. The instances object may be a ng-resource result,
-a promise, a list of instances or a single instance.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getByInstance              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the managed instance from the store that matches the given
-instance (which might by an copy that is not managed or managed by
-another store). The instances are matched by their PK attribute.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getByPk              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the managed instance from the store that matches the given
-PK attribute value.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getManagedInstances              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances visible for the user.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getPersistQueue              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances marked for persist.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getRemoveQueue              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances marked for remove.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getResourceService              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets the managed resource service.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getSaveQueue              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances marked for save (insert).</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getUpdateQueue              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances marked for update.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.getVisibleQueue              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Gets a list of instances visible for the user.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.manage              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Manage given instances. The new instances object may be a ng-resource result,
-a promise, a list of instances or a single instance.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.new              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Returns a new instance managed by the store.</p>            </div>              <h5>Returns:</h5>              <div class="param-desc"></div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.persist              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Queues given instance for persistence.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.remove              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Queues given instance for deletion.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.removeAfterPersistListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes a after-persist listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.removeAfterRemoveListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes a after-remove listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.removeBeforePersistListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes a before-persist listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.removeBeforeRemoveListener              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes a before-remove listener.</p>            </div>          </dd>          <dt>            <a href="source/ResourceStore.html#line1058" class="name-link">              <h4 class="name">                self.removeRelation              </h4>            </a>          </dt>          <dd>            <div class="description">              <p>Removes a relation from the store.</p>            </div>          </dd>        </dl>      </div>    </section>    </div>    <footer style="clear:both">      Documentation generated by      <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a>      using       <a href="https://github.com/allenhwkim/angular-jsdoc">Angular-JSDoc template</a>     </footer>    <!--%= prettyJson %-->    <script>      prettyPrint();      var lineNo = window.location.hash.match(/#line([0-9]+)$/);      lineNo && document.querySelector("ol li:nth-child("+(lineNo[1])+")").scrollIntoView();    </script>  </body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ResourceStore - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ResourceCacheService.html">ResourceCacheService</a><ul class='methods'><li data-type='method'><a href="ResourceCacheService.html#.get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#.info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#.removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#destroy">destroy</a></li><li data-type='method'><a href="ResourceCacheService.html#get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#insert">insert</a></li><li data-type='method'><a href="ResourceCacheService.html#put">put</a></li><li data-type='method'><a href="ResourceCacheService.html#refresh">refresh</a></li><li data-type='method'><a href="ResourceCacheService.html#remove">remove</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllDependent">removeAllDependent</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllLists">removeAllLists</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllObjects">removeAllObjects</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllRaw">removeAllRaw</a></li></ul></li><li><a href="ResourceFactoryService.html">ResourceFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourceFactoryService.html#createStore">createStore</a></li><li data-type='method'><a href="ResourceFactoryService.html#filter">filter</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterInstancesByAttr">filterInstancesByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterNoCache">filterNoCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCache">getCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCacheClass">getCacheClass</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByAttr">getInstanceByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByPk">getInstanceByPk</a></li><li data-type='method'><a href="ResourceFactoryService.html#getPkAttr">getPkAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryDataAttr">getQueryDataAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryFilters">getQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryTotalAttr">getQueryTotalAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getResourceName">getResourceName</a></li><li data-type='method'><a href="ResourceFactoryService.html#isPhantom">isPhantom</a></li><li data-type='method'><a href="ResourceFactoryService.html#new">new</a></li><li data-type='method'><a href="ResourceFactoryService.html#persist">persist</a></li><li data-type='method'><a href="ResourceFactoryService.html#setDefaultQueryFilters">setDefaultQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#setQueryFilters">setQueryFilters</a></li></ul></li><li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactory.html#generate">generate</a></li><li data-type='method'><a href="ResourcePhantomIdFactory.html#isPhantom">isPhantom</a></li></ul></li><li><a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactoryService.html#.createPhantomIdFactory">createPhantomIdFactory</a></li></ul></li><li><a href="ResourceStore.html">ResourceStore</a><ul class='methods'><li data-type='method'><a href="ResourceStore.html#addAfterPersistListener">addAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addAfterRemoveListener">addAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforePersistListener">addBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforeRemoveListener">addBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#commit">commit</a></li><li data-type='method'><a href="ResourceStore.html#createChildStore">createChildStore</a></li><li data-type='method'><a href="ResourceStore.html#createRelation">createRelation</a></li><li data-type='method'><a href="ResourceStore.html#execute">execute</a></li><li data-type='method'><a href="ResourceStore.html#executeAll">executeAll</a></li><li data-type='method'><a href="ResourceStore.html#forget">forget</a></li><li data-type='method'><a href="ResourceStore.html#getByInstance">getByInstance</a></li><li data-type='method'><a href="ResourceStore.html#getByPk">getByPk</a></li><li data-type='method'><a href="ResourceStore.html#getManagedInstances">getManagedInstances</a></li><li data-type='method'><a href="ResourceStore.html#getPersistQueue">getPersistQueue</a></li><li data-type='method'><a href="ResourceStore.html#getRemoveQueue">getRemoveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getResourceService">getResourceService</a></li><li data-type='method'><a href="ResourceStore.html#getSaveQueue">getSaveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getUpdateQueue">getUpdateQueue</a></li><li data-type='method'><a href="ResourceStore.html#getVisibleQueue">getVisibleQueue</a></li><li data-type='method'><a href="ResourceStore.html#manage">manage</a></li><li data-type='method'><a href="ResourceStore.html#new">new</a></li><li data-type='method'><a href="ResourceStore.html#persist">persist</a></li><li data-type='method'><a href="ResourceStore.html#remove">remove</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterPersistListener">removeAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterRemoveListener">removeAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforePersistListener">removeBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforeRemoveListener">removeBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeRelation">removeRelation</a></li></ul></li><li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a><ul class='methods'><li data-type='method'><a href="ResourceStoreRelation.html#getFkAttr">getFkAttr</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getRelatedStore">getRelatedStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getStore">getStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleRemove">handleRemove</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleUpdate">handleUpdate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></li><li><a href="global.html#ResourcePhantomIdUuid4">ResourcePhantomIdUuid4</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ResourceStore</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        ResourceStore
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="ResourceStore"><span class="type-signature"></span>new ResourceStore<span class="signature">(resource, managedInstances, parentStore)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1200">line 1200</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Constructor function for a resource store. A resource store manages inserts, updates and<br>deletes of instances, can create sub-stores that commit changes to the parent store, and<br>sets up relations between resource types (e.g. to update reference keys).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Basic usage of a resource store
+inject(function (ResourceFactoryService, $q) {
+    var
+        service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+        instance1 = service.new(),
+        instance2 = service.new(),
+        instance3 = service.new(),
+        store = service.createStore([instance1, instance2, instance3]);
+
+    $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+    $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+    $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
+
+    instance1.pk = 1;
+    instance2.pk = 2;
+
+    store.remove(instance2);
+    store.persist(instance1);
+    store.persist(instance3);
+
+    $q.when()
+        .then(function () {
+            return store.execute();
+        })
+        .then(done);
+
+    $httpBackend.flush();
+});</code></pre>
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resource</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ResourceFactoryService.html">ResourceFactoryService</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Resource service instance</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>managedInstances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>List of resource instances to manage</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parentStore</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ResourceStore.html">ResourceStore</a></span>
+|
+
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The store of which the new store is a sub-store of</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="addAfterPersistListener"><span class="type-signature"></span>addAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2074">line 2074</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a after-persist listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addAfterRemoveListener"><span class="type-signature"></span>addAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2134">line 2134</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a after-remove listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addBeforePersistListener"><span class="type-signature"></span>addBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2044">line 2044</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a before-persist listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addBeforeRemoveListener"><span class="type-signature"></span>addBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2104">line 2104</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a before-remove listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="commit"><span class="type-signature"></span>commit<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1525">line 1525</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Commits changes to the parent store</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createChildStore"><span class="type-signature"></span>createChildStore<span class="signature">(instances)</span><span class="type-signature"> &rarr; {<a href="ResourceStore.html">ResourceStore</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1851">line 1851</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Creates a new child store from the current store. This store can make changes<br>to it's managed instances and it will not affect the current stores<br>instances until the child store commits.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instances to manage on the child store (default: all instances on the parent store)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>New child store</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="ResourceStore.html">ResourceStore</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createRelation"><span class="type-signature"></span>createRelation<span class="signature">(config)</span><span class="type-signature"> &rarr; {<a href="ResourceStoreRelation.html">ResourceStoreRelation</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1871">line 1871</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Adds a relation to another store.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Configuration object</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>relatedStore</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ResourceStore.html">ResourceStore</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Store instance this store has a relation to</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fkAttr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Foreign key attribute on instances on the related store</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onRemove</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">"forget"</span>
+|
+
+<span class="param-type">"null"</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>What to do on the related instances if instances on this store are removed (default: <code>&quot;forget&quot;</code>)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onUpdate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+|
+
+<span class="param-type">"update"</span>
+|
+
+<span class="param-type">"null"</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>What to do on the related instances if instances on this store are updated (default: <code>&quot;update&quot;</code>)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>New relation</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="ResourceStoreRelation.html">ResourceStoreRelation</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1629">line 1629</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Execute the change queue and clears the change queue if clearAfter is set to true (default).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>clearAfter</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Clear change queue on the store after executing (default: <code>true</code>)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="executeAll"><span class="type-signature"></span>executeAll<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1581">line 1581</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Executes the change queue on this an all related stores and clears the change queue if clearAfter is<br>set to true.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>clearAfter</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Clear change queue on all stores after executing (default: <code>true</code>)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="forget"><span class="type-signature"></span>forget<span class="signature">(oldInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1380">line 1380</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Forget (un-manage) given instances. The instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>oldInstances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instances the store should forget</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Promise that resolves if all given instances are resolved</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getByInstance"><span class="type-signature"></span>getByInstance<span class="signature">(instance)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1932">line 1932</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the managed instance from the store that matches the given<br>instance (which might by an copy that is not managed or managed by<br>another store). The instances are matched by their PK attribute.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instance to search for in the store</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Resource instance managed by the store matching the given instance that might by not managed by the store</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getByPk"><span class="type-signature"></span>getByPk<span class="signature">(pkValue)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1918">line 1918</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the managed instance from the store that matches the given<br>PK attribute value.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pkValue</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Resource instance managed by the store with the given PK value</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getManagedInstances"><span class="type-signature"></span>getManagedInstances<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1950">line 1950</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances visible for the user.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances managed by the store</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getPersistQueue"><span class="type-signature"></span>getPersistQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1974">line 1974</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances marked for persist.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances marked for persistence</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getRemoveQueue"><span class="type-signature"></span>getRemoveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1986">line 1986</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances marked for remove.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances marked for removal</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getResourceService"><span class="type-signature"></span>getResourceService<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="ResourceFactoryService.html">ResourceFactoryService</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2032">line 2032</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets the managed resource service.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Resource service instance</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="ResourceFactoryService.html">ResourceFactoryService</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getSaveQueue"><span class="type-signature"></span>getSaveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1998">line 1998</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances marked for save (e.g. insert).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances marked for save</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getUpdateQueue"><span class="type-signature"></span>getUpdateQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2015">line 2015</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances marked for update.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances marked for update</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getVisibleQueue"><span class="type-signature"></span>getVisibleQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1962">line 1962</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Gets a list of instances visible for the user (e.g. that are not marked for removal).</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Instances visible for the user</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">(newInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1315">line 1315</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Manage given instances. The new instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newInstances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>List of instances to manage</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Promise that resolves if all given instances are resolved</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="new"><span class="type-signature"></span>new<span class="signature">(params<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1447">line 1447</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Returns a new instance managed by the store.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>params</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Object holding attributes to set on the resource instance</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>New resource instance that is managed by the store</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="persist"><span class="type-signature"></span>persist<span class="signature">(instances)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1465">line 1465</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Queues given instance for persistence.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instances that should be queued for persistence</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(instances)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1495">line 1495</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Queues given instance for deletion.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>instances</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
+|
+
+<span class="param-type">Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Instances that should be queued for removing</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeAfterPersistListener"><span class="type-signature"></span>removeAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2086">line 2086</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes a after-persist listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeAfterRemoveListener"><span class="type-signature"></span>removeAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2146">line 2146</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes a after-remove listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeBeforePersistListener"><span class="type-signature"></span>removeBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2056">line 2056</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes a before-persist listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeBeforeRemoveListener"><span class="type-signature"></span>removeBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2116">line 2116</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes a before-remove listener.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeRelation"><span class="type-signature"></span>removeRelation<span class="signature">(relation)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1900">line 1900</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Removes a relation from the store.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>relation</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ResourceStoreRelation.html">ResourceStoreRelation</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Relation instance to remove</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
