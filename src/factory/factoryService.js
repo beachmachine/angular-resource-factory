@@ -901,9 +901,17 @@
                  * Creates a new store for the resource
                  *
                  * @memberOf ResourceFactory
+                 * @param [instances]
                  * @return {ResourceStore}
                  */
                 resource.createStore = function (instances) {
+                    instances = instances || [];
+
+                    // Support for single instances by converting it to an array
+                    if (!angular.isArray(instances)) {
+                        instances = [instances];
+                    }
+
                     return new ResourceStore(resource, instances, null);
                 };
 
@@ -1663,12 +1671,12 @@
                     config = angular.extend({
                         relatedStore: null,
                         fkAttr: null,
-                        onDelete: 'forget',
+                        onRemove: 'forget',
                         onUpdate: 'update'
                     }, config);
 
                     var
-                        relation = new ResourceStoreRelation(self, config.relatedStore, config.fkAttr, config.onUpdate, config.onDelete);
+                        relation = new ResourceStoreRelation(self, config.relatedStore, config.fkAttr, config.onUpdate, config.onRemove);
 
                     relations.push(relation);
 
