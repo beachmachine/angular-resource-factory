@@ -213,6 +213,7 @@ describe("ResourceStoreRelation",
                 store.createRelation({
                     relatedStore: relatedStore,
                     fkAttr: 'fk',
+                    onDispose: 'ignore',
                     onRemove: 'forget'
                 });
 
@@ -260,6 +261,7 @@ describe("ResourceStoreRelation",
                 store.createRelation({
                     relatedStore: relatedStore,
                     fkAttr: 'fk',
+                    onDispose: 'ignore',
                     onRemove: 'null'
                 });
 
@@ -317,6 +319,7 @@ describe("ResourceStoreRelation",
                 store.createRelation({
                     relatedStore: relatedStore,
                     fkAttr: 'fk',
+                    onDispose: 'ignore',
                     onRemove: callback
                 });
 
@@ -340,6 +343,138 @@ describe("ResourceStoreRelation",
 
                 $httpBackend.flush();
                 $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does forget related instance on dispose if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    relatedService = ResourceFactoryService('RelatedTestResourceService', 'http://relatedtest/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    relatedInstance1 = relatedService.new(),
+                    relatedInstance2 = relatedService.new(),
+                    store = service.createStore([instance1, instance2]),
+                    relatedStore = relatedService.createStore([relatedInstance1, relatedInstance2]);
+
+                store.createRelation({
+                    relatedStore: relatedStore,
+                    fkAttr: 'fk',
+                    onDispose: 'forget',
+                    onRemove: 'ignore'
+                });
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                relatedInstance1.fk = 1;
+                relatedInstance2.fk = 2;
+
+                $q.when()
+                    .then(function () {
+                        expect(relatedStore.getManagedInstances().length).toBe(2);
+                    })
+                    .then(function () {
+                        store.remove(instance1);
+                    })
+                    .then(function () {
+                        expect(relatedStore.getManagedInstances().length).toBe(1);
+                        expect(relatedStore.getManagedInstances()[0]).toBe(relatedInstance2);
+                    })
+                    .then(done);
+
+                $rootScope.$apply();
+            });
+        });
+
+        it("Does set foreign key attribute to null on dispose if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    relatedService = ResourceFactoryService('RelatedTestResourceService', 'http://relatedtest/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    relatedInstance1 = relatedService.new(),
+                    relatedInstance2 = relatedService.new(),
+                    store = service.createStore([instance1, instance2]),
+                    relatedStore = relatedService.createStore([relatedInstance1, relatedInstance2]);
+
+                store.createRelation({
+                    relatedStore: relatedStore,
+                    fkAttr: 'fk',
+                    onDispose: 'null',
+                    onRemove: 'ignore'
+                });
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                relatedInstance1.fk = 1;
+                relatedInstance2.fk = 2;
+
+                $q.when()
+                    .then(function () {
+                        expect(relatedStore.getManagedInstances().length).toBe(2);
+                    })
+                    .then(function () {
+                        store.remove(instance1);
+                    })
+                    .then(function () {
+                        expect(relatedStore.getManagedInstances().length).toBe(2);
+                        expect(relatedInstance1.fk).toBe(null);
+                        expect(relatedInstance2.fk).toBe(2);
+                    })
+                    .then(done);
+
+                $rootScope.$apply();
+            });
+        });
+
+        it("Does call custom function on dispose if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+                    relatedService = ResourceFactoryService('RelatedTestResourceService', 'http://relatedtest/:pk/'),
+                    instance1 = service.new(),
+                    instance2 = service.new(),
+                    relatedInstance1 = relatedService.new({fk: instance1.pk}),
+                    relatedInstance2 = relatedService.new({fk: instance2.pk}),
+                    store = service.createStore([instance1, instance2]),
+                    relatedStore = relatedService.createStore([relatedInstance1, relatedInstance2]),
+                    callCount = 0,
+                    callback = function (store, instance, oldReferencedInstancePk, fkAttr) {
+                        expect(store).toBe(relatedStore);
+                        expect(instance).toBe(relatedInstance1);
+                        expect(oldReferencedInstancePk).toBe(1);
+                        expect(fkAttr).toBe('fk');
+
+                        callCount++;
+                    };
+
+                store.createRelation({
+                    relatedStore: relatedStore,
+                    fkAttr: 'fk',
+                    onDispose: callback,
+                    onRemove: 'ignore'
+                });
+
+                instance1.pk = 1;
+                instance2.pk = 2;
+
+                relatedInstance1.fk = 1;
+                relatedInstance2.fk = 2;
+
+                $q.when()
+                    .then(function () {
+                        store.remove(instance1);
+                    })
+                    .then(function () {
+                        expect(callCount).toBe(1);
+                    })
+                    .then(done);
+
+                $rootScope.$apply();
             });
         });
 

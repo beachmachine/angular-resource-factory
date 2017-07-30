@@ -1,6 +1,6 @@
 {
   "name": "angular-resource-factory",
-  "version": "0.8.11",
+  "version": "0.8.12",
   "description": "A factory build upon $resource helping you to interact with RESTful APIs with advanced features as caches and data stores.",
   "main": "dist/ngresourcefactory.min.js",
   "repository": {
@@ -48,7 +48,6 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-spec-reporter": "0.0.31",
     "karma-verbose-reporter": "0.0.6",
-    "latodoc": "github:smeijer/latodoc",
     "license-checker": "^8.0.4",
     "lodash": "^4.17.4",
     "simple-jsdoc": "0.0.4"

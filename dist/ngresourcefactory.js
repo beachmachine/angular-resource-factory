@@ -2317,12 +2317,18 @@
 
                             for (var i = 0; i < oldInstances.length; i++) {
                                 var
-                                    oldInstance = oldInstances[i];
+                                    oldInstance = oldInstances[i],
+                                    oldInstancePkValue = oldInstance ? oldInstance[resource.getPkAttr()] : null;
 
                                 // If the instance is not managed yet, manage it
                                 if (oldInstance.$store === self) {
                                     // Remove the store attribute from the instance
                                     delete oldInstance.$store;
+
+                                    // Call the dispose handler on all relations for the disposed instance
+                                    for (var j = 0; j < relations.length; j++) {
+                                        relations[j].handleDispose(oldInstancePkValue);
+                                    }
 
                                     // Remove the instance from the list of managed instances
                                     removeResourceInstance(managedInstances, oldInstance);
@@ -2331,12 +2337,12 @@
                                     removeResourceInstance(removeQueue, oldInstance);
                                 }
                                 // If the instances is already managed by another store, print an error
-                                else if (oldInstance.$store !== self) {
+                                else if (!!oldInstance.$store && oldInstance.$store !== self) {
                                     console.error("ResourceStore: '" + resourceName + "' instance managed by another store.");
                                 }
-                                // If the instance is already managed by this store, do nothing but logging
+                                // If the instance is not managed by any store, print an error
                                 else {
-                                    console.log("ResourceStore: '" + resourceName + "' instance is not managed.");
+                                    console.error("ResourceStore: '" + resourceName + "' instance is not managed.");
                                 }
                             }
                         };
@@ -2427,9 +2433,15 @@
 
                     for (var i = 0; i < instances.length; i++) {
                         var
-                            instance = instances[i];
+                            instance = instances[i],
+                            instancePkValue = instance ? instance[resource.getPkAttr()] : null;
 
                         if (instance.$store === self) {
+                            // Call the dispose handler on all relations for the disposed instance
+                            for (var j = 0; j < relations.length; j++) {
+                                relations[j].handleDispose(instancePkValue);
+                            }
+
                             removeResourceInstance(persistQueue, instance);
                             removeResourceInstance(visibleQueue, instance);
                             addResourceInstance(removeQueue, instance);
@@ -2596,12 +2608,23 @@
                             }
                         },
 
+                        /**
+                         * Calls the remove handler on the registered relations.
+                         * @param pkValue
+                         * @private
+                         */
                         relationsRemove = function (pkValue) {
                             for (var i = 0; i < relations.length; i++) {
                                 relations[i].handleRemove(pkValue);
                             }
                         },
 
+                        /**
+                         * Calls the update handler on the registered relations.
+                         * @param oldPkValue
+                         * @param newPkValue
+                         * @private
+                         */
                         relationsUpdate = function (oldPkValue, newPkValue) {
                             for (var i = 0; i < relations.length; i++) {
                                 relations[i].handleUpdate(oldPkValue, newPkValue);
@@ -2787,15 +2810,27 @@
                 };
 
                 /**
-                 * Adds a relation to another store.
+                 * Adds a relation to another store. Relations do automatically update foreign key attributes on
+                 * instances on a related store when certain events occur. These events include:
+                 *  - `remove`: An instance was removed on the server (e.g. by a DELETE call)
+                 *  - `dispose`: An instances was removed for forgot on the store (e.g. by `remove` or `forget` methods on the store)
+                 *  - `update`: An instance got a new PK from the server after saving
+                 *
+                 * You can either use pre-defined behaviours for these events, or hook in custom functions. The pre-defined
+                 * behaviours are:
+                 *  - `"forget"`: Forget the referencing instance on the related store
+                 *  - `"null"`: Set the foreign key attribute on the referencing instance to `null`
+                 *  - `"update"`: Set the foreign key attribute on the referencing instance to the new PK
+                 *  - `"ignore"`: Do nothing
                  *
                  * @memberOf ResourceStore
                  * @function createRelation
                  * @param {Object} config Configuration object
                  * @param {ResourceStore} config.relatedStore Store instance this store has a relation to
                  * @param {String} config.fkAttr Foreign key attribute on instances on the related store
-                 * @param {Function|"forget"|"null"} config.onRemove What to do on the related instances if instances on this store are removed (default: `"forget"`)
-                 * @param {Function|"update"|"null"} config.onUpdate What to do on the related instances if instances on this store are updated (default: `"update"`)
+                 * @param {Function|"forget"|"null"|"ignore"} config.onRemove What to do on the related instances if instances on this store are removed (default: `"forget"`)
+                 * @param {Function|"forget"|"null"|"ignore"} config.onDispose What to do on the related instances if instances on this store are disposed (default: `"forget"`)
+                 * @param {Function|"update"|"null"|"ignore"} config.onUpdate What to do on the related instances if instances on this store are updated (default: `"update"`)
                  * @return {ResourceStoreRelation} New relation
                  * @instance
                  */
@@ -2804,11 +2839,12 @@
                         relatedStore: null,
                         fkAttr: null,
                         onRemove: 'forget',
+                        onDispose: 'forget',
                         onUpdate: 'update'
                     }, config);
 
                     var
-                        relation = new ResourceStoreRelation(self, config.relatedStore, config.fkAttr, config.onUpdate, config.onRemove);
+                        relation = new ResourceStoreRelation(self, config.relatedStore, config.fkAttr, config.onUpdate, config.onRemove, config.onDispose);
 
                     relations.push(relation);
 
@@ -3343,8 +3379,9 @@
              * @param {ResourceStore} store Store to create the relation on
              * @param {ResourceStore} relatedStore Related store
              * @param {String} fkAttr Name of foreign key attribute on instances on related store
-             * @param {Function|"update"|"null"} onUpdate What to do on the related instances if instances on the store are updated
-             * @param {Function|"forget"|"null"} onRemove What to do on the related instances if instances on the store are removed
+             * @param {Function|"update"|"null"|"ignore"} onUpdate What to do on the related instances if instances on the store are updated
+             * @param {Function|"forget"|"null"|"ignore"} onRemove What to do on the related instances if instances on the store are removed
+             * @param {Function|"forget"|"null"|"ignore"} onDispose What to do on the related instances if instances on the store are disposed
              * @class
              *
              * @example
@@ -3389,7 +3426,7 @@
              *     $httpBackend.flush();
              * });
              */
-            function ResourceStoreRelation (store, relatedStore, fkAttr, onUpdate, onRemove) {
+            function ResourceStoreRelation (store, relatedStore, fkAttr, onUpdate, onRemove, onDispose) {
                 var
                     self = this;
 
@@ -3411,6 +3448,9 @@
                             referencingInstance[fkAttr] = null;
                         };
                         break;
+                    case 'ignore':
+                        onUpdate = function (referencingStore, referencingInstance, oldReferencedInstancePk, newReferencedInstancePk, fkAttr) { };
+                        break;
                 }
 
                 /*
@@ -3430,6 +3470,32 @@
 
                             referencingInstance[fkAttr] = null;
                         };
+                        break;
+                    case 'ignore':
+                        onRemove = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) { };
+                        break;
+                }
+
+                /*
+                 * Implementation of pre-defined dispose behaviours
+                 */
+                switch (onDispose) {
+                    case 'forget':
+                        onDispose = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) {
+                            console.log("ResourceStoreRelation: Forget '" + relatedStore.getResourceService().getResourceName() + "' instance '" + oldReferencedInstancePk + "' referencing instance.");
+
+                            referencingStore.forget(referencingInstance);
+                        };
+                        break;
+                    case 'null':
+                        onDispose = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) {
+                            console.log("ResourceStoreRelation: Set reference to '" + relatedStore.getResourceService().getResourceName() + "' instance from '" + oldReferencedInstancePk + "' to null.");
+
+                            referencingInstance[fkAttr] = null;
+                        };
+                        break;
+                    case 'ignore':
+                        onDispose = function (referencingStore, referencingInstance, oldReferencedInstancePk, fkAttr) { };
                         break;
                 }
 
@@ -3470,13 +3536,13 @@
                 };
 
                 /**
-                 * Updates the referencing instances where the fkAttr has the given old
-                 * value to the given new value.
+                 * Starts the configured update behaviour on the referencing instances on the related store. This is
+                 * called when an instance was saved / updated on the server and got a new PK.
                  *
                  * @memberOf ResourceStoreRelation
                  * @function handleUpdate
-                 * @param {String|int} oldPkValue Old PK value
-                 * @param {String|int} newPkValue New PK value
+                 * @param {String|int} oldPkValue PK of the instance on the store before the update
+                 * @param {String|int} newPkValue PK of the instance on the store after the update
                  * @instance
                  */
                 self.handleUpdate = function (oldPkValue, newPkValue) {
@@ -3496,12 +3562,12 @@
                 };
 
                 /**
-                 * Lets the related store forget stale referencing instances, e.g. because the
-                 * referenced instance was deleted.
+                 * Starts the configured remove behaviour on the referencing instances on the related store. This is
+                 * called when an instance was deleted on the server.
                  *
                  * @memberOf ResourceStoreRelation
                  * @function handleRemove
-                 * @param {String|int} pkValue PK value
+                 * @param {String|int} pkValue PK of the instance on the store
                  * @instance
                  */
                 self.handleRemove = function (pkValue) {
@@ -3518,7 +3584,32 @@
                             onRemove(relatedStore, referencingInstance, pkValue, fkAttr);
                         }
                     }
-                }
+                };
+
+                /**
+                 * Starts the configured dispose behaviour on the referencing instances on the related store. This is
+                 * called when an instance was removed or forgot on the store.
+                 *
+                 * @memberOf ResourceStoreRelation
+                 * @function handleDispose
+                 * @param {String|int} pkValue PK of the instance on the store
+                 * @instance
+                 */
+                self.handleDispose = function (pkValue) {
+                    console.log("ResourceStoreRelation: Handle dispose of referenced instance on '" + relatedStore.getResourceService().getResourceName() + "' store.");
+
+                    var
+                        referencingInstances = relatedStore.getManagedInstances();
+
+                    for (var i = 0; i < referencingInstances.length; i++) {
+                        var
+                            referencingInstance = referencingInstances[i];
+
+                        if (referencingInstance && referencingInstance[fkAttr] == pkValue) {
+                            onDispose(relatedStore, referencingInstance, pkValue, fkAttr);
+                        }
+                    }
+                };
             }
         }]
     );
