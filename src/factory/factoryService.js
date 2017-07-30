@@ -75,6 +75,7 @@
      * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
      * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
      * @class
+     *
      * @example
      * // Basic GET calls
      * inject(function (ResourceFactoryService, $q) {

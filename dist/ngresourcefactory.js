@@ -106,6 +106,7 @@
      * @param {String[]} options.dependent List of dependent cache names (default: `[]`)
      * @param {int} options.ttl Time to live for cache entries in seconds (default: `3600`)
      * @class
+     *
      * @example
      * // Directly using `ResourceCacheService`
      * inject(function (ResourceCacheService) {
@@ -995,6 +996,7 @@
      * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
      * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
      * @class
+     *
      * @example
      * // Basic GET calls
      * inject(function (ResourceFactoryService, $q) {
@@ -3556,6 +3558,7 @@
      * @see ResourcePhantomIdNegativeInt
      * @see ResourcePhantomIdUuid4
      * @class
+     *
      * @example
      * // ResourcePhantomIdFactory that creates negative IDs as phantom IDs (NOTE: this is already a build-in
      * // phantom ID factory, so you do not have to implement this - @see ResourcePhantomIdNegativeInt)
@@ -3622,6 +3625,7 @@
              * @see ResourcePhantomIdNegativeInt
              * @see ResourcePhantomIdUuid4
              * @class
+             *
              * @example
              * // ResourcePhantomIdFactory that creates negative IDs as phantom IDs (NOTE: this is already a build-in
              * // phantom ID factory, so you do not have to implement this)
@@ -3693,6 +3697,33 @@
      * @name ResourcePhantomIdNegativeInt
      * @ngdoc object
      * @param {ResourcePhantomIdFactoryService} ResourcePhantomIdFactoryService Phantom ID factory service
+     *
+     * @example
+     * // Using `ResourcePhantomIdNegativeInt`
+     * inject(function (ResourceFactoryService, ResourcePhantomIdNegativeInt) {
+     *     var
+     *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+     *             phantomIdGenerator: ResourcePhantomIdNegativeInt
+     *         }),
+     *         phantomInstance1 = service.new(),
+     *         phantomInstance2 = service.new();
+     *
+     *     // Test if IDs are negative
+     *     expect(phantomInstance1.pk).toBe(-1);
+     *     expect(phantomInstance2.pk).toBe(-2);
+     *
+     *     // Test if instances are marked as phantom
+     *     expect(phantomInstance1.$isPhantom()).toBe(true);
+     *     expect(phantomInstance2.$isPhantom()).toBe(true);
+     *
+     *     // Change IDs
+     *     phantomInstance1.pk = 1;
+     *     phantomInstance2.pk = 2;
+     *
+     *     // Test if instances are marked as concrete for positive IDs
+     *     expect(phantomInstance1.$isPhantom()).toBe(false);
+     *     expect(phantomInstance2.$isPhantom()).toBe(false);
+     * });
      */
     module.factory('ResourcePhantomIdNegativeInt',
         ['ResourcePhantomIdFactoryService', function (ResourcePhantomIdFactoryService) {
@@ -3718,6 +3749,33 @@
      * @name ResourcePhantomIdUuid4
      * @ngdoc object
      * @param {ResourcePhantomIdFactoryService} ResourcePhantomIdFactoryService Phantom ID factory service
+     *
+     * @example
+     * // Using `ResourcePhantomIdUuid4`
+     * inject(function (ResourceFactoryService, ResourcePhantomIdUuid4) {
+     *     var
+     *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+     *             phantomIdGenerator: ResourcePhantomIdUuid4
+     *         }),
+     *         phantomInstance1 = service.new(),
+     *         phantomInstance2 = service.new();
+     *
+     *     // Test if IDs are valid UUID4s
+     *     expect(phantomInstance1.pk).toMatch(/[\d\w]{8}-[\d\w]{4}-[\d\w]{4}-[\d\w]{4}-[\d\w]{12}/i);
+     *     expect(phantomInstance2.pk).toMatch(/[\d\w]{8}-[\d\w]{4}-[\d\w]{4}-[\d\w]{4}-[\d\w]{12}/i);
+     *
+     *     // Test if instances are marked as phantom as long as UUID4s match one of the generated
+     *     expect(phantomInstance1.$isPhantom()).toBe(true);
+     *     expect(phantomInstance2.$isPhantom()).toBe(true);
+     *
+     *     // Change IDs
+     *     phantomInstance1.pk = '00000000-0000-0000-0000-000000000000';
+     *     phantomInstance2.pk = '11111111-1111-1111-1111-111111111111';
+     *
+     *     // Test if instances are marked as concrete for not generated UUID4s
+     *     expect(phantomInstance1.$isPhantom()).toBe(false);
+     *     expect(phantomInstance2.$isPhantom()).toBe(false);
+     * });
      */
     module.factory('ResourcePhantomIdUuid4',
         ['ResourcePhantomIdFactoryService', function (ResourcePhantomIdFactoryService) {

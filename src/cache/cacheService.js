@@ -39,6 +39,7 @@
      * @param {String[]} options.dependent List of dependent cache names (default: `[]`)
      * @param {int} options.ttl Time to live for cache entries in seconds (default: `3600`)
      * @class
+     *
      * @example
      * // Directly using `ResourceCacheService`
      * inject(function (ResourceCacheService) {
