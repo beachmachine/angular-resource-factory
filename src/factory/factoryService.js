@@ -25,11 +25,6 @@
         module = angular.module('ngResourceFactory');
 
     /**
-     * A resource instance created via an instance of `ResourceFactoryService`.
-     * @typedef {Object|Array.<Object>} ResourceInstance
-     */
-
-    /**
      * Factory that gives a constructor function for creating a resource service. The resource service is used to make
      * calls to the REST-API via the "method" functions. These are the default method functions:
      * ```javascript
@@ -61,6 +56,7 @@
      * means you do not see a loading bar if you are using `angular-loading-bar` ({@link http://chieffancypants.github.io/angular-loading-bar/}).
      *
      * @name ResourceFactoryService
+     * @ngdoc service
      * @param {String} name Name of the resource service
      * @param {String} url URL to the resource
      * @param {Object} options Options for the resource
@@ -952,10 +948,10 @@
                  *
                  * @memberOf ResourceFactoryService
                  * @function filterInstancesByAttr
-                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {ResourceInstance[]} instances List of instances to filter
                  * @param {String} attrName Attribute name to filter on
                  * @param {*} attrValue Value to filter for
-                 * @return {Array.<ResourceInstance>} Filtered list of instances
+                 * @return {ResourceInstance[]} Filtered list of instances
                  * @instance
                  */
                 resource.filterInstancesByAttr = function (instances, attrName, attrValue) {
@@ -973,7 +969,7 @@
                  *
                  * @memberOf ResourceFactoryService
                  * @function getInstanceByAttr
-                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {ResourceInstance[]} instances List of instances to filter
                  * @param {String} attrName Attribute name to filter on
                  * @param {*} attrValue Value to filter for
                  * @return {ResourceInstance|null} First instances matching the filter
@@ -1000,7 +996,7 @@
                  *
                  * @memberOf ResourceFactoryService
                  * @function getInstanceByPk
-                 * @param {Array.<ResourceInstance>} instances List of instances to filter
+                 * @param {ResourceInstance[]} instances List of instances to filter
                  * @param {String|int} pkValue PK value to filter for
                  * @return {ResourceInstance|null} Instance with the given PK
                  * @instance
@@ -1204,7 +1200,7 @@
              *
              * @name ResourceStore
              * @param {ResourceFactoryService} resource Resource service instance
-             * @param {Array.<ResourceInstance>} managedInstances List of resource instances to manage
+             * @param {ResourceInstance[]} managedInstances List of resource instances to manage
              * @param {ResourceStore|null} parentStore The store of which the new store is a sub-store of
              * @class
              *
@@ -1318,7 +1314,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function manage
-                 * @param {ResourceInstance|Array.<ResourceInstance>} newInstances List of instances to manage
+                 * @param {ResourceInstance|ResourceInstance[]} newInstances List of instances to manage
                  * @return {Promise} Promise that resolves if all given instances are resolved
                  * @instance
                  */
@@ -1383,7 +1379,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function forget
-                 * @param {ResourceInstance|Array.<ResourceInstance>} oldInstances Instances the store should forget
+                 * @param {ResourceInstance|ResourceInstance[]} oldInstances Instances the store should forget
                  * @return {Promise} Promise that resolves if all given instances are resolved
                  * @instance
                  */
@@ -1467,7 +1463,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function persist
-                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances that should be queued for persistence
+                 * @param {ResourceInstance|ResourceInstance[]} instances Instances that should be queued for persistence
                  * @instance
                  */
                 self.persist = function (instances) {
@@ -1497,7 +1493,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function remove
-                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances that should be queued for removing
+                 * @param {ResourceInstance|ResourceInstance[]} instances Instances that should be queued for removing
                  * @instance
                  */
                 self.remove = function (instances) {
@@ -1855,7 +1851,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function createChildStore
-                 * @param {ResourceInstance|Array.<ResourceInstance>} instances Instances to manage on the child store (default: all instances on the parent store)
+                 * @param {ResourceInstance|ResourceInstance[]} instances Instances to manage on the child store (default: all instances on the parent store)
                  * @return {ResourceStore} New child store
                  * @instance
                  */
@@ -1952,7 +1948,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getManagedInstances
-                 * @return {Array.<ResourceInstance>} Instances managed by the store
+                 * @return {ResourceInstance[]} Instances managed by the store
                  * @instance
                  */
                 self.getManagedInstances = function () {
@@ -1964,7 +1960,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getVisibleQueue
-                 * @return {Array.<ResourceInstance>} Instances visible for the user
+                 * @return {ResourceInstance[]} Instances visible for the user
                  * @instance
                  */
                 self.getVisibleQueue = function () {
@@ -1976,7 +1972,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getPersistQueue
-                 * @return {Array.<ResourceInstance>} Instances marked for persistence
+                 * @return {ResourceInstance[]} Instances marked for persistence
                  * @instance
                  */
                 self.getPersistQueue = function () {
@@ -1988,7 +1984,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getRemoveQueue
-                 * @return {Array.<ResourceInstance>} Instances marked for removal
+                 * @return {ResourceInstance[]} Instances marked for removal
                  * @instance
                  */
                 self.getRemoveQueue = function () {
@@ -2000,7 +1996,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getSaveQueue
-                 * @return {Array.<ResourceInstance>} Instances marked for save
+                 * @return {ResourceInstance[]} Instances marked for save
                  * @instance
                  */
                 self.getSaveQueue = function () {
@@ -2017,7 +2013,7 @@
                  *
                  * @memberOf ResourceStore
                  * @function getUpdateQueue
-                 * @return {Array.<ResourceInstance>} Instances marked for update
+                 * @return {ResourceInstance[]} Instances marked for update
                  * @instance
                  */
                 self.getUpdateQueue = function () {

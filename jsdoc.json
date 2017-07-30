@@ -16,9 +16,5 @@
             "outputSourceFiles": true,
             "includeDate": false
         }
-    },
-    "docdash": {
-        "static": true,
-        "sort": true
     }
 }

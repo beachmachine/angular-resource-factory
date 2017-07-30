@@ -30,12 +30,13 @@
      * and respecting the `dataAttr` of resource instances.
      *
      * @name ResourceCacheService
+     * @ngdoc service
      * @param {String} name Name of the cache
      * @param {String} pkAttr Name of the primary key attribute on cached instances
-     * @param {Object} options Additional configuration
+     * @param {Object} [options] Additional configuration
      * @param {String|null} options.urlAttr Name of the attribute to get the URL of the objects (default: `null`)
      * @param {String|null} options.dataAttr Name of the attribute to get the actual data from (default: `null`)
-     * @param {Array<String>} options.dependent List of dependent cache names (default: `[]`)
+     * @param {String[]} options.dependent List of dependent cache names (default: `[]`)
      * @param {int} options.ttl Time to live for cache entries in seconds (default: `3600`)
      * @class
      * @example
@@ -253,7 +254,7 @@
                  * @function get
                  * @param {String} key Cache entry key
                  * @param {Boolean} [useCacheTtl] If `true` this method will return `undefined` when the TTL of the entry is outreached (default: `true`)
-                 * @returns {*|undefined}
+                 * @returns {*} Cache entry
                  * @instance
                  */
                 self.get = function (key, useCacheTtl) {
@@ -429,7 +430,7 @@
                  *
                  * @memberOf ResourceCacheService
                  * @function info
-                 * @returns {{id: *, size: number, options: object}}
+                 * @returns {ResourceCacheServiceMeta} Information about the cache instance
                  * @instance
                  */
                 self.info = function () {
@@ -457,7 +458,7 @@
                  *
                  * @memberOf ResourceCacheService
                  * @member withDataAttr
-                 * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @type {HttpCacheInstance}
                  * @instance
                  */
                 self.withDataAttr = {
@@ -477,7 +478,7 @@
                  *
                  * @memberOf ResourceCacheService
                  * @member withoutDataAttr
-                 * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @type {HttpCacheInstance}
                  * @instance
                  */
                 self.withoutDataAttr = {
@@ -497,7 +498,7 @@
                  *
                  * @memberOf ResourceCacheService
                  * @member withDataAttrNoTtl
-                 * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @type {HttpCacheInstance}
                  * @instance
                  */
                 self.withDataAttrNoTtl = {
@@ -517,7 +518,7 @@
                  *
                  * @memberOf ResourceCacheService
                  * @member withoutDataAttrNoTtl
-                 * @type {{put: constructor.withDataAttrNoTtl.put, get: constructor.withDataAttrNoTtl.get, remove: (*), removeAll: (*), info: (*)}}
+                 * @type {HttpCacheInstance}
                  * @instance
                  */
                 self.withoutDataAttrNoTtl = {
@@ -770,7 +771,7 @@
              * @memberOf ResourceCacheService
              * @function get
              * @param {String} key Cache name
-             * @returns {*|null} Cache instance with the given name
+             * @returns {ResourceCacheService} Cache instance with the given name
              * @static
              */
             constructor.get = function (key) {
@@ -789,7 +790,7 @@
              *
              * @memberOf ResourceCacheService
              * @function info
-             * @returns {{}} Information object for all caches
+             * @returns {Object} Information object for all caches
              * @static
              */
             constructor.info = function () {

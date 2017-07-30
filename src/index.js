@@ -21,6 +21,21 @@
 (function () {
     'use strict';
 
+    /**
+     * A resource instance created via an instance of `ResourceFactoryService`.
+     * @typedef {Object|Object[]} ResourceInstance
+     */
+
+    /**
+     * A `$http` compatible cache instance
+     * @typedef {{put: Function, get: Function, remove: Function, removeAll: Function, info: Function}} HttpCacheInstance
+     */
+
+    /**
+     * Object holding resource cache meta information.
+     * @typedef {{id: String, size: int, options: Object}} ResourceCacheServiceMeta
+     */
+
     var
         app = angular.module('ngResourceFactory', [
             'ngResource'

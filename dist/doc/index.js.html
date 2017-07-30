@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ResourcePhantomIdFactory - Documentation</title>
+    <title>index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -32,583 +32,63 @@
 
 <div id="main">
     
-    <h1 class="page-title">ResourcePhantomIdFactory</h1>
+    <h1 class="page-title">index.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ResourcePhantomIdFactory
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="method">
-    
-        
-
-        <h4 class="name" id="ResourcePhantomIdFactory"><span class="type-signature"></span>new ResourcePhantomIdFactory<span class="signature">(generateFn, isPhantomFn)</span><span class="type-signature"></span></h4>
-
-        
-    
-
-    
-    <div class="description">
-        <p>Constructor function for a phantom id generate. Takes a function that generates the PK, and a<br>functions that checks if the given PK is a phantom PK.</p>
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>generateFn</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Angular ResourceFactory
+ * Copyright 2016 Andreas Stocker
+ * MIT License
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+ * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 
-            
-            </td>
+(function () {
+    'use strict';
 
-            
+    /**
+     * A resource instance created via an instance of `ResourceFactoryService`.
+     * @typedef {Object|Object[]} ResourceInstance
+     */
 
-            
+    /**
+     * A `$http` compatible cache instance
+     * @typedef {{put: Function, get: Function, remove: Function, removeAll: Function, info: Function}} HttpCacheInstance
+     */
 
-            <td class="description last"><p>Function that returns a new, phantom ID. Gets the instance as the first parameter</p></td>
-        </tr>
+    /**
+     * Object holding resource cache meta information.
+     * @typedef {{id: String, size: int, options: Object}} ResourceCacheServiceMeta
+     */
 
-    
-
-        <tr>
-            
-                <td class="name"><code>isPhantomFn</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Function that checks if the first given parameter is a phantom ID. Gets the instance as the second parameter</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="phantomIdFactory_phantomIdFactoryService.js.html">phantomIdFactory/phantomIdFactoryService.js</a>, <a href="phantomIdFactory_phantomIdFactoryService.js.html#line91">line 91</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></li>
-        
-            <li><a href="global.html#ResourcePhantomIdUuid4">ResourcePhantomIdUuid4</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h5>Example</h5>
-        
-    <pre class="prettyprint"><code>// ResourcePhantomIdFactory that creates negative IDs as phantom IDs (NOTE: this is already a build-in
-// phantom ID factory, so you do not have to implement this)
-inject(function (ResourceFactoryService, ResourcePhantomIdFactoryService) {
     var
-        lastPkValue = 0,
-        generator = ResourcePhantomIdFactoryService.createPhantomIdFactory({
-            generate: function () {
-                return --lastPkValue;
-            },
-            is: function (pkValue) {
-                return pkValue &lt; 0;
-            }
-        }),
-        service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
-            phantomIdGenerator: generator
-        }),
-        phantomInstance1 = service.new(),
-        phantomInstance2 = service.new();
-
-    expect(phantomInstance1.$isPhantom()).toBe(true);
-    expect(phantomInstance2.$isPhantom()).toBe(true);
-
-    // Change IDs to non-negative numbers
-    phantomInstance1.pk = 1;
-    phantomInstance2.pk = 2;
-
-    expect(phantomInstance1.$isPhantom()).toBe(false);
-    expect(phantomInstance2.$isPhantom()).toBe(false);
-});</code></pre>
-
-    
-</div>
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="method">
-    
-        
-
-        <h4 class="name" id="generate"><span class="type-signature"></span>generate<span class="signature">(instance)</span><span class="type-signature"> &rarr; {String|int}</span></h4>
-
-        
-    
-
-    
-    <div class="description">
-        <p>Generates a new phantom PK value</p>
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>instance</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Instance to generate the phantom ID for</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="phantomIdFactory_phantomIdFactoryService.js.html">phantomIdFactory/phantomIdFactoryService.js</a>, <a href="phantomIdFactory_phantomIdFactoryService.js.html#line136">line 136</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">String</span>
-|
-
-<span class="param-type">int</span>
-
-
-    </dd>
-</dl>
-
-        
-
-    
-</div>
-
-        
-            
-<div class="method">
-    
-        
-
-        <h4 class="name" id="isPhantom"><span class="type-signature"></span>isPhantom<span class="signature">(pkValue, instance)</span><span class="type-signature"> &rarr; {*}</span></h4>
-
-        
-    
-
-    
-    <div class="description">
-        <p>Checks if the given PK value on the given instance is a phantom PK value</p>
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pkValue</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>ID value to check</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>instance</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#ResourceInstance">ResourceInstance</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Instance to work on</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="phantomIdFactory_phantomIdFactoryService.js.html">phantomIdFactory/phantomIdFactoryService.js</a>, <a href="phantomIdFactory_phantomIdFactoryService.js.html#line149">line 149</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">*</span>
-
-
-    </dd>
-</dl>
-
-        
-
-    
-</div>
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+        app = angular.module('ngResourceFactory', [
+            'ngResource'
+        ]);
+
+})();
+</code></pre>
+        </article>
+    </section>
 
 
 

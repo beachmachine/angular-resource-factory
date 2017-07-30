@@ -28,6 +28,7 @@
      * Factory service to generate new resource phantom id generators.
      *
      * @name ResourcePhantomIdFactoryService
+     * @ngdoc service
      * @see ResourcePhantomIdNegativeInt
      * @see ResourcePhantomIdUuid4
      * @class
@@ -166,6 +167,7 @@
      * Resource phantom id generator that generates negative integer IDs
      *
      * @name ResourcePhantomIdNegativeInt
+     * @ngdoc object
      * @param {ResourcePhantomIdFactoryService} ResourcePhantomIdFactoryService Phantom ID factory service
      */
     module.factory('ResourcePhantomIdNegativeInt',
@@ -190,6 +192,7 @@
      * Resource phantom id generator that generates UUID4 IDs
      *
      * @name ResourcePhantomIdUuid4
+     * @ngdoc object
      * @param {ResourcePhantomIdFactoryService} ResourcePhantomIdFactoryService Phantom ID factory service
      */
     module.factory('ResourcePhantomIdUuid4',

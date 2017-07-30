@@ -6,11 +6,16 @@
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="scripts/prettify/springeo.js" defer async></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/springeo.css">
+    <link type="text/css" rel="stylesheet" href="styles/simple-jsdoc.css">
 </head>
 <body>
 
@@ -22,7 +27,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ResourceCacheService.html">ResourceCacheService</a><ul class='methods'><li data-type='method'><a href="ResourceCacheService.html#.get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#.info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#.removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#destroy">destroy</a></li><li data-type='method'><a href="ResourceCacheService.html#get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#insert">insert</a></li><li data-type='method'><a href="ResourceCacheService.html#put">put</a></li><li data-type='method'><a href="ResourceCacheService.html#refresh">refresh</a></li><li data-type='method'><a href="ResourceCacheService.html#remove">remove</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllDependent">removeAllDependent</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllLists">removeAllLists</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllObjects">removeAllObjects</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllRaw">removeAllRaw</a></li></ul></li><li><a href="ResourceFactoryService.html">ResourceFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourceFactoryService.html#createStore">createStore</a></li><li data-type='method'><a href="ResourceFactoryService.html#filter">filter</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterInstancesByAttr">filterInstancesByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterNoCache">filterNoCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCache">getCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCacheClass">getCacheClass</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByAttr">getInstanceByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByPk">getInstanceByPk</a></li><li data-type='method'><a href="ResourceFactoryService.html#getPkAttr">getPkAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryDataAttr">getQueryDataAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryFilters">getQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryTotalAttr">getQueryTotalAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getResourceName">getResourceName</a></li><li data-type='method'><a href="ResourceFactoryService.html#isPhantom">isPhantom</a></li><li data-type='method'><a href="ResourceFactoryService.html#new">new</a></li><li data-type='method'><a href="ResourceFactoryService.html#persist">persist</a></li><li data-type='method'><a href="ResourceFactoryService.html#setDefaultQueryFilters">setDefaultQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#setQueryFilters">setQueryFilters</a></li></ul></li><li><a href="ResourcePhantomIdFactory.html">ResourcePhantomIdFactory</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactory.html#generate">generate</a></li><li data-type='method'><a href="ResourcePhantomIdFactory.html#isPhantom">isPhantom</a></li></ul></li><li><a href="ResourcePhantomIdFactoryService.html">ResourcePhantomIdFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactoryService.html#.createPhantomIdFactory">createPhantomIdFactory</a></li></ul></li><li><a href="ResourceStore.html">ResourceStore</a><ul class='methods'><li data-type='method'><a href="ResourceStore.html#addAfterPersistListener">addAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addAfterRemoveListener">addAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforePersistListener">addBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforeRemoveListener">addBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#commit">commit</a></li><li data-type='method'><a href="ResourceStore.html#createChildStore">createChildStore</a></li><li data-type='method'><a href="ResourceStore.html#createRelation">createRelation</a></li><li data-type='method'><a href="ResourceStore.html#execute">execute</a></li><li data-type='method'><a href="ResourceStore.html#executeAll">executeAll</a></li><li data-type='method'><a href="ResourceStore.html#forget">forget</a></li><li data-type='method'><a href="ResourceStore.html#getByInstance">getByInstance</a></li><li data-type='method'><a href="ResourceStore.html#getByPk">getByPk</a></li><li data-type='method'><a href="ResourceStore.html#getManagedInstances">getManagedInstances</a></li><li data-type='method'><a href="ResourceStore.html#getPersistQueue">getPersistQueue</a></li><li data-type='method'><a href="ResourceStore.html#getRemoveQueue">getRemoveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getResourceService">getResourceService</a></li><li data-type='method'><a href="ResourceStore.html#getSaveQueue">getSaveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getUpdateQueue">getUpdateQueue</a></li><li data-type='method'><a href="ResourceStore.html#getVisibleQueue">getVisibleQueue</a></li><li data-type='method'><a href="ResourceStore.html#manage">manage</a></li><li data-type='method'><a href="ResourceStore.html#new">new</a></li><li data-type='method'><a href="ResourceStore.html#persist">persist</a></li><li data-type='method'><a href="ResourceStore.html#remove">remove</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterPersistListener">removeAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterRemoveListener">removeAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforePersistListener">removeBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforeRemoveListener">removeBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeRelation">removeRelation</a></li></ul></li><li><a href="ResourceStoreRelation.html">ResourceStoreRelation</a><ul class='methods'><li data-type='method'><a href="ResourceStoreRelation.html#getFkAttr">getFkAttr</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getRelatedStore">getRelatedStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getStore">getStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleRemove">handleRemove</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleUpdate">handleUpdate</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></li><li><a href="global.html#ResourcePhantomIdUuid4">ResourcePhantomIdUuid4</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><input id="search" type="search" placeholder="Search..."><h3>Classes</h3><ul id=classes><li><a href="ResourceCacheService.html"><div class="ancestor"></div>ResourceCacheService</a><ul class='methods'><li data-type='method'><a href="ResourceCacheService.html#.get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#.info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#.removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#destroy">destroy</a></li><li data-type='method'><a href="ResourceCacheService.html#get">get</a></li><li data-type='method'><a href="ResourceCacheService.html#info">info</a></li><li data-type='method'><a href="ResourceCacheService.html#insert">insert</a></li><li data-type='method'><a href="ResourceCacheService.html#put">put</a></li><li data-type='method'><a href="ResourceCacheService.html#refresh">refresh</a></li><li data-type='method'><a href="ResourceCacheService.html#remove">remove</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAll">removeAll</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllDependent">removeAllDependent</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllLists">removeAllLists</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllObjects">removeAllObjects</a></li><li data-type='method'><a href="ResourceCacheService.html#removeAllRaw">removeAllRaw</a></li></ul></li><li><a href="ResourceFactoryService.html"><div class="ancestor"></div>ResourceFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourceFactoryService.html#createStore">createStore</a></li><li data-type='method'><a href="ResourceFactoryService.html#filter">filter</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterInstancesByAttr">filterInstancesByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#filterNoCache">filterNoCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCache">getCache</a></li><li data-type='method'><a href="ResourceFactoryService.html#getCacheClass">getCacheClass</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByAttr">getInstanceByAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getInstanceByPk">getInstanceByPk</a></li><li data-type='method'><a href="ResourceFactoryService.html#getPkAttr">getPkAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryDataAttr">getQueryDataAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryFilters">getQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#getQueryTotalAttr">getQueryTotalAttr</a></li><li data-type='method'><a href="ResourceFactoryService.html#getResourceName">getResourceName</a></li><li data-type='method'><a href="ResourceFactoryService.html#isPhantom">isPhantom</a></li><li data-type='method'><a href="ResourceFactoryService.html#new">new</a></li><li data-type='method'><a href="ResourceFactoryService.html#persist">persist</a></li><li data-type='method'><a href="ResourceFactoryService.html#setDefaultQueryFilters">setDefaultQueryFilters</a></li><li data-type='method'><a href="ResourceFactoryService.html#setQueryFilters">setQueryFilters</a></li></ul></li><li><a href="ResourcePhantomIdFactory.html"><div class="ancestor"></div>ResourcePhantomIdFactory</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactory.html#generate">generate</a></li><li data-type='method'><a href="ResourcePhantomIdFactory.html#isPhantom">isPhantom</a></li></ul></li><li><a href="ResourcePhantomIdFactoryService.html"><div class="ancestor"></div>ResourcePhantomIdFactoryService</a><ul class='methods'><li data-type='method'><a href="ResourcePhantomIdFactoryService.html#.createPhantomIdFactory">createPhantomIdFactory</a></li></ul></li><li><a href="ResourceStore.html"><div class="ancestor"></div>ResourceStore</a><ul class='methods'><li data-type='method'><a href="ResourceStore.html#addAfterPersistListener">addAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addAfterRemoveListener">addAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforePersistListener">addBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#addBeforeRemoveListener">addBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#commit">commit</a></li><li data-type='method'><a href="ResourceStore.html#createChildStore">createChildStore</a></li><li data-type='method'><a href="ResourceStore.html#createRelation">createRelation</a></li><li data-type='method'><a href="ResourceStore.html#execute">execute</a></li><li data-type='method'><a href="ResourceStore.html#executeAll">executeAll</a></li><li data-type='method'><a href="ResourceStore.html#forget">forget</a></li><li data-type='method'><a href="ResourceStore.html#getByInstance">getByInstance</a></li><li data-type='method'><a href="ResourceStore.html#getByPk">getByPk</a></li><li data-type='method'><a href="ResourceStore.html#getManagedInstances">getManagedInstances</a></li><li data-type='method'><a href="ResourceStore.html#getPersistQueue">getPersistQueue</a></li><li data-type='method'><a href="ResourceStore.html#getRemoveQueue">getRemoveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getResourceService">getResourceService</a></li><li data-type='method'><a href="ResourceStore.html#getSaveQueue">getSaveQueue</a></li><li data-type='method'><a href="ResourceStore.html#getUpdateQueue">getUpdateQueue</a></li><li data-type='method'><a href="ResourceStore.html#getVisibleQueue">getVisibleQueue</a></li><li data-type='method'><a href="ResourceStore.html#manage">manage</a></li><li data-type='method'><a href="ResourceStore.html#new">new</a></li><li data-type='method'><a href="ResourceStore.html#persist">persist</a></li><li data-type='method'><a href="ResourceStore.html#remove">remove</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterPersistListener">removeAfterPersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeAfterRemoveListener">removeAfterRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforePersistListener">removeBeforePersistListener</a></li><li data-type='method'><a href="ResourceStore.html#removeBeforeRemoveListener">removeBeforeRemoveListener</a></li><li data-type='method'><a href="ResourceStore.html#removeRelation">removeRelation</a></li></ul></li><li><a href="ResourceStoreRelation.html"><div class="ancestor"></div>ResourceStoreRelation</a><ul class='methods'><li data-type='method'><a href="ResourceStoreRelation.html#getFkAttr">getFkAttr</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getRelatedStore">getRelatedStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#getStore">getStore</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleRemove">handleRemove</a></li><li data-type='method'><a href="ResourceStoreRelation.html#handleUpdate">handleUpdate</a></li></ul></li></ul><h3>Global</h3><ul id="global"><li><a href="global.html#ResourcePhantomIdNegativeInt">ResourcePhantomIdNegativeInt</a></li><li><a href="global.html#ResourcePhantomIdUuid4">ResourcePhantomIdUuid4</a></li></ul>
 </nav>
 
 <div id="main">
@@ -50,23 +55,19 @@
     <div class="container-overview">
     
         
+<div class="method">
+    
+        
 
+        <h4 class="name" id="ResourceStore"><span class="type-signature"></span>new ResourceStore<span class="signature">(resource, managedInstances, parentStore)</span><span class="type-signature"></span></h4>
+
+        
     
 
-    <h4 class="name" id="ResourceStore"><span class="type-signature"></span>new ResourceStore<span class="signature">(resource, managedInstances, parentStore)</span><span class="type-signature"></span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1200">line 1200</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Constructor function for a resource store. A resource store manages inserts, updates and<br>deletes of instances, can create sub-stores that commit changes to the parent store, and<br>sets up relations between resource types (e.g. to update reference keys).</p>
+    </div>
     
 
     
@@ -76,82 +77,8 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Constructor function for a resource store. A resource store manages inserts, updates and<br>deletes of instances, can create sub-stores that commit changes to the parent store, and<br>sets up relations between resource types (e.g. to update reference keys).</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// Basic usage of a resource store
-inject(function (ResourceFactoryService, $q) {
-    var
-        service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
-        instance1 = service.new(),
-        instance2 = service.new(),
-        instance3 = service.new(),
-        store = service.createStore([instance1, instance2, instance3]);
-
-    $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
-    $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
-    $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
-
-    instance1.pk = 1;
-    instance2.pk = 2;
-
-    store.remove(instance2);
-    store.persist(instance1);
-    store.persist(instance3);
-
-    $q.when()
-        .then(function () {
-            return store.execute();
-        })
-        .then(done);
-
-    $httpBackend.flush();
-});</code></pre>
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -247,20 +174,98 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1196">line 1196</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
+        <h5>Example</h5>
+        
+    <pre class="prettyprint"><code>// Basic usage of a resource store
+inject(function (ResourceFactoryService, $q) {
+    var
+        service = ResourceFactoryService('TestResourceService', 'http://test/:pk/'),
+        instance1 = service.new(),
+        instance2 = service.new(),
+        instance3 = service.new(),
+        store = service.createStore([instance1, instance2, instance3]);
 
+    $httpBackend.expect('DELETE', 'http://test/2/').respond(204, '');
+    $httpBackend.expect('PATCH', 'http://test/1/').respond(200, {pk: 1});
+    $httpBackend.expect('POST', 'http://test/').respond(201, {pk: 2});
 
+    instance1.pk = 1;
+    instance2.pk = 2;
 
+    store.remove(instance2);
+    store.persist(instance1);
+    store.persist(instance3);
 
+    $q.when()
+        .then(function () {
+            return store.execute();
+        })
+        .then(done);
+
+    $httpBackend.flush();
+});</code></pre>
+
+    
+</div>
 
     
     </div>
@@ -282,23 +287,19 @@ inject(function (ResourceFactoryService, $q) {
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="addAfterPersistListener"><span class="type-signature"></span>addAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
     
 
-    <h4 class="name" id="addAfterPersistListener"><span class="type-signature"></span>addAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2074">line 2074</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Adds a after-persist listener.</p>
+    </div>
     
 
     
@@ -308,50 +309,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Adds a after-persist listener.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -398,64 +357,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="addAfterRemoveListener"><span class="type-signature"></span>addAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2134">line 2134</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2070">line 2070</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -466,25 +403,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Adds a after-remove listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="addAfterRemoveListener"><span class="type-signature"></span>addAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Adds a after-remove listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -531,64 +490,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="addBeforePersistListener"><span class="type-signature"></span>addBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2044">line 2044</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2130">line 2130</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -599,25 +536,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Adds a before-persist listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="addBeforePersistListener"><span class="type-signature"></span>addBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Adds a before-persist listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -664,64 +623,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="addBeforeRemoveListener"><span class="type-signature"></span>addBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2104">line 2104</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2040">line 2040</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -732,25 +669,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Adds a before-remove listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="addBeforeRemoveListener"><span class="type-signature"></span>addBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Adds a before-remove listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -797,64 +756,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="commit"><span class="type-signature"></span>commit<span class="signature">()</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1525">line 1525</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2100">line 2100</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -865,80 +802,80 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Commits changes to the parent store</p>
+    
+
+    
+
+    
+
+    
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="commit"><span class="type-signature"></span>commit<span class="signature">()</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Commits changes to the parent store</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="createChildStore"><span class="type-signature"></span>createChildStore<span class="signature">(instances)</span><span class="type-signature"> &rarr; {<a href="ResourceStore.html">ResourceStore</a>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1851">line 1851</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1521">line 1521</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -949,25 +886,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Creates a new child store from the current store. This store can make changes<br>to it's managed instances and it will not affect the current stores<br>instances until the child store commits.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="createChildStore"><span class="type-signature"></span>createChildStore<span class="signature">(instances)</span><span class="type-signature"> &rarr; {<a href="ResourceStore.html">ResourceStore</a>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Creates a new child store from the current store. This store can make changes<br>to it's managed instances and it will not affect the current stores<br>instances until the child store commits.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1017,22 +976,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1847">line 1847</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>New child store</p>
 </div>
@@ -1051,28 +1054,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="createRelation"><span class="type-signature"></span>createRelation<span class="signature">(config)</span><span class="type-signature"> &rarr; {<a href="ResourceStoreRelation.html">ResourceStoreRelation</a>}</span></h4>
+
+        
     
 
-    <h4 class="name" id="createRelation"><span class="type-signature"></span>createRelation<span class="signature">(config)</span><span class="type-signature"> &rarr; {<a href="ResourceStoreRelation.html">ResourceStoreRelation</a>}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1871">line 1871</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Adds a relation to another store.</p>
+    </div>
     
 
     
@@ -1082,50 +1083,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Adds a relation to another store.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1302,22 +1261,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1867">line 1867</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>New relation</p>
 </div>
@@ -1336,28 +1339,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+        
     
 
-    <h4 class="name" id="execute"><span class="type-signature"></span>execute<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1629">line 1629</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Execute the change queue and clears the change queue if clearAfter is set to true (default).</p>
+    </div>
     
 
     
@@ -1367,50 +1368,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Execute the change queue and clears the change queue if clearAfter is set to true (default).</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1464,22 +1423,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1625">line 1625</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl class="param-type">
@@ -1494,28 +1497,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="executeAll"><span class="type-signature"></span>executeAll<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+        
     
 
-    <h4 class="name" id="executeAll"><span class="type-signature"></span>executeAll<span class="signature">(clearAfter<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1581">line 1581</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Executes the change queue on this an all related stores and clears the change queue if clearAfter is<br>set to true.</p>
+    </div>
     
 
     
@@ -1525,50 +1526,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Executes the change queue on this an all related stores and clears the change queue if clearAfter is<br>set to true.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1622,22 +1581,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1577">line 1577</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 
 
 <dl class="param-type">
@@ -1652,28 +1655,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="forget"><span class="type-signature"></span>forget<span class="signature">(oldInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+        
     
 
-    <h4 class="name" id="forget"><span class="type-signature"></span>forget<span class="signature">(oldInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1380">line 1380</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Forget (un-manage) given instances. The instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
+    </div>
     
 
     
@@ -1683,50 +1684,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Forget (un-manage) given instances. The instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1776,22 +1735,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1376">line 1376</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Promise that resolves if all given instances are resolved</p>
 </div>
@@ -1810,28 +1813,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="getByInstance"><span class="type-signature"></span>getByInstance<span class="signature">(instance)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
+
+        
     
 
-    <h4 class="name" id="getByInstance"><span class="type-signature"></span>getByInstance<span class="signature">(instance)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1932">line 1932</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Gets the managed instance from the store that matches the given<br>instance (which might by an copy that is not managed or managed by<br>another store). The instances are matched by their PK attribute.</p>
+    </div>
     
 
     
@@ -1841,50 +1842,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Gets the managed instance from the store that matches the given<br>instance (which might by an copy that is not managed or managed by<br>another store). The instances are matched by their PK attribute.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -1931,22 +1890,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1928">line 1928</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Resource instance managed by the store matching the given instance that might by not managed by the store</p>
 </div>
@@ -1968,28 +1971,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="getByPk"><span class="type-signature"></span>getByPk<span class="signature">(pkValue)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
+
+        
     
 
-    <h4 class="name" id="getByPk"><span class="type-signature"></span>getByPk<span class="signature">(pkValue)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>|undefined}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1918">line 1918</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Gets the managed instance from the store that matches the given<br>PK attribute value.</p>
+    </div>
     
 
     
@@ -1999,50 +2000,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Gets the managed instance from the store that matches the given<br>PK attribute value.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -2092,22 +2051,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1914">line 1914</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Resource instance managed by the store with the given PK value</p>
 </div>
@@ -2129,52 +2132,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getManagedInstances"><span class="type-signature"></span>getManagedInstances<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances visible for the user.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getManagedInstances"><span class="type-signature"></span>getManagedInstances<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1950">line 1950</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1946">line 1946</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2185,38 +2206,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances visible for the user.</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances managed by the store</p>
 </div>
@@ -2235,52 +2238,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getPersistQueue"><span class="type-signature"></span>getPersistQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances marked for persist.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getPersistQueue"><span class="type-signature"></span>getPersistQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1974">line 1974</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1970">line 1970</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2291,38 +2312,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances marked for persist.</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances marked for persistence</p>
 </div>
@@ -2341,52 +2344,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getRemoveQueue"><span class="type-signature"></span>getRemoveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances marked for remove.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getRemoveQueue"><span class="type-signature"></span>getRemoveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1986">line 1986</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1982">line 1982</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2397,38 +2418,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances marked for remove.</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances marked for removal</p>
 </div>
@@ -2447,52 +2450,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getResourceService"><span class="type-signature"></span>getResourceService<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="ResourceFactoryService.html">ResourceFactoryService</a>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets the managed resource service.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getResourceService"><span class="type-signature"></span>getResourceService<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="ResourceFactoryService.html">ResourceFactoryService</a>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2032">line 2032</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2028">line 2028</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2503,38 +2524,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets the managed resource service.</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Resource service instance</p>
 </div>
@@ -2553,52 +2556,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getSaveQueue"><span class="type-signature"></span>getSaveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances marked for save (e.g. insert).</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getSaveQueue"><span class="type-signature"></span>getSaveQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1998">line 1998</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1994">line 1994</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2609,38 +2630,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances marked for save (e.g. insert).</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances marked for save</p>
 </div>
@@ -2659,52 +2662,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getUpdateQueue"><span class="type-signature"></span>getUpdateQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances marked for update.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getUpdateQueue"><span class="type-signature"></span>getUpdateQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2015">line 2015</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2011">line 2011</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2715,38 +2736,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances marked for update.</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances marked for update</p>
 </div>
@@ -2765,52 +2768,70 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
+
+        <h4 class="name" id="getVisibleQueue"><span class="type-signature"></span>getVisibleQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Gets a list of instances visible for the user (e.g. that are not marked for removal).</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="getVisibleQueue"><span class="type-signature"></span>getVisibleQueue<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="global.html#ResourceInstance">ResourceInstance</a>>}</span></h4>
+    
 
     
 
+    
 
+    
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1962">line 1962</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1958">line 1958</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -2821,38 +2842,20 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Gets a list of instances visible for the user (e.g. that are not marked for removal).</p>
-</div>
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Instances visible for the user</p>
 </div>
@@ -2871,28 +2874,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">(newInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+        
     
 
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">(newInstances)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1315">line 1315</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Manage given instances. The new instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
+    </div>
     
 
     
@@ -2902,50 +2903,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Manage given instances. The new instances object may be a ng-resource result,<br>a promise, a list of instances or a single instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -2995,22 +2954,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1311">line 1311</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Promise that resolves if all given instances are resolved</p>
 </div>
@@ -3029,28 +3032,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="new"><span class="type-signature"></span>new<span class="signature">(params<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>}</span></h4>
+
+        
     
 
-    <h4 class="name" id="new"><span class="type-signature"></span>new<span class="signature">(params<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#ResourceInstance">ResourceInstance</a>}</span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1447">line 1447</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Returns a new instance managed by the store.</p>
+    </div>
     
 
     
@@ -3060,50 +3061,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Returns a new instance managed by the store.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3162,22 +3121,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1443">line 1443</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>New resource instance that is managed by the store</p>
 </div>
@@ -3196,28 +3199,26 @@ inject(function (ResourceFactoryService, $q) {
     </dd>
 </dl>
 
-    
+        
 
+    
+</div>
 
         
             
+<div class="method">
+    
+        
 
+        <h4 class="name" id="persist"><span class="type-signature"></span>persist<span class="signature">(instances)</span><span class="type-signature"></span></h4>
+
+        
     
 
-    <h4 class="name" id="persist"><span class="type-signature"></span>persist<span class="signature">(instances)</span><span class="type-signature"></span></h4>
-
     
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1465">line 1465</a>
-    </li></ul></dd>
+    <div class="description">
+        <p>Queues given instance for persistence.</p>
+    </div>
     
 
     
@@ -3227,50 +3228,8 @@ inject(function (ResourceFactoryService, $q) {
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Queues given instance for persistence.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3320,64 +3279,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(instances)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1495">line 1495</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1461">line 1461</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -3388,25 +3325,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Queues given instance for deletion.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="remove"><span class="type-signature"></span>remove<span class="signature">(instances)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Queues given instance for deletion.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3456,64 +3415,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="removeAfterPersistListener"><span class="type-signature"></span>removeAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2086">line 2086</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1491">line 1491</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -3524,25 +3461,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Removes a after-persist listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="removeAfterPersistListener"><span class="type-signature"></span>removeAfterPersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Removes a after-persist listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3589,64 +3548,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="removeAfterRemoveListener"><span class="type-signature"></span>removeAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2146">line 2146</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2082">line 2082</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -3657,25 +3594,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Removes a after-remove listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="removeAfterRemoveListener"><span class="type-signature"></span>removeAfterRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Removes a after-remove listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3722,64 +3681,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="removeBeforePersistListener"><span class="type-signature"></span>removeBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2056">line 2056</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2142">line 2142</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -3790,25 +3727,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Removes a before-persist listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="removeBeforePersistListener"><span class="type-signature"></span>removeBeforePersistListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Removes a before-persist listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3855,64 +3814,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="removeBeforeRemoveListener"><span class="type-signature"></span>removeBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2116">line 2116</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2052">line 2052</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -3923,25 +3860,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Removes a before-remove listener.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="removeBeforeRemoveListener"><span class="type-signature"></span>removeBeforeRemoveListener<span class="signature">(fn)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Removes a before-remove listener.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -3988,64 +3947,42 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
     
 
-    <h4 class="name" id="removeRelation"><span class="type-signature"></span>removeRelation<span class="signature">(relation)</span><span class="type-signature"></span></h4>
-
     
-
-
 
 
 <dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1900">line 1900</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line2112">line 2112</a>
     </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -4056,25 +3993,47 @@ inject(function (ResourceFactoryService, $q) {
 </dl>
 
 
+    
 
+    
 
+    
 
-<div class="description">
-    <p>Removes a relation from the store.</p>
+    
+
+    
+
+    
+
+    
 </div>
 
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
+            
+<div class="method">
     
+        
+
+        <h4 class="name" id="removeRelation"><span class="type-signature"></span>removeRelation<span class="signature">(relation)</span><span class="type-signature"></span></h4>
+
+        
+    
+
+    
+    <div class="description">
+        <p>Removes a relation from the store.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+        <h5>Parameters:</h5>
+        
 
 <table class="params">
     <thead>
@@ -4121,20 +4080,66 @@ inject(function (ResourceFactoryService, $q) {
     </tbody>
 </table>
 
+    
+
+    
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1896">line 1896</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
+    
+</div>
 
         
     
@@ -4153,11 +4158,11 @@ inject(function (ResourceFactoryService, $q) {
 
 <br class="clear">
 
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
-</footer>
+<!-- <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> using the Minami theme.
+</footer> -->
 
 <script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+<!-- <script src="scripts/linenumber.js"></script> -->
 </body>
 </html>
