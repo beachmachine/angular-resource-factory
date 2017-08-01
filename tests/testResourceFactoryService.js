@@ -113,6 +113,122 @@ describe("ResourceFactoryService",
             });
         });
 
+        it("Does generate working extra static REST method", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    });
+
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1, toCheck: 'ok-1'});
+
+                $q.when()
+                    .then(function () {
+                        return service.extra({pk: 1}).$promise
+                    })
+                    .then(function (result) {
+                        expect(result.toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does generate working extra instance REST method", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        extraMethods: {
+                            extra: {
+                                method: 'GET',
+                                isArray: false
+                            }
+                        }
+                    }),
+                    instance = service.new({pk: 1});
+
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1, toCheck: 'ok-1'});
+
+                $q.when()
+                    .then(function () {
+                        return instance.$extra()
+                    })
+                    .then(function (result) {
+                        expect(result.toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does generate working customised pre-defined static REST method", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        extraMethods: {
+                            update: {
+                                method: 'POST' // default is 'PATCH'
+                            }
+                        }
+                    });
+
+                $httpBackend.expect('POST', 'http://test/1/').respond(200, {data: {pk: 1, toCheck: 'ok-1'}});
+
+                $q.when()
+                    .then(function () {
+                        return service.update({pk: 1}).$promise
+                    })
+                    .then(function (result) {
+                        expect(result.toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does generate working customised pre-defined instance REST method", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        extraMethods: {
+                            update: {
+                                method: 'POST' // default is 'PATCH'
+                            }
+                        }
+                    }),
+                    instance = service.new({pk: 1});
+
+                $httpBackend.expect('POST', 'http://test/1/').respond(200, {data: {pk: 1, toCheck: 'ok-1'}});
+
+                $q.when()
+                    .then(function () {
+                        return instance.$update()
+                    })
+                    .then(function (result) {
+                        expect(result.toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
         it("Does generate extra instance functions", function () {
             inject(function (ResourceFactoryService) {
                 var
@@ -587,17 +703,53 @@ describe("ResourceFactoryService",
             });
         });
 
-        it("Does use 'data' as query data attribute if configured so", function (done) {
+        it("Does use 'data' as data attribute on query if configured so", function (done) {
             inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
-                        queryDataAttr: 'data'
+                        useDataAttrForList: true,
+                        useDataAttrForDetail: false,
+                        dataAttr: 'data'
                     });
 
-                expect(service.getQueryDataAttr()).toBe('data');
+                expect(service.getDataAttr()).toBe('data');
 
                 $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1}, {pk: 2}]});
                 $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.length).toBe(2);
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.pk).toBe(1);
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does use 'data' as data attribute on detail if configured so", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        useDataAttrForList: false,
+                        useDataAttrForDetail: true,
+                        dataAttr: 'data'
+                    });
+
+                expect(service.getDataAttr()).toBe('data');
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1}, {pk: 2}]);
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {data: {pk: 1}});
 
                 $q.when()
                     .then(function () {
@@ -623,7 +775,7 @@ describe("ResourceFactoryService",
             inject(function (ResourceFactoryService, $q) {
                 var
                     service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
-                        queryDataAttr: 'data',
+                        dataAttr: 'data',
                         queryTotalAttr: 'count'
                     });
 

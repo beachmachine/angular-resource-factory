@@ -61,17 +61,21 @@
      * @param {String} url URL to the resource
      * @param {Object} options Options for the resource
      * @param {Boolean} options.stripTrailingSlashes Strip trailing slashes from request URLs. Defaults to `false`.
+     * @param {Boolean} options.withCredentials Include credentials in CORS calls. Defaults to `true`.
      * @param {Boolean} options.ignoreLoadingBar Ignore the resource for automatic loading bars. Defaults to `false`.
      * @param {Boolean} options.generatePhantomIds Generate IDs for phantom records created via the `new` method. Defaults to `true`.
-     * @param {ResourcePhantomIdFactory} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
+     * @param {ResourcePhantomIdFactoryService} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
      * @param {String[]} options.dependent List of resource services to clean the cache for on modifying requests.
      * @param {Object} options.extraMethods Extra request methods to put on the resource service.
      * @param {Object} options.extraFunctions Extra functions to put on the resource service instance.
      * @param {String} options.pkAttr Attribute name where to find the ID of objects. Defaults to `"pk"`.
      * @param {String} options.urlAttr Attribute name where to find the URL of objects. Defaults to `"url"`.
-     * @param {String} options.queryDataAttr Attribute name where to find the data on the query call (resource list calls). Defaults to `null`.
+     * @param {String} options.dataAttr Attribute name where to find the data on call results. Defaults to `null`.
+     * @param {String} options.useDataAttrForList Use the `dataAttr` for list calls (e.g. `query`). Defaults to `true`.
+     * @param {String} options.useDataAttrForDetail Use the `dataAttr` for detail calls (e.g. `get`). Defaults to `false`.
+     * @param {String} options.queryDataAttr Deprecated: Attribute name where to find the data on call results. Note that this option does the same as setting `dataAttr`. Defaults to `null`.
      * @param {String} options.queryTotalAttr Attribute name where to find the total amount of data on the query call (resource list calls). Defaults to `null`.
-     * @param {String} options.cacheClass Resource cache class constructor function to use (see `{@link ResourceCache}`). Defaults to `{@link ResourceCacheService}`.
+     * @param {String} options.cacheClass Resource cache class constructor function to use (see `{@link ResourceCacheService}`). Defaults to `{@link ResourceCacheService}`.
      * @param {Function} options.toInternal Function to post-process data coming from response. Gets `obj`, `headersGetter` and `status` and should return the processed `obj`.
      * @param {Function} options.fromInternal Function to post-process data that is going to be sent. Gets `obj` and `headersGetter` and should return the processed `obj`.
      * @class
@@ -125,10 +129,10 @@
      * inject(function (ResourceFactoryService, $q) {
      *     var
      *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
-     *             queryDataAttr: 'data'
+     *             dataAttr: 'data'
      *         });
      *
-     *     expect(service.getQueryDataAttr()).toBe('data');
+     *     expect(service.getDataAttr()).toBe('data');
      *
      *     $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1}, {pk: 2}]});
      *     $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1});
@@ -205,6 +209,13 @@
                     ignoreLoadingBar: false,
 
                     /**
+                     * Include credentials in CORS calls
+                     * @type {Boolean}
+                     * @private
+                     */
+                    withCredentials: true,
+
+                    /**
                      * Generate IDs for phantom records created via the `new`
                      * method on the resource service
                      * @type {Boolean}
@@ -214,7 +225,7 @@
 
                     /**
                      * Phantom ID generator instance to use
-                     * @type {ResourcePhantomIdFactory}
+                     * @type {ResourcePhantomIdFactoryService}
                      * @private
                      */
                     phantomIdGenerator: ResourcePhantomIdNegativeInt,
@@ -255,8 +266,30 @@
                     urlAttr: 'url',
 
                     /**
-                     * Attribute name where to find the data on the query call
+                     * Attribute name where to find the data on call results
                      * @type {String|null}
+                     * @private
+                     */
+                    dataAttr: null,
+
+                    /**
+                     * Use the `dataAttr` for list calls (e.g. `query`)
+                     * @type {Boolean}
+                     * @private
+                     */
+                    useDataAttrForList: true,
+
+                    /**
+                     * Use the `dataAttr` for detail calls (e.g. `get`)
+                     * @type {Boolean}
+                     * @private
+                     */
+                    useDataAttrForDetail: false,
+
+                    /**
+                     * Deprecated: Attribute name where to find the data on the query call (Note that this option does the same as setting `dataAttr`)
+                     * @type {String|null}
+                     * @deprecated
                      * @private
                      */
                     queryDataAttr: null,
@@ -276,7 +309,7 @@
                     queryFilter: {},
 
                     /**
-                     * Resource cache class constructor function to use (see `{@link ResourceCache}`)
+                     * Resource cache class constructor function to use (see `{@link ResourceCacheService}`)
                      * @type {Function}
                      * @private
                      */
@@ -309,6 +342,16 @@
                         return obj;
                     }
                 }, options || {});
+
+                // TODO: remove `queryDataAttr` support
+                // Support deprecated `queryDataAttr` option, but warn about it
+                if (options.queryDataAttr) {
+                    console.warn("ResourceFactoryService: The option 'queryDataAttr' is deprecated. Use 'dataAttr' instead.");
+
+                    if (!options.dataAttr) {
+                        options.dataAttr = options.queryDataAttr;
+                    }
+                }
 
                 var
                     resource,
@@ -344,7 +387,8 @@
                      * @type {ResourceCacheService}
                      */
                     cache = new options.cacheClass(name, options.pkAttr, {
-                        dataAttr: options.queryDataAttr,
+                        dataAttr: options.dataAttr,
+                        wrapObjectsInDataAttr: options.dataAttr && options.useDataAttrForDetail,
                         pkAttr: options.pkAttr,
                         urlAttr: options.urlAttr,
                         dependent: options.dependent,
@@ -362,7 +406,7 @@
                                 data = response.data,
                                 instance = response.resource;
 
-                            // `data` is the object that went through the transformation chain. It should alrady
+                            // `data` is the object that went through the transformation chain. It should already
                             // have the `total` attribute set via the `queryTransformResponseData` transformation
                             // method.
                             instance.total = data.total;
@@ -379,6 +423,7 @@
                     insertingInterceptor = {
                         response: function (response) {
                             var
+                                useDataAttr = options.useDataAttrForDetail && options.dataAttr,
                                 instance = response.resource,
                                 url = options.urlAttr ? instance[options.urlAttr] : null;
 
@@ -391,7 +436,7 @@
                              * to invalidate the whole object cache.
                              */
                             if (url) {
-                                cache.insert(url, instance, false);
+                                cache.insert(url, instance, useDataAttr);
                             }
                             else {
                                 cache.removeAllObjects();
@@ -409,8 +454,9 @@
                     modifyingInterceptor = {
                         response: function (response) {
                             var
+                                useDataAttr = options.useDataAttrForDetail && options.dataAttr,
                                 instance = response.resource,
-                                url = options.urlAttr ? instance[options.urlAttr] : response.config.url;
+                                url = options.urlAttr ? instance[options.urlAttr] : null;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
@@ -421,7 +467,7 @@
                              * to invalidate the whole object cache.
                              */
                             if (url) {
-                                cache.insert(url, instance, false);
+                                cache.insert(url, instance, useDataAttr);
                             }
                             else {
                                 cache.removeAllObjects();
@@ -440,7 +486,7 @@
                         response: function (response) {
                             var
                                 instance = response.resource,
-                                url = options.urlAttr ? instance[options.urlAttr] : response.config.url;
+                                url = options.urlAttr ? instance[options.urlAttr] : null;
 
                             cache.removeAllRaw();
                             cache.removeAllLists();
@@ -521,7 +567,50 @@
                     },
 
                     /**
-                     * Transforms query responses to get the actual data from the `queryDataAttr` option, if
+                     * Transforms detail responses to get the actual data from the `dataAttr` option, if
+                     * configured.
+                     *
+                     * @memberOf ResourceFactoryService
+                     * @param responseData
+                     * @param headersGetter
+                     * @param status
+                     * @returns {Array|Object}
+                     * @private
+                     */
+                    singleTransformResponseData = function (responseData, headersGetter, status) {
+                        var
+                            result = null;
+
+                        // get data on success status from `dataAttr`, if configured
+                        if (status >= 200 && status < 300) {
+                            // get the data from the `dataAttr`, if configured
+                            if (options.useDataAttrForDetail && options.dataAttr) {
+                                console.log("ResourceFactoryService: Get data from '" + options.dataAttr + "' attribute.");
+
+                                // get the data from the configured `dataAttr` only if we have a response object.
+                                // else we just want the result to be the response data.
+                                if (responseData) {
+                                    result = responseData[options.dataAttr];
+                                }
+                                else {
+                                    result = responseData;
+                                }
+                            }
+                            // if no data `dataAttr` is defined, use the response data directly
+                            else {
+                                result = responseData;
+                            }
+                        }
+                        // on any other status just return the responded object
+                        else {
+                            result = responseData;
+                        }
+
+                        return result;
+                    },
+
+                    /**
+                     * Transforms query responses to get the actual data from the `dataAttr` option, if
                      * configured. Also sets the `total` attribute on the list if `queryTotalAttr` is configured.
                      *
                      * @memberOf ResourceFactoryService
@@ -535,22 +624,22 @@
                         var
                             result = null;
 
-                        // get data on success status from `queryDataAttr`, if configured
+                        // get data on success status from `dataAttr`, if configured
                         if (status >= 200 && status < 300) {
-                            // get the data from the `queryDataAttr`, if configured
-                            if (options.queryDataAttr) {
-                                console.log("ResourceFactoryService: Get data from '" + options.queryDataAttr + "' attribute.");
+                            // get the data from the `dataAttr`, if configured
+                            if (options.useDataAttrForList && options.dataAttr) {
+                                console.log("ResourceFactoryService: Get data from '" + options.dataAttr + "' attribute.");
 
-                                // get the data from the configured `queryDataAttr` only if we have a response object.
+                                // get the data from the configured `dataAttr` only if we have a response object.
                                 // else we just want the result to be the response data.
                                 if (responseData) {
-                                    result = responseData[options.queryDataAttr];
+                                    result = responseData[options.dataAttr];
                                 }
                                 else {
                                     result = responseData;
                                 }
                             }
-                            // if no data `queryDataAttr` is defined, use the response data directly
+                            // if no data `dataAttr` is defined, use the response data directly
                             else {
                                 result = responseData;
                             }
@@ -619,12 +708,13 @@
                         restore: {
                             method: 'GET',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
-                            cache: cache.withoutDataAttrNoTtl,
+                            cache: options.useDataAttrForDetail ? cache.withDataAttrNoTtl : cache.withoutDataAttrNoTtl,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -635,12 +725,13 @@
                         get: {
                             method: 'GET',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
-                            cache: cache.withoutDataAttr,
+                            cache: options.useDataAttrForDetail ? cache.withDataAttr : cache.withoutDataAttr,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -651,11 +742,12 @@
                         getNoCache: {
                             method: 'GET',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -666,11 +758,11 @@
                         query: {
                             method: 'GET',
                             isArray: true,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             interceptor: queryInterceptor,
-                            cache: cache.withDataAttr,
+                            cache: options.useDataAttrForList ? cache.withDataAttr : cache.withoutDataAttr,
                             transformResponse: [
                                 transformResponseFromJson,
                                 queryTransformResponseData,
@@ -684,7 +776,7 @@
                         queryNoCache: {
                             method: 'GET',
                             isArray: true,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: true,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             interceptor: queryInterceptor,
@@ -701,12 +793,13 @@
                         save: {
                             method: 'POST',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: false,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             interceptor: insertingInterceptor,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -717,12 +810,13 @@
                         update: {
                             method: 'PATCH',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: false,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             interceptor: modifyingInterceptor,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -733,12 +827,13 @@
                         remove: {
                             method: 'DELETE',
                             isArray: false,
-                            withCredentials: true,
+                            withCredentials: options.withCredentials,
                             cancellable: false,
                             ignoreLoadingBar: options.ignoreLoadingBar,
                             interceptor: deletingInterceptor,
                             transformResponse: [
                                 transformResponseFromJson,
+                                singleTransformResponseData,
                                 singleTransformResponseToInternal
                             ],
                             transformRequest: [
@@ -748,8 +843,21 @@
                         }
                     };
 
-                // extend the methods with the given extra methods
-                angular.extend(methods, options.extraMethods);
+                // extend methods by the extra methods. when extra methods contain a pre-defined method
+                // merge the properties with the pre-defined one.
+                for (var extraMethodName in options.extraMethods) {
+                    if (options.extraMethods.hasOwnProperty(extraMethodName)) {
+                        // if the defined extra method matches a pre-defined one
+                        if (methods.hasOwnProperty(extraMethodName)) {
+                            angular.extend(methods[extraMethodName], options.extraMethods[extraMethodName])
+                        }
+
+                        // if the extra method is a new one
+                        else {
+                            methods[extraMethodName] = options.extraMethods[extraMethodName];
+                        }
+                    }
+                }
 
                 // offer methods for querying without a loading bar (using a 'Bg' suffix)
                 for (var methodName in methods) {
@@ -800,12 +908,25 @@
                  * Gets the data attribute name
                  *
                  * @memberOf ResourceFactoryService
-                 * @function getQueryDataAttr
+                 * @function getDataAttr
                  * @return {String|null} Data attribute name
                  * @instance
                  */
+                resource.getDataAttr = function () {
+                    return options.dataAttr;
+                };
+
+                /**
+                 * Gets the query data attribute name
+                 *
+                 * @memberOf ResourceFactoryService
+                 * @function getQueryDataAttr
+                 * @return {String|null} Data attribute name
+                 * @instance
+                 * @deprecated
+                 */
                 resource.getQueryDataAttr = function () {
-                    return options.queryDataAttr;
+                    return options.dataAttr; // set by a compatibility code to the value of `queryDataAttr`
                 };
 
                 /**

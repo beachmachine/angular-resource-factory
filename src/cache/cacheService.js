@@ -36,6 +36,7 @@
      * @param {Object} [options] Additional configuration
      * @param {String|null} options.urlAttr Name of the attribute to get the URL of the objects (default: `null`)
      * @param {String|null} options.dataAttr Name of the attribute to get the actual data from (default: `null`)
+     * @param {Boolean} options.wrapObjectsInDataAttr When object cache entries are created from list results, use the `dataAttr` to wrap the data (default: `false`)
      * @param {String[]} options.dependent List of dependent cache names (default: `[]`)
      * @param {int} options.ttl Time to live for cache entries in seconds (default: `3600`)
      * @class
@@ -114,6 +115,14 @@
                      * @private
                      */
                     dataAttr: null,
+
+                    /**
+                     * When object cache entries are created from list results, use the `dataAttr`
+                     * to wrap the data.
+                     * @type {Boolean}
+                     * @private
+                     */
+                    wrapObjectsInDataAttr: false,
 
                     /**
                      * Dependent caches
@@ -241,7 +250,7 @@
                         createOrUpdateTimestamp(key);
 
                         // only refresh the cache entries if the value is already a cache entry (which is
-                        // always an array), not a promise.
+                        // always an array or object), not a promise.
                         if (isManaged) {
                             self.refresh(getDataForEntry(value, useDataAttr));
                         }
@@ -569,6 +578,29 @@
                 }
 
                 /**
+                 * Creates a cache entry from the given data.
+                 *
+                 * @memberOf ResourceCacheService
+                 * @function createEntryForData
+                 * @param {Object} data Object to create a cache entry from
+                 * @returns {*}
+                 * @private
+                 */
+                function createEntryForData (data) {
+                    var
+                        entry = {};
+
+                    if (options.wrapObjectsInDataAttr) {
+                        entry[options.dataAttr] = data;
+                    }
+                    else {
+                        entry = data;
+                    }
+
+                    return entry;
+                }
+
+                /**
                  * Gets the cache data for the given cache entry.
                  *
                  * @memberOf ResourceCacheService
@@ -679,7 +711,7 @@
 
                     // inserts the data on the cache as individual entry, if we have the URL information on the data
                     if (urlAttr && newData && newData[urlAttr]) {
-                        self.insert(newData[urlAttr], newData, false, false);
+                        self.insert(newData[urlAttr], createEntryForData(newData), options.wrapObjectsInDataAttr, false);
                     }
 
                     for (var key in cache) {
@@ -730,7 +762,9 @@
                  */
                 function refreshEach (newEntries) {
                     for (var i = 0; i < newEntries.length; i++) {
-                        refreshSingle(newEntries[i]);
+                        if (angular.isObject(newEntries[i])) {
+                            refreshSingle(newEntries[i]);
+                        }
                     }
                 }
 
