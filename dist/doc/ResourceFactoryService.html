@@ -776,6 +776,7 @@ inject(function (ResourceFactoryService) {
     expect(service.queryNoCache).toBeDefined();
     expect(service.save).toBeDefined();
     expect(service.update).toBeDefined();
+    expect(service.patch).toBeDefined();
     expect(service.remove).toBeDefined();
 
     expect(instance.$restore).toBeDefined();
@@ -785,6 +786,7 @@ inject(function (ResourceFactoryService) {
     expect(instance.$queryNoCache).toBeDefined();
     expect(instance.$save).toBeDefined();
     expect(instance.$update).toBeDefined();
+    expect(instance.$patch).toBeDefined();
     expect(instance.$remove).toBeDefined();
 });</code></pre>
 
@@ -922,7 +924,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1154">line 1154</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1173">line 1173</a>
     </li></ul></dd>
     
 
@@ -1089,7 +1091,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line997">line 997</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1016">line 1016</a>
     </li></ul></dd>
     
 
@@ -1290,7 +1292,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1067">line 1067</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1086">line 1086</a>
     </li></ul></dd>
     
 
@@ -1457,7 +1459,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1011">line 1011</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1030">line 1030</a>
     </li></ul></dd>
     
 
@@ -1563,7 +1565,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1142">line 1142</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1161">line 1161</a>
     </li></ul></dd>
     
 
@@ -1669,7 +1671,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line944">line 944</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line963">line 963</a>
     </li></ul></dd>
     
 
@@ -1775,7 +1777,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line907">line 907</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line926">line 926</a>
     </li></ul></dd>
     
 
@@ -1979,7 +1981,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1088">line 1088</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1107">line 1107</a>
     </li></ul></dd>
     
 
@@ -2163,7 +2165,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1116">line 1116</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1135">line 1135</a>
     </li></ul></dd>
     
 
@@ -2272,7 +2274,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line895">line 895</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line914">line 914</a>
     </li></ul></dd>
     
 
@@ -2383,7 +2385,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line919">line 919</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line938">line 938</a>
     </li></ul></dd>
     
 
@@ -2492,7 +2494,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line956">line 956</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line975">line 975</a>
     </li></ul></dd>
     
 
@@ -2598,7 +2600,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line932">line 932</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line951">line 951</a>
     </li></ul></dd>
     
 
@@ -2707,7 +2709,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1130">line 1130</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1149">line 1149</a>
     </li></ul></dd>
     
 
@@ -2862,7 +2864,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1046">line 1046</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1065">line 1065</a>
     </li></ul></dd>
     
 
@@ -3032,7 +3034,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1025">line 1025</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1044">line 1044</a>
     </li></ul></dd>
     
 
@@ -3298,7 +3300,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1174">line 1174</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1193">line 1193</a>
     </li></ul></dd>
     
 
@@ -3453,7 +3455,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line981">line 981</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line1000">line 1000</a>
     </li></ul></dd>
     
 
@@ -3608,7 +3610,7 @@ inject(function (ResourceFactoryService) {
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line968">line 968</a>
+        <a href="factory_factoryService.js.html">factory/factoryService.js</a>, <a href="factory_factoryService.js.html#line987">line 987</a>
     </li></ul></dd>
     
 

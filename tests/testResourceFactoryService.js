@@ -25,6 +25,7 @@ describe("ResourceFactoryService",
                 expect(service.queryNoCache).toBeDefined();
                 expect(service.save).toBeDefined();
                 expect(service.update).toBeDefined();
+                expect(service.patch).toBeDefined();
                 expect(service.remove).toBeDefined();
             });
         });
@@ -42,6 +43,7 @@ describe("ResourceFactoryService",
                 expect(instance.$queryNoCache).toBeDefined();
                 expect(instance.$save).toBeDefined();
                 expect(instance.$update).toBeDefined();
+                expect(instance.$patch).toBeDefined();
                 expect(instance.$remove).toBeDefined();
             });
         });
@@ -59,6 +61,7 @@ describe("ResourceFactoryService",
                 expect(service.queryNoCacheBg).toBeDefined();
                 expect(service.saveBg).toBeDefined();
                 expect(service.updateBg).toBeDefined();
+                expect(service.patchBg).toBeDefined();
                 expect(service.removeBg).toBeDefined();
             });
         });
@@ -76,6 +79,7 @@ describe("ResourceFactoryService",
                 expect(instance.$queryNoCacheBg).toBeDefined();
                 expect(instance.$saveBg).toBeDefined();
                 expect(instance.$updateBg).toBeDefined();
+                expect(instance.$patchBg).toBeDefined();
                 expect(instance.$removeBg).toBeDefined();
             });
         });

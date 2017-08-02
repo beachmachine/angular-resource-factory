@@ -169,6 +169,7 @@
      *     expect(service.queryNoCache).toBeDefined();
      *     expect(service.save).toBeDefined();
      *     expect(service.update).toBeDefined();
+     *     expect(service.patch).toBeDefined();
      *     expect(service.remove).toBeDefined();
      *
      *     expect(instance.$restore).toBeDefined();
@@ -178,6 +179,7 @@
      *     expect(instance.$queryNoCache).toBeDefined();
      *     expect(instance.$save).toBeDefined();
      *     expect(instance.$update).toBeDefined();
+     *     expect(instance.$patch).toBeDefined();
      *     expect(instance.$remove).toBeDefined();
      * });
      */
@@ -808,6 +810,23 @@
                             ]
                         },
                         update: {
+                            method: 'PATCH',
+                            isArray: false,
+                            withCredentials: options.withCredentials,
+                            cancellable: false,
+                            ignoreLoadingBar: options.ignoreLoadingBar,
+                            interceptor: modifyingInterceptor,
+                            transformResponse: [
+                                transformResponseFromJson,
+                                singleTransformResponseData,
+                                singleTransformResponseToInternal
+                            ],
+                            transformRequest: [
+                                singleTransformRequestFromInternal,
+                                transformRequestToJson
+                            ]
+                        },
+                        patch: {
                             method: 'PATCH',
                             isArray: false,
                             withCredentials: options.withCredentials,

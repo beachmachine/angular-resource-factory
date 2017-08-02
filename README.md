@@ -70,7 +70,7 @@ var module = angular.module('services');
 module.factory('MemberResourceService',
     function (ResourceFactoryService) {
         return ResourceFactoryService('MemberResourceService', 'http://example.api/member/:pk/', {
-            queryDataAttr: 'results',
+            dataAttr: 'results',
             queryTotalAttr: 'count',
             pkAttr: 'pk',
             urlAttr: 'url',
