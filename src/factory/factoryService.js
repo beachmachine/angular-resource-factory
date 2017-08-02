@@ -66,8 +66,9 @@
      * @param {Boolean} options.generatePhantomIds Generate IDs for phantom records created via the `new` method. Defaults to `true`.
      * @param {ResourcePhantomIdFactoryService} options.phantomIdGenerator Phantom ID generator instance used for generating phantom IDs. Defaults to `{@link ResourcePhantomIdNegativeInt}`.
      * @param {String[]} options.dependent List of resource services to clean the cache for on modifying requests.
-     * @param {Object} options.extraMethods Extra request methods to put on the resource service.
+     * @param {Object} options.extraMethods Extra request methods to put on the resource service. Works the same way as `actions` known from `ng-resource`. Defaults to `{}`.
      * @param {Object} options.extraFunctions Extra functions to put on the resource service instance.
+     * @param {Object} options.extraParamDefaults Extra default values for `url` parameters. Works the same way as `defaultParams` known from `ng-resource`. Defaults to `{}`.
      * @param {String} options.pkAttr Attribute name where to find the ID of objects. Defaults to `"pk"`.
      * @param {String} options.urlAttr Attribute name where to find the URL of objects. Defaults to `"url"`.
      * @param {String} options.dataAttr Attribute name where to find the data on call results. Defaults to `null`.
@@ -252,6 +253,13 @@
                      * @private
                      */
                     extraFunctions: {},
+
+                    /**
+                     * Extra default values for `url` parameters
+                     * @type {Object}
+                     * @private
+                     */
+                    extraParamDefaults: {},
 
                     /**
                      * Attribute name where to find the ID of objects
@@ -893,6 +901,12 @@
 
                 // build the default params configuration
                 paramsDefaults[options.pkAttr] = '@' + options.pkAttr;
+                angular.extend(paramsDefaults, options.extraParamDefaults);
+
+                // default params for save and query should be the same as the regular
+                // default params, except that the PK should not be included in the URLs
+                angular.extend(saveParams, paramsDefaults);
+                angular.extend(queryParams, paramsDefaults);
                 saveParams[options.pkAttr] = null;
                 queryParams[options.pkAttr] = null;
 

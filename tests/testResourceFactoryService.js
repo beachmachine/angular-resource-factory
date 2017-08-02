@@ -881,5 +881,69 @@ describe("ResourceFactoryService",
                 expect(service.getResourceName()).toBe('TestResourceService');
             });
         });
+
+        it("Does map extra param defaults with same name on instance", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:attr1/:attr2/:pk/', {
+                        extraParamDefaults: {
+                            attr1: '@attr1',
+                            attr2: '@attr2'
+                        }
+                    }),
+                    instance = service.new({
+                        pk: 1,
+                        attr1: 2,
+                        attr2: 'three'
+                    });
+
+                $httpBackend.expect('POST', 'http://test/2/three/').respond(200, {pk: 1, attr1: 2, attr2: 'three'});
+                $httpBackend.expect('PATCH', 'http://test/2/three/1/').respond(200, {pk: 1, attr1: 2, attr2: 'three'});
+
+                $q.when()
+                    .then(function () {
+                        return instance.$save();
+                    })
+                    .then(function () {
+                        return instance.$update();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does map extra param defaults with different name on instance", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:attr1/:attr2/:pk/', {
+                        extraParamDefaults: {
+                            attr1: '@prop1',
+                            attr2: '@prop2'
+                        }
+                    }),
+                    instance = service.new({
+                        pk: 1,
+                        prop1: 2,
+                        prop2: 'three'
+                    });
+
+                $httpBackend.expect('POST', 'http://test/2/three/').respond(200, {pk: 1, prop1: 2, prop2: 'three'});
+                $httpBackend.expect('PATCH', 'http://test/2/three/1/').respond(200, {pk: 1, prop1: 2, prop2: 'three'});
+
+                $q.when()
+                    .then(function () {
+                        return instance.$save();
+                    })
+                    .then(function () {
+                        return instance.$update();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
     }
 );
