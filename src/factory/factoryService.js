@@ -154,6 +154,30 @@
      *         .then(done);
      *
      *     $httpBackend.flush();
+     *     $httpBackend.verifyNoOutstandingRequest();
+     * });
+     *
+     * @example
+     * // Access attributes outside the data attribute
+     * inject(function (ResourceFactoryService, $q) {
+     *     var
+     *         service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+     *             dataAttr: 'data'
+     *         });
+     *
+     *     $httpBackend.expect('GET', 'http://test/').respond(200, {prop1: 123, data: [{pk: 1}, {pk: 2}]});
+     *
+     *     $q.when()
+     *         .then(function () {
+     *             return service.query().$promise;
+     *         })
+     *         .then(function (result) {
+     *             expect(result.$meta.prop1).toBe(123);
+     *         })
+     *         .then(done);
+     *
+     *     $httpBackend.flush();
+     *     $httpBackend.verifyNoOutstandingRequest();
      * });
      *
      * @example
