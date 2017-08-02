@@ -398,7 +398,7 @@
                      */
                     cache = new options.cacheClass(name, options.pkAttr, {
                         dataAttr: options.dataAttr,
-                        wrapObjectsInDataAttr: options.dataAttr && options.useDataAttrForDetail,
+                        wrapObjectsInDataAttr: !!(options.dataAttr && options.useDataAttrForDetail),
                         pkAttr: options.pkAttr,
                         urlAttr: options.urlAttr,
                         dependent: options.dependent,
@@ -417,9 +417,10 @@
                                 instance = response.resource;
 
                             // `data` is the object that went through the transformation chain. It should already
-                            // have the `total` attribute set via the `queryTransformResponseData` transformation
-                            // method.
+                            // have the `total` and `$meta` attribute set via the `queryTransformResponseData`
+                            // transformation method.
                             instance.total = data.total;
+                            instance.$meta = data.$meta;
 
                             return instance;
                         }
@@ -589,6 +590,7 @@
                      */
                     singleTransformResponseData = function (responseData, headersGetter, status) {
                         var
+                            meta = null,
                             result = null;
 
                         // get data on success status from `dataAttr`, if configured
@@ -600,7 +602,11 @@
                                 // get the data from the configured `dataAttr` only if we have a response object.
                                 // else we just want the result to be the response data.
                                 if (responseData) {
+                                    meta = angular.copy(responseData);
+                                    delete meta[options.dataAttr];
+
                                     result = responseData[options.dataAttr];
+                                    result.$meta = meta;
                                 }
                                 else {
                                     result = responseData;
@@ -632,6 +638,7 @@
                      */
                     queryTransformResponseData = function (responseData, headersGetter, status) {
                         var
+                            meta = null,
                             result = null;
 
                         // get data on success status from `dataAttr`, if configured
@@ -643,7 +650,11 @@
                                 // get the data from the configured `dataAttr` only if we have a response object.
                                 // else we just want the result to be the response data.
                                 if (responseData) {
+                                    meta = angular.copy(responseData);
+                                    delete meta[options.dataAttr];
+
                                     result = responseData[options.dataAttr];
+                                    result.$meta = meta;
                                 }
                                 else {
                                     result = responseData;

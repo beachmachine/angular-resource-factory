@@ -1079,5 +1079,205 @@ describe("ResourceFactoryService",
                 $httpBackend.verifyNoOutstandingRequest();
             });
         });
+
+        it("Does not use data attribute for non 200 responses on list", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    okCount = 0,
+                    errorCount = 0,
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'result',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {result: [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}]}, {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('GET', 'http://test/?filter=1').respond(400, {messages: {toCheck: 'error-1'}}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(
+                        function () {
+                            return service.query().$promise;
+                        }
+                    )
+                    .then(
+                        function ok (result) {
+                            okCount++;
+
+                            expect(result[0].toCheck).toBe('ok-1');
+                            expect(result[1].toCheck).toBe('ok-2');
+
+                            return service.query({filter: 1}).$promise;
+                        },
+                        function error () {
+                            throw 'First GET should not return an error';
+                        }
+                    )
+                    .then(
+                        function ok () {
+                            throw 'Second GET should not return a success';
+                        },
+                        function error (err) {
+                            errorCount++;
+
+                            expect(err.data.messages.toCheck).toBe('error-1');
+
+                            return service.query().$promise;
+                        }
+                    )
+                    .then(
+                        function ok (result) {
+                            okCount++;
+
+                            expect(result[0].toCheck).toBe('ok-1');
+                            expect(result[1].toCheck).toBe('ok-2');
+                        },
+                        function error () {
+                            throw 'Second GET should not return an error';
+                        }
+                    )
+                    .then(
+                        function () {
+                            expect(okCount).toBe(2);
+                            expect(errorCount).toBe(1);
+                        }
+                    )
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does not use data attribute for non 200 responses on detail", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    okCount = 0,
+                    errorCount = 0,
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'result',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {result: {pk: 1, toCheck: 'ok-1'}}, {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('PATCH', 'http://test/1/').respond(400, {messages: {toCheck: 'error-1'}}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(
+                        function () {
+                            return service.get({pk: 1}).$promise;
+                        }
+                    )
+                    .then(
+                        function ok (result) {
+                            okCount++;
+
+                            expect(result.toCheck).toBe('ok-1');
+                            return result.$update();
+                        },
+                        function error () {
+                            throw 'First GET should not return an error';
+                        }
+                    )
+                    .then(
+                        function ok () {
+                            throw 'First PATCH should not return a success';
+                        },
+                        function error (err) {
+                            errorCount++;
+
+                            expect(err.data.messages.toCheck).toBe('error-1');
+                            return service.get({pk: 1}).$promise;
+                        }
+                    )
+                    .then(
+                        function ok (result) {
+                            okCount++;
+
+                            expect(result.toCheck).toBe('ok-1');
+                        },
+                        function error () {
+                            throw 'Second GET should not return an error';
+                        }
+                    )
+                    .then(
+                        function () {
+                            expect(okCount).toBe(2);
+                            expect(errorCount).toBe(1);
+                        }
+                    )
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does get meta data on list", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {metaToCheck: 'meta-ok-1', data: [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}]}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.length).toBe(2);
+                        expect(result.$meta.metaToCheck).toBe('meta-ok-1');
+                        expect(result.$meta.data).not.toBeDefined();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does get meta data on detail", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {metaToCheck: 'meta-ok-1', data: {pk: 1, toCheck: 'ok-1'}}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function (result) {
+                        expect(result.toCheck).toBe('ok-1');
+                        expect(result.$meta.metaToCheck).toBe('meta-ok-1');
+                        expect(result.$meta.data).not.toBeDefined();
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
     }
 );
