@@ -945,5 +945,139 @@ describe("ResourceFactoryService",
                 $httpBackend.verifyNoOutstandingRequest();
             });
         });
+
+        it("Does find first instance from cache by primary key attribute without data attribute", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}], {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1, toCheck: 'ok-1'}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function () {
+                        expect(service.firstFromCacheByPk(1).toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does find all instances from cache by primary key attribute without data attribute", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/');
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}], {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {pk: 1, toCheck: 'ok-1'}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function () {
+                        var
+                            result = service.findFromCacheByPk(1);
+
+                        expect(result.length).toBe(2);
+                        expect(result[0].toCheck).toBe('ok-1');
+                        expect(result[1].toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does find first instance from cache by primary key attribute with data attribute", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}]}, {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {data: {pk: 1, toCheck: 'ok-1'}}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function () {
+                        expect(service.firstFromCacheByPk(1).toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
+
+        it("Does find all instances from cache by primary key attribute with data attribute", function (done) {
+            inject(function (ResourceFactoryService, $q) {
+                var
+                    service = ResourceFactoryService('TestResourceService', 'http://test/:pk/', {
+                        dataAttr: 'data',
+                        useDataAttrForDetail: true,
+                        useDataAttrForList: true
+                    });
+
+                $httpBackend.expect('GET', 'http://test/').respond(200, {data: [{pk: 1, toCheck: 'ok-1'}, {pk: 2, toCheck: 'ok-2'}]}, {
+                    'content-type': 'application/json'
+                });
+                $httpBackend.expect('GET', 'http://test/1/').respond(200, {data: {pk: 1, toCheck: 'ok-1'}}, {
+                    'content-type': 'application/json'
+                });
+
+                $q.when()
+                    .then(function () {
+                        return service.query().$promise;
+                    })
+                    .then(function () {
+                        return service.get({pk: 1}).$promise;
+                    })
+                    .then(function () {
+                        var
+                            result = service.findFromCacheByPk(1);
+
+                        expect(result.length).toBe(2);
+                        expect(result[0].toCheck).toBe('ok-1');
+                        expect(result[1].toCheck).toBe('ok-1');
+                    })
+                    .then(done);
+
+                $httpBackend.flush();
+                $httpBackend.verifyNoOutstandingRequest();
+            });
+        });
     }
 );

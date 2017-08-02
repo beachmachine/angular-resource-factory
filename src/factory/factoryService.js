@@ -1028,6 +1028,47 @@
                 };
 
                 /**
+                 * Gets the first item from cache that matches the given PK value. If there is no item on the
+                 * cache that matches, this method returns `undefined`. Note that the cache TTL is ignored.
+                 *
+                 * @memberOf ResourceFactoryService
+                 * @function firstFromCacheByPk
+                 * @param {String|int} pkValue PK value to search for
+                 * @returns {ResourceInstance|undefined} Search result data
+                 * @instance
+                 */
+                resource.firstFromCacheByPk = function (pkValue) {
+                    var
+                        data = cache.firstByPk(pkValue);
+
+                    if (data) {
+                        return resource.new(data);
+                    }
+                    return data;
+                };
+
+                /**
+                 * Gets all items from cache that match the given PK value. If there is no item on the
+                 * cache that matches, this method returns an empty array. Note that the cache TTL is ignored.
+                 *
+                 * @memberOf ResourceFactoryService
+                 * @function findFromCacheByPk
+                 * @param {String|int} pkValue PK value to search for
+                 * @returns {ResourceInstance[]} Search results data
+                 * @instance
+                 */
+                resource.findFromCacheByPk = function (pkValue) {
+                    var
+                        cacheResult = cache.findByPk(pkValue),
+                        result = [];
+
+                    for (var i = 0; i < cacheResult.length; i++) {
+                        result.push(resource.new(cacheResult[i]));
+                    }
+                    return result;
+                };
+
+                /**
                  * Queries the resource with the configured filters.
                  *
                  * @memberOf ResourceFactoryService

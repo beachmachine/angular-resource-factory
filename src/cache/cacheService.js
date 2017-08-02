@@ -143,6 +143,85 @@
                 init();
 
                 /**
+                 * Gets the first item from cache that matches the given PK value. If there is no item on the
+                 * cache that matches, this method returns `undefined`. Note that the cache TTL is ignored.
+                 *
+                 * @memberOf ResourceCacheService
+                 * @function firstByPk
+                 * @param {String|int} pkValue PK value to search for
+                 * @returns {Object|undefined} Search result data
+                 * @instance
+                 */
+                self.firstByPk = function (pkValue) {
+                    for (var key in cacheIsManaged) {
+                        if (cacheIsManaged.hasOwnProperty(key) && cacheIsManaged[key]) {
+                            var
+                                data = getDataForKey(key),
+                                isArray = angular.isArray(data),
+                                isObject = angular.isObject(data);
+
+                            if (isArray) {
+                                for (var i = 0; i < data.length; i++) {
+                                    var
+                                        dataItem = data[i],
+                                        dataItemIsObject = angular.isObject(dataItem);
+
+                                    if (dataItemIsObject && dataItem[pkAttr] == pkValue) {
+                                        return dataItem;
+                                    }
+                                }
+                            }
+                            else if (isObject && data[pkAttr] == pkValue) {
+                                return data;
+                            }
+                        }
+                    }
+
+                    return undefined;
+                };
+
+                /**
+                 * Gets all items from cache that match the given PK value. If there is no item on the
+                 * cache that matches, this method returns an empty array. Note that the cache TTL is ignored.
+                 *
+                 * @memberOf ResourceCacheService
+                 * @function findByPk
+                 * @param {String|int} pkValue PK value to search for
+                 * @returns {Object[]} Search results data
+                 * @instance
+                 */
+                self.findByPk = function (pkValue) {
+                    var
+                        result = [];
+
+                    for (var key in cacheIsManaged) {
+                        if (cacheIsManaged.hasOwnProperty(key) && cacheIsManaged[key]) {
+                            var
+                                data = getDataForKey(key),
+                                isArray = angular.isArray(data),
+                                isObject = angular.isObject(data);
+
+                            if (isArray) {
+                                for (var i = 0; i < data.length; i++) {
+                                    var
+                                        dataItem = data[i],
+                                        dataItemIsObject = angular.isObject(dataItem);
+
+                                    if (dataItemIsObject && dataItem[pkAttr] == pkValue) {
+                                        result.push(dataItem);
+                                    }
+                                }
+                            }
+                            else if (isObject && data[pkAttr] == pkValue) {
+                                result.push(data);
+                            }
+                        }
+                    }
+
+                    return result;
+                };
+
+                /**
                  * Refreshes the cache entries with the new value or values. The existing objects in the cache
                  * are matched by the `pkAttr` value, and additionally by the `urlAttr`, if available.
                  *
