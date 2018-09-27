@@ -2425,8 +2425,8 @@
                 };
 
                 /**
-                 * Adds the given instance to the given list of instances. Does nothing if the instance
-                 * is already in the list of instances.
+                 * Adds the given instance to the given list of instances. Updates all occurrences of the instance
+                 * if it is already in the list of instances.
                  *
                  * @memberOf ResourceStore
                  * @function addResourceInstance
@@ -2445,6 +2445,7 @@
                                 matchingInstanceFound = matchingInstanceIndex !== -1;
 
                             if (matchingInstanceFound) {
+                                // Removes the old instance and replaces it with the provided instance
                                 instances.splice(matchingInstanceIndex, 1, instance);
                             }
                         }
